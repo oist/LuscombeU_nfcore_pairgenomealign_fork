@@ -30,6 +30,11 @@
                         "git_sha": "3fa9017b55b9c26e1c327ca189d3942b55f4d496",
                         "installed_by": ["modules"]
                     },
+                    "last/mafconvert": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
                     "last/mafswap": {
                         "branch": "master",
                         "git_sha": "3fa9017b55b9c26e1c327ca189d3942b55f4d496",

@@ -36,6 +36,14 @@
                     "help_text": "By default the _target_ genome is named `target` and this name is concatenated with the sample IDs using `___` as a separator to construct alignment file names. Use this option to provide a more informative name for the target genome.",
                     "description": "Target genome name."
                 },
+                "convert_to": {
+                    "type": "string",
+                    "enum": ["no", "axt", "gff", "sam"],
+                    "default": "no",
+                    "help_text": "Output extra files for the final _one-to-one_ alignment results in AXT or GFF format. This is useful for downstream tools that do not parse MAF.  The files are always compressed.",
+                    "description": "Convert output to a different format than MAF.",
+                    "fa_icon": "fas fa-file"
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
