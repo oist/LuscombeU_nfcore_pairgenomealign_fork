@@ -124,11 +124,7 @@
         },
         {
             "@id": "main.nf",
-            "@type": [
-                "File",
-                "SoftwareSourceCode",
-                "ComputationalWorkflow"
-            ],
+            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
             "dateCreated": "",
             "dateModified": "2024-12-17T10:02:25Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
@@ -143,25 +139,16 @@
                 "synteny",
                 "whole-genome-alignment"
             ],
-            "license": [
-                "MIT"
-            ],
-            "name": [
-                "nf-core/pairgenomealign"
-            ],
+            "license": ["MIT"],
+            "name": ["nf-core/pairgenomealign"],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
             "sdPublisher": {
                 "@id": "https://nf-co.re/"
             },
-            "url": [
-                "https://github.com/nf-core/pairgenomealign",
-                "https://nf-co.re/pairgenomealign/1.1.1/"
-            ],
-            "version": [
-                "1.1.1"
-            ]
+            "url": ["https://github.com/nf-core/pairgenomealign", "https://nf-co.re/pairgenomealign/1.1.1/"],
+            "version": ["1.1.1"]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
