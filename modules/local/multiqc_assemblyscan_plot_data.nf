@@ -1,6 +1,6 @@
 process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     label 'process_single'
-    conda "${moduleDir}/environment.yml"
+    conda "${moduleDir}/multiqc_assemblyscan_plot_data_environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/jq:1.6':
         'biocontainers/jq:1.6' }"
