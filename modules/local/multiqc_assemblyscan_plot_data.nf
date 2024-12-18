@@ -2,8 +2,8 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     label 'process_single'
     conda "${moduleDir}/multiqc_assemblyscan_plot_data_environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/jq:1.6':
-        'biocontainers/jq:1.6' }"
+        'https://depot.galaxyproject.org/singularity/jq:1.5--4':
+        'biocontainers/jq:1.5--4' }"
 
     // This module parses the JSON output of the assemblyscan module with jq to extract
     // statistics about GC content and contig length.  I do not know how to contribute

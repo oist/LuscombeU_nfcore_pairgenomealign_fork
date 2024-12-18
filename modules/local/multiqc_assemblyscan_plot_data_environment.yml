@@ -3,4 +3,4 @@ channels:
   - bioconda
 
 dependencies:
-  - bioconda::jq=1.6
+  - bioconda::jq=1.5
