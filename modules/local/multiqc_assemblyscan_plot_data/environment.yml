@@ -1,6 +1,5 @@
 channels:
   - conda-forge
   - bioconda
-
 dependencies:
-  - bioconda::jq=1.5
+  - conda-forge::jq=1.7.1
