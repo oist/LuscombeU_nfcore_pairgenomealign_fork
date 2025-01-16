@@ -38,9 +38,9 @@ Basic statistics on nucleotide content and contig length are collected for align
 - `alignment/`
   - `*.train` is the alignment parameters computed by `last-train` (optional)
   - `*.m2m_aln.maf.gz` is the _**many-to-many**_ alignment between _target_ and _query_ genomes. (optional through the `--m2m` option)
-  - `*.m2o_aln.maf.gz` is the _**many-to-one**_ alignment regions of the _target_ genome are matched at most once by the _query_ genome.
+  - `*.m2o_aln.maf.gz` is the _**many-to-one**_ alignment regions of the _target_ genome are matched at most once by the _query_ genome. (optional through the `--m2m` option)
+  - `*.o2m_aln.maf.gz` is the _**one-to-many**_ alignment between the _target_ and _query_ genomes. (optional through the `--m2m` option)
   - `*.o2o_aln.maf.gz` is the _**one-to-one**_ alignment between the _target_ and _query_ genomes.
-  - `*.o2m_aln.maf.gz` is the _**one-to-many**_ alignment between the _target_ and _query_ genomes (optional).
 
 </details>
 
