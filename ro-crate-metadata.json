@@ -44,6 +44,9 @@
                     "@id": "modules/"
                 },
                 {
+                    "@id": "modules/local/"
+                },
+                {
                     "@id": "modules/nf-core/"
                 },
                 {
@@ -122,11 +125,6 @@
         {
             "@id": "main.nf",
             "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
-            "creator": [
-                {
-                    "@id": "https://orcid.org/0000-0001-7410-6295"
-                }
-            ],
             "dateCreated": "",
             "dateModified": "2025-01-20T14:36:43Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
@@ -162,7 +160,7 @@
             "url": {
                 "@id": "https://www.nextflow.io/"
             },
-            "version": "!>=24.04.2"
+            "version": "!>=24.10.1"
         },
         {
             "@id": "#253dd1aa-c6b9-46d1-9098-234015354696",
@@ -219,6 +217,11 @@
             "@id": "modules/",
             "@type": "Dataset",
             "description": "Modules used by the pipeline"
+        },
+        {
+            "@id": "modules/local/",
+            "@type": "Dataset",
+            "description": "Pipeline-specific modules"
         },
         {
             "@id": "modules/nf-core/",
@@ -305,6 +308,12 @@
             "@type": "Organization",
             "name": "nf-core",
             "url": "https://nf-co.re/"
+        },
+        {
+            "@id": "#mohammed.mahdi@oist.jp",
+            "@type": "Person",
+            "email": "mohammed.mahdi@oist.jp",
+            "name": "Mohammed Mahdi"
         },
         {
             "@id": "https://orcid.org/0000-0001-7410-6295",
