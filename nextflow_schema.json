@@ -74,7 +74,7 @@
                 "softmask": {
                     "type": "string",
                     "enum": ["tantan", "original"],
-                    "help_text": "In this pipeline, letters soft-masked in lowercase are excluded from indexing (`lastdb -c`).  By default, the original mask is removed and a new one is made with an internal version of the “tantan” tool.  Set this option to `original` to keep the original soft-masking.  See <https://gitlab.com/mcfrith/last/-/blob/main/doc/lastdb.rst> for details.",
+                    "help_text": "In this pipeline, letters soft-masked in lowercase are excluded from indexing (`lastdb -c`).  By default, the original mask is removed and a new one is made with an internal version of the \u201ctantan\u201d tool.  Set this option to `original` to keep the original soft-masking.  See <https://gitlab.com/mcfrith/last/-/blob/main/doc/lastdb.rst> for details.",
                     "description": "Customise the way to mask the _target_ genome.",
                     "default": "tantan",
                     "fa_icon": "fas fa-theater-masks"
@@ -87,6 +87,14 @@
             "description": "Arguments for the lastdb, last-train, lastal and last-split programs.",
             "default": "",
             "properties": {
+                "export_aln_to": {
+                    "type": "string",
+                    "default": "no_export",
+                    "description": "Convert output to a different format than MAF.",
+                    "enum": ["no_export", "axt", "bed", "blast", "blasttab", "blasttab+", "chain", "gff", "html", "psl", "sam", "tab"],
+                    "fa_icon": "fas fa-file-export",
+                    "help_text": "Output extra files for the final _one-to-one_ alignment results in AXT, GFF or SAM format. This is useful for downstream tools that do not parse MAF.  The files are always compressed."
+                },
                 "m2m": {
                     "type": "boolean",
                     "description": "Make a many to many alignment",
@@ -349,9 +357,6 @@
         },
         {
             "$ref": "#/$defs/dotplot_parameters"
-        },
-        {
-            "$ref": "#/$defs/reference_genome_options"
         },
         {
             "$ref": "#/$defs/reference_genome_options"

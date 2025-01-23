@@ -5,6 +5,7 @@
 */
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
+include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
@@ -78,6 +79,10 @@ workflow PAIRGENOMEALIGN {
             ch_seqtk_cutn_query
         )
         pairalign_out = PAIRALIGN_M2M.out
+    }
+
+    if (!(params.export_aln_to == "no_export")) {
+        ALIGNMENT_EXP(pairalign_out.o2o, params.export_aln_to)
     }
 
     // Collate and save software versions
