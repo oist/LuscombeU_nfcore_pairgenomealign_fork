@@ -23,6 +23,13 @@
 
 ![Tubemap workflow summary](docs/images/pairgenomealign-tubemap.png "Tubemap workflow summary")
 
+The main steps of the pipeline are:
+
+1. Genome QC ([`assembly-scan`](https://github.com/rpetit3/assembly-scan)).
+2. Genome indexing ([`lastdb`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastdb.rst)).
+3. Genome pairwise alignments ([`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst)).
+4. Alignment plotting ([`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst)).
+
 The pipeline can generate four kinds of outputs, called _many-to-many_, _many-to-one_, _one-to-many_ and _one-to-one_, depending on whether sequences of one genome are allowed match the other genome multiple times or not.
 
 These alignments are output in [MAF](https://genome.ucsc.edu/FAQ/FAQformat.html#format5) format, and optional line plot representations are output in PNG format.
