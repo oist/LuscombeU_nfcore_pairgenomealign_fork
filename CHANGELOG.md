@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | Dependency | Old version | New version |
 | ---------- | ----------- | ----------- |
 | `LAST`     | 1542        | 1608        |
-| `MultiQC`  | 1.25.1      | 1.26        |
+| `MultiQC`  | 1.25.1      | 1.27        |
 
 ## [v1.1.1](https://github.com/nf-core/pairgenomealign/releases/tag/1.1.1) "Kani nabe" - [December 17th, 2024]
 
