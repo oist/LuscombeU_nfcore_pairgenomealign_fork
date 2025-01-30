@@ -116,7 +116,12 @@ workflow PAIRALIGN_M2M {
     m2o = ALIGNMENT_SPLIT_M2O.out.maf
     o2m = ALIGNMENT_SPLIT_O2M.out.maf
     o2o = ALIGNMENT_SPLIT_O2O.out.maf
-    versions = ALIGNMENT_LASTDB.out.versions
+    versions = Channel.empty()
+        .mix(     ALIGNMENT_LASTDB.out.versions)
+        .mix(      ALIGNMENT_TRAIN.out.versions)
+        .mix( ALIGNMENT_LASTAL_M2M.out.versions)
+        .mix(  ALIGNMENT_SPLIT_O2O.out.versions)
+        .mix(ALIGNMENT_DOTPLOT_O2O.out.versions)
 }
 
 /*

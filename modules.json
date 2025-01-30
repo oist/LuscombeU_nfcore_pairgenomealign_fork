@@ -47,7 +47,7 @@
                     },
                     "last/train": {
                         "branch": "master",
-                        "git_sha": "b651d72024027c922b5014aec80add091df63831",
+                        "git_sha": "29a99284f30fa0c5fd0f5dca192c94b80de0be30",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {

@@ -85,7 +85,12 @@ workflow PAIRALIGN_M2O {
         .mix(ALIGNMENT_SPLIT_O2O.out.multiqc.collect{ it[1]} )
     m2o = ALIGNMENT_LASTAL_M2O.out.maf
     o2o = ALIGNMENT_SPLIT_O2O.out.maf
-    versions = ALIGNMENT_LASTDB.out.versions
+    versions = Channel.empty()
+        .mix(     ALIGNMENT_LASTDB.out.versions)
+        .mix(      ALIGNMENT_TRAIN.out.versions)
+        .mix( ALIGNMENT_LASTAL_M2O.out.versions)
+        .mix(  ALIGNMENT_SPLIT_O2O.out.versions)
+        .mix(ALIGNMENT_DOTPLOT_O2O.out.versions)
 }
 
 /*
