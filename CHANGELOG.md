@@ -3,15 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.0.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.0.0) "Naga imo" - [January 27th, 2025]
+## [v2.0.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.0.0) "Naga imo" - [January 31st, 2025]
 
-### Backwards-incompatible changes
+### `Breaking changes`
 
 - The LAST software was updated and it has new defaults for some of its
   parameters. The alignments ran with this pipeline will not be identical to
   the ones from older versions.
 
-### New features
+### `Added`
 
 - The `alignment/lastdb` directory is not output anymore. It consumed space,
   is not usually needed for downstream analysis, and can be re-computed
@@ -26,19 +26,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New parameter `--export_aln_to` that creates additional files containing
   the alignments in a different format such as Axt, Chain, GFF or SAM.
 
-### Bug fixes
+### `Fixed`
 
 - Incorrect detection of regions with 10 or more `N`s was corrected ([#18](https://github.com/nf-core/pairgenomealign/issues/18)).
 - The `--lastal_params` now works as intended instead of being ignored ([#22](https://github.com/nf-core/pairgenomealign/issues/22)).
 - The _workflow summary_ is now properly sorted at the end of the MultiQC report ([#32](https://github.com/nf-core/pairgenomealign/issues/32)).
 
-### Parameters
+### `Parameters`
 
 | Old parameter | New parameter     |
 | ------------- | ----------------- |
 |               | `--export_aln_to` |
 
-### Software dependencies
+### `Dependencies`
 
 | Dependency | Old version | New version |
 | ---------- | ----------- | ----------- |
@@ -47,16 +47,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.1.1](https://github.com/nf-core/pairgenomealign/releases/tag/1.1.1) "Kani nabe" - [December 17th, 2024]
 
-This release brings the pipeline to the standards of Nextflow 24.10.1 and
-nf-core 3.1.0. No changes were made to the alignment process.
+### `Fixed`
+
+- This release brings the pipeline to the standards of Nextflow 24.10.1 and
+  nf-core 3.1.0.
 
 ## [v1.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/1.1.0) "Nattou maki" - [September 27th, 2024]
 
-### New features
+### `Added`
 
 - Added a new `softmask` parameter, to optionally keep original softmasking.
 
-### Parameters
+### `Parameters`
 
 | Old parameter | New parameter |
 | ------------- | ------------- |
