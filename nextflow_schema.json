@@ -145,10 +145,24 @@
             "description": "Customise dot-plots or skip them.",
             "default": "",
             "properties": {
-                "dotplot_options": {
-                    "type": "string",
-                    "description": "Extra arguments passed to `last-dotplot` to customise the output. See <https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst>.",
-                    "fa_icon": "fas fa-cog"
+                "dotplot_width": {
+                    "type": "integer",
+                    "default": 1000,
+                    "description": "Maximum width of the dot plots, in pixels.",
+                    "fa_icon": "fas fa-arrows-alt-h"
+                },
+                "dotplot_font_size": {
+                    "type": "integer",
+                    "default": 14,
+                    "description": "Font size of the sequence names on the dot plots.",
+                    "fa_icon": "fas fa-text-width"
+                },
+                "dotplot_height": {
+                    "type": "integer",
+                    "default": 10000,
+                    "description": "Maximum height of the dot plots, in pixels.",
+                    "help_text": "Set it to a much greater value than the maximum width so that the width is effectively fixed.",
+                    "fa_icon": "fas fa-arrows-alt-v"
                 },
                 "skip_dotplot_o2m": {
                     "type": "boolean",
@@ -169,6 +183,11 @@
                     "type": "boolean",
                     "description": "Do not generate the many-to-many alignment dot-plot.",
                     "fa_icon": "fas fa-forward"
+                },
+                "dotplot_options": {
+                    "type": "string",
+                    "description": "Extra arguments passed to `last-dotplot` to customise the output. See <https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst>.",
+                    "fa_icon": "fas fa-cog"
                 }
             },
             "fa_icon": "fas fa-cogs"
