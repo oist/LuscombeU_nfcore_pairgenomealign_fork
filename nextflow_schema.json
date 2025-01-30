@@ -66,7 +66,7 @@
                 "seed": {
                     "type": "string",
                     "enum": ["YASS", "NEAR", "MAM4", "MAM8", "RY4", "RY8", "RY16", "RY32", "RY64", "RY128"],
-                    "help_text": "LAST creates a database of seed sequences in the _target_ genome, and provides different ways to generate these seeds. The default (`YASS`) searches for long-and-weak similarities that allow for mismatches but not gaps. Among alternatives, there are `MAM8` to find weak similarities with high sensitivity, but low speed and high memory usage, or `RY4` to `RY128` that reduce run time and memory use at the expense of sensitivity, by only seeking seeds at ~1/4 to ~1/128 of positions in each sequence. See <https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst> for details.",
+                    "help_text": "LAST creates a database of seed sequences in the _target_ genome, and provides different ways to generate these seeds. The default (`YASS`) searches for long-and-weak similarities that allow for mismatches but not gaps. Among alternatives, there are `MAM8` to find weak similarities with high sensitivity, but low speed and high memory usage, or `RY4` to `RY128` that reduce run time and memory use at the expense of sensitivity, by only seeking seeds at ~1/4 to ~1/128 of positions in each sequence. See [https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst) for details.",
                     "description": "Select the LAST seed to index the _target_ genome.",
                     "default": "YASS",
                     "fa_icon": "fas fa-seedling"
