@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Incorrect detection of regions with 10 or more `N`s was corrected ([#18](https://github.com/nf-core/pairgenomealign/issues/18)).
 - The `--lastal_params` now works as intended instead of being ignored ([#22](https://github.com/nf-core/pairgenomealign/issues/22)).
 - The _workflow summary_ is now properly sorted at the end of the MultiQC report ([#32](https://github.com/nf-core/pairgenomealign/issues/32)).
+- Conforms to nf-core template version 3.2.0 ([#40](https://github.com/nf-core/pairgenomealign/pull/40)).
 
 ### `Parameters`
 
