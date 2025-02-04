@@ -94,10 +94,12 @@
                     "enum": [
                         "no_export",
                         "axt",
+			"bam",
                         "bed",
                         "blast",
                         "blasttab",
                         "blasttab+",
+			"cram",
                         "chain",
                         "gff",
                         "html",
@@ -106,7 +108,53 @@
                         "tab"
                     ],
                     "fa_icon": "fas fa-file-export",
-                    "help_text": "Output extra files for the final _one-to-one_ alignment results in AXT, GFF or SAM format. This is useful for downstream tools that do not parse MAF. The files are always compressed with `gzip`."
+                    "help_text": "Output extra files for the final _one-to-one_ alignment results in AXT, GFF or SAM format. This is useful for downstream tools that do not parse MAF. The files are always compressed with `gzip` except for BAM and CRAM."
+                },
+                "export_aln_to2": {
+                    "type": "string",
+                    "default": "no_export",
+                    "description": "Convert output to a different format than MAF.",
+                    "enum": [
+                        "no_export",
+                        "axt",
+			"bam",
+                        "bed",
+                        "blast",
+                        "blasttab",
+                        "blasttab+",
+			"cram",
+                        "chain",
+                        "gff",
+                        "html",
+                        "psl",
+                        "sam",
+                        "tab"
+                    ],
+                    "fa_icon": "fas fa-file-export",
+                    "help_text": "Use this option to export again to a second format."
+                },
+                "export_aln_to3": {
+                    "type": "string",
+                    "default": "no_export",
+                    "description": "Convert output to a different format than MAF.",
+                    "enum": [
+                        "no_export",
+                        "axt",
+			"bam",
+                        "bed",
+                        "blast",
+                        "blasttab",
+                        "blasttab+",
+			"cram",
+                        "chain",
+                        "gff",
+                        "html",
+                        "psl",
+                        "sam",
+                        "tab"
+                    ],
+                    "fa_icon": "fas fa-file-export",
+                    "help_text": "Use this option to export again to a third format."
                 },
                 "m2m": {
                     "type": "boolean",

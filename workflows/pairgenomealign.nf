@@ -81,8 +81,16 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
+    export_formats = [params.export_aln_to, params.export_aln_to2, params.export_aln_to3]
+
     if (!(params.export_aln_to == "no_export")) {
-        ALIGNMENT_EXP(pairalign_out.o2o, params.export_aln_to)
+        ALIGNMENT_EXP(
+            pairalign_out.o2o
+                .combine(channel.fromList(export_formats.findAll { it != "no_export" })),
+            [[],[]],
+            [[],[]],
+            [[],[]]
+        )
     }
 
     // Collate and save software versions
