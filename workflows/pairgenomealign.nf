@@ -8,6 +8,7 @@ include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblysc
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
+include { SAMTOOLS_FAIDX as TARGET_INDEX   } from '../modules/nf-core/samtools/faidx/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
 include { SEQTK_CUTN as CUTN_QUERY         } from '../modules/nf-core/seqtk/cutn/main'
 include { PAIRALIGN_M2O                    } from '../subworkflows/local/pairalign_m2o/main'
@@ -81,15 +82,29 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
+
+    // Export to other formats than MAF
+    //
     export_formats = [params.export_aln_to, params.export_aln_to2, params.export_aln_to3]
+
+    // If we export to CRAM we need a samtools index, otherwise we need placeholders.
+    ch_target_fa  = [[],[]]
+    ch_target_fai = [[],[]]
+    ch_target_gzi = [[],[]]
+    if (export_formats.contains('cram')) {
+        TARGET_INDEX(ch_targetgenome, [[],[]])
+        ch_target_fa  = ch_targetgenome
+        ch_target_fai = TARGET_INDEX.out.fai
+        ch_target_gzi = TARGET_INDEX.out.gzi.ifEmpty([[],[]])
+    }
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o
                 .combine(channel.fromList(export_formats.findAll { it != "no_export" })),
-            [[],[]],
-            [[],[]],
-            [[],[]]
+            ch_target_fa,
+            ch_target_fai,
+            ch_target_gzi
         )
     }
 
