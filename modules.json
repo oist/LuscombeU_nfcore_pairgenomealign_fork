@@ -17,7 +17,7 @@
                     },
                     "last/dotplot": {
                         "branch": "master",
-                        "git_sha": "b651d72024027c922b5014aec80add091df63831",
+                        "git_sha": "ea8c30970877fd25bc03da7b7608107edc5e32f4",
                         "installed_by": ["modules"]
                     },
                     "last/lastal": {
