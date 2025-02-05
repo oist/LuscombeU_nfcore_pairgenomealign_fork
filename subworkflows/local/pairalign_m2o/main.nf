@@ -4,12 +4,14 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { LAST_DOTPLOT as ALIGNMENT_DOTPLOT_M2O } from '../../../modules/nf-core/last/dotplot/main'
-include { LAST_DOTPLOT as ALIGNMENT_DOTPLOT_O2O } from '../../../modules/nf-core/last/dotplot/main'
-include { LAST_LASTAL  as ALIGNMENT_LASTAL_M2O  } from '../../../modules/nf-core/last/lastal/main'
-include { LAST_LASTDB  as ALIGNMENT_LASTDB      } from '../../../modules/nf-core/last/lastdb/main'
-include { LAST_SPLIT   as ALIGNMENT_SPLIT_O2O   } from '../../../modules/nf-core/last/split/main'
-include { LAST_TRAIN   as ALIGNMENT_TRAIN       } from '../../../modules/nf-core/last/train/main'
+include { LAST_DOTPLOT as ALIGNMENT_DOTPLOT_M2O   } from '../../../modules/nf-core/last/dotplot/main'
+include { LAST_DOTPLOT as ALIGNMENT_DOTPLOT_M2O_F } from '../../../modules/nf-core/last/dotplot/main'
+include { LAST_DOTPLOT as ALIGNMENT_DOTPLOT_O2O   } from '../../../modules/nf-core/last/dotplot/main'
+include { LAST_DOTPLOT as ALIGNMENT_DOTPLOT_O2O_F } from '../../../modules/nf-core/last/dotplot/main'
+include { LAST_LASTAL  as ALIGNMENT_LASTAL_M2O    } from '../../../modules/nf-core/last/lastal/main'
+include { LAST_LASTDB  as ALIGNMENT_LASTDB        } from '../../../modules/nf-core/last/lastdb/main'
+include { LAST_SPLIT   as ALIGNMENT_SPLIT_O2O     } from '../../../modules/nf-core/last/split/main'
+include { LAST_TRAIN   as ALIGNMENT_TRAIN         } from '../../../modules/nf-core/last/train/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,8 +63,17 @@ workflow PAIRALIGN_M2O {
         ALIGNMENT_DOTPLOT_M2O (
             ALIGNMENT_LASTAL_M2O.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            false
         )
+        if ( params.dotplot_filter ) {
+            ALIGNMENT_DOTPLOT_M2O_F (
+                ALIGNMENT_LASTAL_M2O.out.maf.join(ch_queries_bed),
+                ch_target_bed,
+                'png',
+                true
+            )
+        }
     }
 
     // Compute the one-to-one alignment and optionally plot it
@@ -74,8 +85,17 @@ workflow PAIRALIGN_M2O {
         ALIGNMENT_DOTPLOT_O2O (
             ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            false
         )
+        if (params.dotplot_filter) {
+            ALIGNMENT_DOTPLOT_O2O_F (
+                ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),
+                ch_target_bed,
+                'png',
+                true
+            )
+        }
     }
 
     emit:

@@ -193,17 +193,23 @@
             "description": "Customise dot-plots or skip them.",
             "default": "",
             "properties": {
-                "dotplot_width": {
-                    "type": "integer",
-                    "default": 1000,
-                    "description": "Maximum width of the dot plots, in pixels.",
-                    "fa_icon": "fas fa-arrows-alt-h"
+                "dotplot_filter": {
+                    "type": "boolean",
+                    "description": "Remove isolated alignments with the `maf-filter` tool.",
+                    "help_text": "The filter often removes noise in the plots, but in some cases can also remove too much alignments. Be careful when interpreting the results.",
+                    "fa_icon": "fas fa-filter"
                 },
                 "dotplot_font_size": {
                     "type": "integer",
                     "default": 14,
                     "description": "Font size of the sequence names on the dot plots.",
                     "fa_icon": "fas fa-text-width"
+                },
+                "dotplot_width": {
+                    "type": "integer",
+                    "default": 1000,
+                    "description": "Maximum width of the dot plots, in pixels.",
+                    "fa_icon": "fas fa-arrows-alt-h"
                 },
                 "dotplot_height": {
                     "type": "integer",
