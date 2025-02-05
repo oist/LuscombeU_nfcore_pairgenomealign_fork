@@ -42,6 +42,7 @@ The parameters are described in details in the [online documentation](https://nf
 
 - `--m2m` enables the computation of the _many-to-many_ alignment, which is the only one to be useful in the case of self-alignments, but which on the other hand can exhaust computing resources in the case of very large genomes.
 - Likewise, when comparing very similar and repetitive genomes (like two vertebrate genomes from the same species), any dotplot other than for the _one-to-one_ alignment will be heavy to compute and useless anyway, because the whole page will be filled with dots. The `--skip_dotplot_*` options are there to solve that problem.
+- Users who need a different format than MAF can check the `--export_aln_to` parameter to generate extra files.
 
 ## Fixed arguments (taken from the [LAST cookbook][] and the [LAST tuning][] manual)
 
@@ -128,7 +129,7 @@ Several generic profiles are bundled with the pipeline which instruct the pipeli
 > [!IMPORTANT]
 > We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
 
-The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is suported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
+The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is supported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
 Note that multiple profiles can be loaded, for example: `-profile test,docker` - the order of arguments is important!
 They are loaded in sequence, so later profiles can overwrite earlier profiles.

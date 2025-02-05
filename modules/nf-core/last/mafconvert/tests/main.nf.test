@@ -1,24 +1,24 @@
-// nf-core modules test last/split
 nextflow_process {
 
-    name "Test Process LAST_SPLIT"
+    name "Test Process LAST_MAFCONVERT"
     script "../main.nf"
-    process "LAST_SPLIT"
+    process "LAST_MAFCONVERT"
 
     tag "modules"
     tag "modules_nfcore"
     tag "last"
-    tag "last/split"
+    tag "last/mafconvert"
 
-    test("sarscov2 - contigs_genome") {
+    test("sarscov2 - bam") {
 
         when {
             process {
                 """
                 input[0] = [
-                    [ id:'sarscov.contigs.genome' ], // meta map
+                    [ id:'contigs.genome' ], // meta map
                     file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/alignment/last/contigs.genome.maf.gz', checkIfExists: true)
                 ]
+                input[1] = 'psl'
                 """
             }
         }
@@ -32,16 +32,17 @@ nextflow_process {
 
     }
 
-    test("sarscov2 - contigs_genome - stub") {
+    test("sarscov2 - bam - stub") {
 
         options "-stub"
         when {
             process {
                 """
                 input[0] = [
-                    [ id:'sarscov.contigs.genome' ], // meta map
+                    [ id:'contigs.genome' ], // meta map
                     file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/alignment/last/contigs.genome.maf.gz', checkIfExists: true)
                 ]
+                input[1] = 'psl'
                 """
             }
         }

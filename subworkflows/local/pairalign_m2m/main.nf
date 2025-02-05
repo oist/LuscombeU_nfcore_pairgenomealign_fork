@@ -37,17 +37,24 @@ workflow PAIRALIGN_M2M {
         ch_target
     )
 
-    // Train alignment parameters
+    // Train alignment parameters if not provided
     //
-    ALIGNMENT_TRAIN (
-        ch_queries,
-        ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
-    )
+    if (params.lastal_params) {
+        ch_queries_with_params = ch_queries.map { row -> [ row[0], row[1], file(params.lastal_params, checkIfExists: true) ] }
+        training_results_for_multiqc = channel.empty()
+    } else {
+        ALIGNMENT_TRAIN (
+            ch_queries,
+            ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
+        )
+        ch_queries_with_params = ch_queries.join(ALIGNMENT_TRAIN.out.param_file)
+        training_results_for_multiqc = ALIGNMENT_TRAIN.out.multiqc.collect{ it[1] }
+    }
 
     // Align queries to target.  This is a many-to-many alignment
     //
     ALIGNMENT_LASTAL_M2M (
-        ch_queries.join(ALIGNMENT_TRAIN.out.param_file),
+        ch_queries_with_params,
         ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
     )
 
@@ -103,13 +110,18 @@ workflow PAIRALIGN_M2M {
     emit:
 
     multiqc = Channel.empty()
-        .mix(    ALIGNMENT_TRAIN.out.multiqc.collect{ it[1]} )
+        .mix(training_results_for_multiqc)
         .mix(ALIGNMENT_SPLIT_O2O.out.multiqc.collect{ it[1]} )
     m2m = ALIGNMENT_LASTAL_M2M.out.maf
     m2o = ALIGNMENT_SPLIT_M2O.out.maf
     o2m = ALIGNMENT_SPLIT_O2M.out.maf
     o2o = ALIGNMENT_SPLIT_O2O.out.maf
-    versions = ALIGNMENT_LASTDB.out.versions
+    versions = Channel.empty()
+        .mix(     ALIGNMENT_LASTDB.out.versions)
+        .mix(      ALIGNMENT_TRAIN.out.versions)
+        .mix( ALIGNMENT_LASTAL_M2M.out.versions)
+        .mix(  ALIGNMENT_SPLIT_O2O.out.versions)
+        .mix(ALIGNMENT_DOTPLOT_O2O.out.versions)
 }
 
 /*
