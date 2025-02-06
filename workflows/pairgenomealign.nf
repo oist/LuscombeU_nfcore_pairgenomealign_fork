@@ -8,7 +8,8 @@ include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblysc
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
-include { SAMTOOLS_FAIDX as TARGET_INDEX   } from '../modules/nf-core/samtools/faidx/main'
+include { SAMTOOLS_BGZIP as ALIGNMENT_BGZIP } from '../modules/nf-core/samtools/bgzip/main'
+include { SAMTOOLS_FAIDX as ALIGNMENT_FAIDX } from '../modules/nf-core/samtools/faidx/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
 include { SEQTK_CUTN as CUTN_QUERY         } from '../modules/nf-core/seqtk/cutn/main'
 include { PAIRALIGN_M2O                    } from '../subworkflows/local/pairalign_m2o/main'
@@ -92,10 +93,11 @@ workflow PAIRGENOMEALIGN {
     ch_target_fai = [[],[]]
     ch_target_gzi = [[],[]]
     if (export_formats.contains('cram')) {
-        TARGET_INDEX(ch_targetgenome, [[],[]])
-        ch_target_fa  = ch_targetgenome
-        ch_target_fai = TARGET_INDEX.out.fai
-        ch_target_gzi = TARGET_INDEX.out.gzi.ifEmpty([[],[]])
+        ALIGNMENT_BGZIP(ch_targetgenome)
+        ALIGNMENT_FAIDX(ALIGNMENT_BGZIP.out.fa, [[],[]])
+        ch_target_fa  = ALIGNMENT_BGZIP.out.fa
+        ch_target_fai = ALIGNMENT_FAIDX.out.fai
+        ch_target_gzi = ALIGNMENT_FAIDX.out.gzi
     }
 
     if (!(params.export_aln_to == "no_export")) {
