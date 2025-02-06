@@ -36,16 +36,25 @@ process LAST_MAFCONVERT {
     """
     set -o pipefail
 
+    split_H_filter() {
+        perl -F'\\t' -lane '
+            \$d=268435455;
+            sub sH{my(\$n)=@_;(q(268435455H)x int(\$n/\$d)).(\$n%\$d).q(H)}
+            \$F[5]=~s/(\\d+)H/sH(\$1)/ge if @F>5;
+            print join(qq(\t),@F)
+        '
+    }
+
     case $format in
         bam)
-            maf-convert $args -d sam  $maf | samtools view -b -o ${prefix}.${format}
+            maf-convert $args -d sam  $maf | split_H_filter | samtools view -b         -o ${prefix}.${format}
             ;;
         cram)
             # CRAM output is not supported if the genome is compressed with something else than bgzip
-            maf-convert $args -d sam  $maf | samtools view -Ct $fasta -o ${prefix}.${format}
+            maf-convert $args -d sam  $maf | split_H_filter | samtools view -Ct $fasta -o ${prefix}.${format}
             ;;
         *)
-            maf-convert $args $format $maf | gzip --no-name > ${prefix}.${format}.gz
+            maf-convert $args $format $maf                  | gzip --no-name            > ${prefix}.${format}.gz
             ;;
     esac
 
