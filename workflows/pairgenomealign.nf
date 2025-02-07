@@ -87,6 +87,7 @@ workflow PAIRGENOMEALIGN {
     // Export to other formats than MAF
     //
     export_formats = [params.export_aln_to, params.export_aln_to2, params.export_aln_to3]
+    if ( params.cram ) { export_formats.add('cram') }
 
     // If we export to CRAM we need a samtools index, otherwise we need placeholders.
     ch_target_fa  = [[],[]]
@@ -100,15 +101,15 @@ workflow PAIRGENOMEALIGN {
         ch_target_gzi = ALIGNMENT_FAIDX.out.gzi
     }
 
-    if (!(params.export_aln_to == "no_export")) {
-        ALIGNMENT_EXP(
-            pairalign_out.o2o
-                .combine(channel.fromList(export_formats.findAll { it != "no_export" })),
-            ch_target_fa,
-            ch_target_fai,
-            ch_target_gzi
-        )
-    }
+    // Optional export step.
+    // Will not run if first input channel is empty because of "no_export"
+    ALIGNMENT_EXP(
+        pairalign_out.o2o
+            .combine(channel.fromList(export_formats.findAll { it != "no_export" })),
+        ch_target_fa,
+        ch_target_fai,
+        ch_target_gzi
+    )
 
     // Collate and save software versions
     //
