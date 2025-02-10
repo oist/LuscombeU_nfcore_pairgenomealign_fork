@@ -119,10 +119,6 @@ output:
           type: file
           description: Pairwise alignment in CRAM format (optional)
           pattern: "*.cram"
-      - fasta:
-          type: file
-          description: Genome file to recover sequences from the CRAM file (optional)
-          pattern: "*.{fasta,fasta.gz,fasta.bgz,fasta.bgzf}"
   - gff_gz:
       - meta:
           type: map
