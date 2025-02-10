@@ -57,6 +57,10 @@ custom_data:
         title: "Total alignment length"
       PercentSimilarity:
         title: "Percent similarity"
+        description: "Number of identical bases divided by number of matched bases and gaps"
+      percentSimilarityNogaps:
+        title: "Percent similarity (no gaps)"
+        description: "Number of identical bases divided by number of matched bases"
 
 sp:
   last_o2o:
