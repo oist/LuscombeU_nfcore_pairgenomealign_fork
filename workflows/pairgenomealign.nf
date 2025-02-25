@@ -8,6 +8,7 @@ include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblysc
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
+include { FASTGA as FASTGA_M2M             } from '../subworkflows/local/fastga/main'
 include { SAMTOOLS_BGZIP as ALIGNMENT_BGZIP } from '../modules/nf-core/samtools/bgzip/main'
 include { SAMTOOLS_FAIDX as ALIGNMENT_FAIDX } from '../modules/nf-core/samtools/faidx/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
@@ -55,6 +56,13 @@ workflow PAIRGENOMEALIGN {
         ASSEMBLYSCAN.out.json.collect{it[1]}
     )
 
+    if ( params.fastga ) {
+        FASTGA_M2M (
+            ch_targetgenome,
+            ch_samplesheet
+        )
+    }
+
     // Prefix query ids with target genome name before producing alignment files
     //
     ch_samplesheet = ch_samplesheet
@@ -82,7 +90,6 @@ workflow PAIRGENOMEALIGN {
         )
         pairalign_out = PAIRALIGN_M2M.out
     }
-
 
     // Export to other formats than MAF
     //
