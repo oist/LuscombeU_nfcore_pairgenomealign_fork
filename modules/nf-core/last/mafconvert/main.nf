@@ -51,7 +51,11 @@ process LAST_MAFCONVERT {
             ;;
         cram)
             # CRAM output is not supported if the genome is compressed with something else than bgzip
-            maf-convert $args -d sam  $maf | split_H_filter | samtools view -Ct $fasta -o ${prefix}.${format}
+            maf-convert $args -d sam  $maf |
+                split_H_filter |
+                samtools addreplacerg -r "ID:${meta.id}" - |
+                samtools sort -u |
+                samtools view -CT $fasta -o ${prefix}.${format}
             ;;
         *)
             maf-convert $args $format $maf                  | gzip --no-name            > ${prefix}.${format}.gz
