@@ -3,6 +3,24 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.1.0dev](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "TBD" - [TBD]
+
+
+### `Added`
+
+- Great Things will be done
+
+### `Fixed`
+
+- In alignment plots, Contig names are now written with a nice scalable font
+  instead of being pixellised.
+
+### `Dependencies`
+
+| Dependency | Old version | New version |
+| ---------- | ----------- | ----------- |
+| `LAST`     | 1608        | 1611        |
+
 ## [v2.0.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.0.0) "Naga imo" - [February 5th, 2025]
 
 ### `Breaking changes`
