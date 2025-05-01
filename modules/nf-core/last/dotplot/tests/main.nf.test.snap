@@ -1,0 +1,38 @@
+{
+    "sarscov2 - contigs - genome - gif": {
+        "content": [
+            [
+                "versions.yml:md5,143ef48514afd0c39da64d8f11fd18f7"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-21T09:18:32.629314"
+    },
+    "sarscov2 - contigs - genome - png - stub": {
+        "content": [
+            [
+                "versions.yml:md5,143ef48514afd0c39da64d8f11fd18f7"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-21T09:18:48.084683"
+    },
+    "sarscov2 - contigs - genome - png": {
+        "content": [
+            [
+                "versions.yml:md5,143ef48514afd0c39da64d8f11fd18f7"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-21T09:18:17.971205"
+    }
+}

@@ -44,6 +44,9 @@
                     "@id": "modules/"
                 },
                 {
+                    "@id": "modules/local/"
+                },
+                {
                     "@id": "modules/nf-core/"
                 },
                 {
@@ -121,8 +124,15 @@
         },
         {
             "@id": "main.nf",
-            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow"
+            ],
             "creator": [
+                {
+                    "@id": "#mohammed.mahdi@oist.jp"
+                },
                 {
                     "@id": "https://orcid.org/0000-0001-7410-6295"
                 }
@@ -141,16 +151,33 @@
                 "synteny",
                 "whole-genome-alignment"
             ],
-            "license": ["MIT"],
-            "name": ["nf-core/pairgenomealign"],
+            "license": [
+                "MIT"
+            ],
+            "maintainer": [
+                {
+                    "@id": "#mohammed.mahdi@oist.jp"
+                },
+                {
+                    "@id": "https://orcid.org/0000-0001-7410-6295"
+                }
+            ],
+            "name": [
+                "nf-core/pairgenomealign"
+            ],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
             "sdPublisher": {
                 "@id": "https://nf-co.re/"
             },
-            "url": ["https://github.com/nf-core/pairgenomealign", "https://nf-co.re/pairgenomealign/1.1.1/"],
-            "version": ["1.1.1"]
+            "url": [
+                "https://github.com/nf-core/pairgenomealign",
+                "https://nf-co.re/pairgenomealign/2.0.0/"
+            ],
+            "version": [
+                "2.0.0"
+            ]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
@@ -162,7 +189,7 @@
             "url": {
                 "@id": "https://www.nextflow.io/"
             },
-            "version": "!>=24.04.2"
+            "version": "!>=24.10.1"
         },
         {
             "@id": "#285305ee-008c-4b7a-8317-3730e922adb1",
@@ -219,6 +246,11 @@
             "@id": "modules/",
             "@type": "Dataset",
             "description": "Modules used by the pipeline"
+        },
+        {
+            "@id": "modules/local/",
+            "@type": "Dataset",
+            "description": "Pipeline-specific modules"
         },
         {
             "@id": "modules/nf-core/",
@@ -305,6 +337,12 @@
             "@type": "Organization",
             "name": "nf-core",
             "url": "https://nf-co.re/"
+        },
+        {
+            "@id": "#mohammed.mahdi@oist.jp",
+            "@type": "Person",
+            "email": "mohammed.mahdi@oist.jp",
+            "name": "Mohammed Mahdi"
         },
         {
             "@id": "https://orcid.org/0000-0001-7410-6295",
