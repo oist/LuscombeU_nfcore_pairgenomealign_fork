@@ -64,7 +64,8 @@ workflow PAIRALIGN_M2M {
         ALIGNMENT_DOTPLOT_M2M (
             ALIGNMENT_LASTAL_M2M.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            []
         )
     }
 
@@ -77,7 +78,8 @@ workflow PAIRALIGN_M2M {
         ALIGNMENT_DOTPLOT_O2M (
             ALIGNMENT_SPLIT_O2M.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            []
         )
     }
 
@@ -90,7 +92,8 @@ workflow PAIRALIGN_M2M {
         ALIGNMENT_DOTPLOT_M2O (
             ALIGNMENT_SPLIT_M2O.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            []
         )
     }
 
@@ -103,7 +106,8 @@ workflow PAIRALIGN_M2M {
         ALIGNMENT_DOTPLOT_O2O (
             ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            []
         )
     }
 

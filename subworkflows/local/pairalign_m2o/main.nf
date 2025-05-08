@@ -61,7 +61,8 @@ workflow PAIRALIGN_M2O {
         ALIGNMENT_DOTPLOT_M2O (
             ALIGNMENT_LASTAL_M2O.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            []
         )
     }
 
@@ -74,7 +75,9 @@ workflow PAIRALIGN_M2O {
         ALIGNMENT_DOTPLOT_O2O (
             ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),
             ch_target_bed,
-            'png'
+            'png',
+            []
+
         )
     }
 
