@@ -169,6 +169,12 @@
                     "type": "boolean",
                     "description": "Do not generate the many-to-many alignment dot-plot.",
                     "fa_icon": "fas fa-forward"
+                },
+                "dotplot_filter": {
+                    "type": "boolean",
+                    "description": "Remove isolated alignments with the `maf-filter` tool.",
+                    "help_text": "The filter often removes noise in the plots, but in some cases can also remove too much alignments. Be careful when interpreting the results.",
+                    "fa_icon": "fas fa-filter"
                 }
             },
             "fa_icon": "fas fa-cogs"
