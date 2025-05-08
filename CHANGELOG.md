@@ -5,7 +5,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v2.1.0dev](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "TBD" - [TBD]
 
-
 ### `Added`
 
 - Great Things will be done
