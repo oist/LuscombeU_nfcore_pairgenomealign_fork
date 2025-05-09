@@ -7,47 +7,47 @@
                 "nf-core": {
                     "assemblyscan": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "gfastats": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "8bc54984b57a02c8712d48274b90c1161bf2c996",
                         "installed_by": ["modules"]
                     },
                     "last/dotplot": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "last/lastal": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "last/lastdb": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "last/mafconvert": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "last/mafswap": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "last/split": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "last/train": {
                         "branch": "master",
-                        "git_sha": "0723b03f7265df8f17189b5083547959dca9f4f3",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
@@ -57,7 +57,7 @@
                     },
                     "seqtk/cutn": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
                         "installed_by": ["modules"]
                     }
                 }
