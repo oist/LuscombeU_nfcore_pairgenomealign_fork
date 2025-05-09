@@ -35,11 +35,14 @@ workflow PAIRALIGN_M2M {
 
     main:
 
+    ch_versions = Channel.empty()
+
     // Index the target genome
     //
     ALIGNMENT_LASTDB (
         ch_target
     )
+    ch_versions = ch_versions.mix(ALIGNMENT_LASTDB.out.versions.first())
 
     // Train alignment parameters if not provided
     //
@@ -51,6 +54,7 @@ workflow PAIRALIGN_M2M {
             ch_queries,
             ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
         )
+        ch_versions = ch_versions.mix(ALIGNMENT_TRAIN.out.versions.first())
         ch_queries_with_params = ch_queries.join(ALIGNMENT_TRAIN.out.param_file)
         training_results_for_multiqc = ALIGNMENT_TRAIN.out.multiqc.collect{ it[1] }
     }
@@ -61,6 +65,7 @@ workflow PAIRALIGN_M2M {
         ch_queries_with_params,
         ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
     )
+    ch_versions = ch_versions.mix(ALIGNMENT_LASTAL_M2M.out.versions.first())
 
     // Optionally plot the many-to-many alignment
     //
@@ -71,6 +76,7 @@ workflow PAIRALIGN_M2M {
             'png',
             []
         )
+        ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_M2M.out.versions.first())
         if ( params.dotplot_filter ) {
             ALIGNMENT_DOTPLOT_M2M_FLT (
                 ALIGNMENT_LASTAL_M2M.out.maf.join(ch_queries_bed),
@@ -86,6 +92,7 @@ workflow PAIRALIGN_M2M {
     ALIGNMENT_SPLIT_O2M (
         ALIGNMENT_LASTAL_M2M.out.maf
     )
+    ch_versions = ch_versions.mix(ALIGNMENT_SPLIT_O2M.out.versions.first())
     if (! (params.skip_dotplot_o2m) ) {
         ALIGNMENT_DOTPLOT_O2M (
             ALIGNMENT_SPLIT_O2M.out.maf.join(ch_queries_bed),
@@ -156,12 +163,7 @@ workflow PAIRALIGN_M2M {
     m2o = ALIGNMENT_SPLIT_M2O.out.maf
     o2m = ALIGNMENT_SPLIT_O2M.out.maf
     o2o = ALIGNMENT_SPLIT_O2O.out.maf
-    versions = Channel.empty()
-        .mix(     ALIGNMENT_LASTDB.out.versions)
-        .mix(      ALIGNMENT_TRAIN.out.versions)
-        .mix( ALIGNMENT_LASTAL_M2M.out.versions)
-        .mix(  ALIGNMENT_SPLIT_O2O.out.versions)
-        .mix(ALIGNMENT_DOTPLOT_O2O.out.versions)
+    versions = ch_versions                     // channel: [ versions.yml ]
 }
 
 /*
