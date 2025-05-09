@@ -28,7 +28,7 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     echo "# plot_type: 'bargraph'" >> gc_summary_mqc.tsv
     echo "# description: 'This plot shows a brief summary of each base content/percentage in the query genomes'" >> gc_summary_mqc.tsv
     echo "# pconfig:" >> gc_summary_mqc.tsv
-    echo "#    id: 'base content summary'" >> gc_summary_mqc.tsv
+    echo "#    id: 'base_content_summary_plot'" >> gc_summary_mqc.tsv
     echo "#    title: 'per_base content and percentage'" >> gc_summary_mqc.tsv
     echo "#    ylab: ''" >> gc_summary_mqc.tsv
     echo "id\tpercent_A\tpercent_C\tpercent_G\tpercent_T\tpercent_N\tcontig_non_ACGTN" >> gc_summary_mqc.tsv
@@ -44,7 +44,7 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     echo "# plot_type: 'table'" >> contig_length_mqc.tsv
     echo "# description: 'This plot shows a short statistics abouth the length of contigs in the query genomes'" >> contig_length_mqc.tsv
     echo "# pconfig:" >> contig_length_mqc.tsv
-    echo "#    id: 'contigs length statistics'" >> contig_length_mqc.tsv
+    echo "#    id: 'contigs_length_statistics_plot'" >> contig_length_mqc.tsv
     echo "#    title: 'contigs length statistics'" >> contig_length_mqc.tsv
     echo "#    ylab: 'length'" >> contig_length_mqc.tsv
     echo "id\tTOTALcontiglen\tMINcontiglen\tMAXcontiglen\ttotalcontigs\tcontigs>1k\tcontigs>10k" >> contig_length_mqc.tsv
