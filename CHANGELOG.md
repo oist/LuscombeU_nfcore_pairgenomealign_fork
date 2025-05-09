@@ -3,16 +3,25 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.1.0dev](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "TBD" - [TBD]
+## [v2.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "Goya champuru" - [May 9th 2025]
 
 ### `Added`
 
-- Great Things will be done
+- New `--dotplot_filter` paramater to produce extra alignment plots where small off-diagonal signal is filtered out ([#35](https://github.com/nf-core/pairgenomealign/issues/35)).
+- New `--dotplot_width`, `--dotplot_height` and `--dotplot_font_size` parameters to control alignment plot size ([#38](https://github.com/nf-core/pairgenomealign/issues/38)).
 
 ### `Fixed`
 
-- In alignment plots, Contig names are now written with a nice scalable font
-  instead of being pixellised.
+- In alignment plots, contig names are now written with a nice scalable font instead of being pixellised ([#44](https://github.com/nf-core/pairgenomealign/issues/44)).
+
+### `Parameters`
+
+| Old parameter | New parameter         |
+| ------------- | --------------------- |
+|               | `--dotplot_filter`    |
+|               | `--dotplot_font_size` |
+|               | `--dotplot_height`    |
+|               | `--dotplot_width`     |
 
 ### `Dependencies`
 
