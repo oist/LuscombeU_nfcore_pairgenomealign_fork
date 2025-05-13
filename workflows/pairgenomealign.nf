@@ -5,6 +5,8 @@
 */
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
+include { SAMTOOLS_BGZIP as ALIGNMENT_BGZ  } from '../modules/nf-core/samtools/bgzip/main'
+include { SAMTOOLS_FAIDX as ALIGNMENT_FAI  } from '../modules/nf-core/samtools/faidx/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
@@ -82,11 +84,35 @@ workflow PAIRGENOMEALIGN {
     }
 
     if (!(params.export_aln_to == "no_export")) {
+        // If we export to CRAM we need a samtools index,
+        // if we export to BAM the index is also nice to have,
+        //  otherwise we need placeholders.
+        ch_targetgenome_fa  = [[],[]]
+        ch_targetgenome_fai = [[],[]]
+        ch_targetgenome_gzi = [[],[]]
+
+        if (params.export_aln_to.contains('cram') |params.export_aln_to.contains('bam')) {
+            // Guarantee BGZIP compression
+            ALIGNMENT_BGZ ( ch_targetgenome )
+            ch_versions = ch_versions.mix(ALIGNMENT_BGZ.out.versions.first())
+            ch_targetgenome_fa = ALIGNMENT_BGZ.out.fasta
+
+            // Index BGZIP-compressed file
+            ALIGNMENT_FAI (
+                ch_targetgenome_fa,
+                [[],[]],
+                false
+            )
+            ch_versions = ch_versions.mix(ALIGNMENT_FAI.out.versions.first())
+            ch_targetgenome_fai = ALIGNMENT_FAI.out.fai
+            ch_targetgenome_gzi = ALIGNMENT_FAI.out.gzi
+        }
+
         ALIGNMENT_EXP(
             pairalign_out.o2o. map {it + params.export_aln_to},
-            [[],[]],
-            [[],[]],
-            [[],[]]
+            ch_targetgenome_fa,
+            ch_targetgenome_fai,
+            ch_targetgenome_gzi
         )
     }
 
