@@ -1,5 +1,5 @@
 process SAMTOOLS_BGZIP {
-    tag "$fasta"
+    tag "$meta.id"
     label 'process_low'
 
     conda "${moduleDir}/environment.yml"
@@ -20,7 +20,7 @@ process SAMTOOLS_BGZIP {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    output = "${prefix}.gz"
+    output = "${prefix}.fasta.gz"
     """
     FILE_TYPE=\$(htsfile $fasta)
     case "\$FILE_TYPE" in

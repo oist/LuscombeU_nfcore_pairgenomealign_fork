@@ -7,6 +7,7 @@
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
 include { SAMTOOLS_BGZIP as ALIGNMENT_BGZ  } from '../modules/nf-core/samtools/bgzip/main'
 include { SAMTOOLS_FAIDX as ALIGNMENT_FAI  } from '../modules/nf-core/samtools/faidx/main'
+include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
@@ -113,6 +114,14 @@ workflow PAIRGENOMEALIGN {
             ch_targetgenome_fa,
             ch_targetgenome_fai,
             ch_targetgenome_gzi
+        )
+    }
+
+    if (params.cram) {
+        ALIGNMENT_MERGE(
+            ALIGNMENT_EXP.out.cram.map { it -> [[id:params.targetName], it[1]] }.groupTuple() ,
+            [[],[]],
+            [[],[]]
         )
     }
 
