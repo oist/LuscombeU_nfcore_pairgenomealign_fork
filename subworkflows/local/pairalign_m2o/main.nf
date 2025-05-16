@@ -36,7 +36,7 @@ workflow PAIRALIGN_M2O {
     ALIGNMENT_LASTDB (
         ch_target
     )
-    ch_versions = ch_versions.mix(ALIGNMENT_LASTDB.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_LASTDB.out.versions)
 
     // Train alignment parameters if not provided
     //
