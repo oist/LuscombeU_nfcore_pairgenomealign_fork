@@ -80,6 +80,7 @@ workflow PAIRALIGN_M2O {
                 'png',
                 true
             )
+            ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_M2O_FLT.out.versions)
         }
     }
 
@@ -97,6 +98,7 @@ workflow PAIRALIGN_M2O {
             []
 
         )
+        ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_O2O.out.versions)
         if (params.dotplot_filter) {
             ALIGNMENT_DOTPLOT_O2O_FLT (
                 ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),
@@ -104,6 +106,7 @@ workflow PAIRALIGN_M2O {
                 'png',
                 true
             )
+            ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_O2O_FLT.out.versions)
         }
     }
 
