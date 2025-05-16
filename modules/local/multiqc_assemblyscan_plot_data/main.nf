@@ -26,12 +26,12 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     echo "# section_name: 'Base frequency'" >> gc_summary_mqc.tsv
     echo "# format: 'tsv'" >> gc_summary_mqc.tsv
     echo "# plot_type: 'bargraph'" >> gc_summary_mqc.tsv
-    echo "# description: 'This plot shows a brief summary of each base content/percentage in the query genomes'" >> gc_summary_mqc.tsv
+    echo "# description: 'Base frequency (in percent) in the query genomes'" >> gc_summary_mqc.tsv
     echo "# pconfig:" >> gc_summary_mqc.tsv
-    echo "#    id: 'base content summary'" >> gc_summary_mqc.tsv
-    echo "#    title: 'per_base content and percentage'" >> gc_summary_mqc.tsv
+    echo "#    id: 'base_content_summary_plot'" >> gc_summary_mqc.tsv
+    echo "#    title: 'Per-base percentage'" >> gc_summary_mqc.tsv
     echo "#    ylab: ''" >> gc_summary_mqc.tsv
-    echo "id\tpercent_A\tpercent_C\tpercent_G\tpercent_T\tpercent_N\tcontig_non_ACGTN" >> gc_summary_mqc.tsv
+    echo "id\tpercent A\tpercent C\tpercent G\tpercent T\tpercent N\tpercent non-ACGTN" >> gc_summary_mqc.tsv
     for i in ${json}
     do
         printf "\$(basename \$i .json)\t" >> gc_summary_mqc.tsv
@@ -42,12 +42,12 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     echo "# section_name: 'Contig length statistics'" >> contig_length_mqc.tsv
     echo "# format: 'tsv'" >> contig_length_mqc.tsv
     echo "# plot_type: 'table'" >> contig_length_mqc.tsv
-    echo "# description: 'This plot shows a short statistics abouth the length of contigs in the query genomes'" >> contig_length_mqc.tsv
+    echo "# description: 'Contigs length statistic for the query genomes, collected with assembly-scan'" >> contig_length_mqc.tsv
     echo "# pconfig:" >> contig_length_mqc.tsv
-    echo "#    id: 'contigs length statistics'" >> contig_length_mqc.tsv
-    echo "#    title: 'contigs length statistics'" >> contig_length_mqc.tsv
+    echo "#    id: 'contigs_length_statistics_plot'" >> contig_length_mqc.tsv
+    echo "#    title: 'Contigs length statistics'" >> contig_length_mqc.tsv
     echo "#    ylab: 'length'" >> contig_length_mqc.tsv
-    echo "id\tTOTALcontiglen\tMINcontiglen\tMAXcontiglen\ttotalcontigs\tcontigs>1k\tcontigs>10k" >> contig_length_mqc.tsv
+    echo "id\tTOTAL contig len.\tMin contig len.\tMAX contig len.\tTotal contigs\tContigs > 1k\tContigs > 10k" >> contig_length_mqc.tsv
     for i in ${json}
     do
         printf "\$(basename \$i .json)\t" >> contig_length_mqc.tsv
