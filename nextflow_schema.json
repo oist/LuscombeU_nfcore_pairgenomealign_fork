@@ -117,6 +117,12 @@
                     "fa_icon": "fas fa-file-export",
                     "help_text": "Output extra files for the final _one-to-one_ alignment results in AXT, GFF or SAM format. This is useful for downstream tools that do not parse MAF. The files are always compressed with `gzip`."
                 },
+                "cram": {
+                    "type": "boolean",
+                    "description": "Output a single CRAM file instead of multiple MAF files",
+                    "help_text": "Each one-to-one alignment will be converted to CRAM format and combined into a single CRAM file, which replaces the MAF files.",
+                    "fa_icon": "fas fa-arrows-alt"
+                },
                 "m2m": {
                     "type": "boolean",
                     "description": "Make a many to many alignment",
