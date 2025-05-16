@@ -17,7 +17,7 @@
                     },
                     "last/lastal": {
                         "branch": "master",
-                        "git_sha": "05954dab2ff481bcb999f24455da29a5828af08d",
+                        "git_sha": "90689d2e4b5a6a50dd0e0a5a29cb5f5b0fc6ab95",
                         "installed_by": ["modules"]
                     },
                     "last/lastdb": {
