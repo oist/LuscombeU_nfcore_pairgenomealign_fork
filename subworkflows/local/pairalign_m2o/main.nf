@@ -71,7 +71,7 @@ workflow PAIRALIGN_M2O {
             'png',
             []
         )
-        ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_M2O.out.versions.first())
+        ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_M2O.out.versions)
 
         if ( params.dotplot_filter ) {
             ALIGNMENT_DOTPLOT_M2O_FLT (
