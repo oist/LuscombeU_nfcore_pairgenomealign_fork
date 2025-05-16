@@ -54,7 +54,7 @@ workflow PAIRALIGN_M2M {
             ch_queries,
             ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
         )
-        ch_versions = ch_versions.mix(ALIGNMENT_TRAIN.out.versions.first())
+        ch_versions = ch_versions.mix(ALIGNMENT_TRAIN.out.versions)
         ch_queries_with_params = ch_queries.join(ALIGNMENT_TRAIN.out.param_file)
         training_results_for_multiqc = ALIGNMENT_TRAIN.out.multiqc.collect{ it[1] }
     }
