@@ -60,7 +60,7 @@ workflow PAIRALIGN_M2O {
         ch_queries_with_params,
         ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
     )
-    ch_versions = ch_versions.mix(ALIGNMENT_LASTAL_M2O.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_LASTAL_M2O.out.versions)
 
     // Optionally plot the many-to-one alignment
     //
