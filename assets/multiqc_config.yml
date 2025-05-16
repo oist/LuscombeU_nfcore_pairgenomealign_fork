@@ -55,8 +55,12 @@ custom_data:
         description: "target__query"
       TotalAlignmentLength:
         title: "Total alignment length"
-      PercentSimilarity:
-        title: "Percent similarity"
+      PercentIdentity:
+        title: "Percent identity"
+        description: "Matches / alignment length, including gaps"
+      PercentIdentityNoGaps:
+        title: "Ungapped percent identity"
+        description: "Matches / (Matches + Mismatches), thus excluding gaps"
 
 sp:
   last_o2o:
