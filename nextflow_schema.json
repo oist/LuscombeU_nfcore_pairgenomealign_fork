@@ -36,6 +36,13 @@
                     "help_text": "By default the _target_ genome is named `target` and this name is concatenated with the sample IDs using `___` as a separator to construct alignment file names. Use this option to provide a more informative name for the target genome.",
                     "description": "Target genome name."
                 },
+                "skip_assembly_qc": {
+                    "type": "boolean",
+                    "default": "false",
+                    "help_text": "If the assembly QC was already done before this pipeline is started, you can skip it with this option.",
+                    "description": "Skip assembly QC.",
+                    "fa_icon": "fas fa-forward"
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
