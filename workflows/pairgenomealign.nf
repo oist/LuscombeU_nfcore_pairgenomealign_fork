@@ -96,7 +96,7 @@ workflow PAIRGENOMEALIGN {
     if (params.cram | params.export_aln_to.contains('cram') | params.export_aln_to.contains('bam')) {
         // Guarantee BGZIP compression
         ALIGNMENT_BGZ ( ch_targetgenome )
-        ch_versions = ch_versions.mix(ALIGNMENT_BGZ.out.versions.first())
+        ch_versions = ch_versions.mix(ALIGNMENT_BGZ.out.versions)
         ch_targetgenome_fa = ALIGNMENT_BGZ.out.fasta
 
         // Index BGZIP-compressed file
@@ -105,7 +105,7 @@ workflow PAIRGENOMEALIGN {
             [[],[]],
             false
         )
-        ch_versions = ch_versions.mix(ALIGNMENT_FAI.out.versions.first())
+        ch_versions = ch_versions.mix(ALIGNMENT_FAI.out.versions)
         ch_targetgenome_fai = ALIGNMENT_FAI.out.fai
         ch_targetgenome_gzi = ALIGNMENT_FAI.out.gzi
     }

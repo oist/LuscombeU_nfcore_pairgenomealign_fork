@@ -36,7 +36,7 @@ workflow PAIRALIGN_M2O {
     ALIGNMENT_LASTDB (
         ch_target
     )
-    ch_versions = ch_versions.mix(ALIGNMENT_LASTDB.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_LASTDB.out.versions)
 
     // Train alignment parameters if not provided
     //
@@ -48,7 +48,7 @@ workflow PAIRALIGN_M2O {
             ch_queries,
             ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
         )
-        ch_versions = ch_versions.mix(ALIGNMENT_TRAIN.out.versions.first())
+        ch_versions = ch_versions.mix(ALIGNMENT_TRAIN.out.versions)
         ch_queries_with_params = ch_queries.join(ALIGNMENT_TRAIN.out.param_file)
         training_results_for_multiqc = ALIGNMENT_TRAIN.out.multiqc.collect{ it[1] }
     }
@@ -60,7 +60,7 @@ workflow PAIRALIGN_M2O {
         ch_queries_with_params,
         ALIGNMENT_LASTDB.out.index.map { row -> row[1] }  // Remove metadata map
     )
-    ch_versions = ch_versions.mix(ALIGNMENT_LASTAL_M2O.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_LASTAL_M2O.out.versions)
 
     // Optionally plot the many-to-one alignment
     //
@@ -71,7 +71,7 @@ workflow PAIRALIGN_M2O {
             'png',
             []
         )
-        ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_M2O.out.versions.first())
+        ch_versions = ch_versions.mix(ALIGNMENT_DOTPLOT_M2O.out.versions)
 
         if ( params.dotplot_filter ) {
             ALIGNMENT_DOTPLOT_M2O_FLT (
@@ -88,7 +88,7 @@ workflow PAIRALIGN_M2O {
     ALIGNMENT_SPLIT_O2O (
         ALIGNMENT_LASTAL_M2O.out.maf
     )
-    ch_versions = ch_versions.mix(ALIGNMENT_SPLIT_O2O.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_SPLIT_O2O.out.versions)
     if (! (params.skip_dotplot_o2o) ) {
         ALIGNMENT_DOTPLOT_O2O (
             ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),
