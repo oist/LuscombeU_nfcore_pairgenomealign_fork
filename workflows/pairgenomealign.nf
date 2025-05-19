@@ -121,7 +121,11 @@ workflow PAIRGENOMEALIGN {
 
     if (params.cram) {
         // We want the read group IDs to be just the query genome name (which is already long enough).
-        o2o_alignments = pairalign_out.o2o.map { meta, alns -> meta.id = meta.id.replaceAll(/^.*___/, '') ; [meta, alns] }
+        o2o_alignments = pairalign_out.o2o.map { meta, alns ->
+            def newMeta = meta.clone()    // Avoids unexpected propagation to pairalign_out.o2o's meta.id.
+            newMeta.id = newMeta.id.replaceAll(/^.*___/, '')
+            [newMeta, alns]
+        }
         ALIGNMENT_CRAM(
             o2o_alignments.map {it + "cram"},
             ch_targetgenome_fa,
