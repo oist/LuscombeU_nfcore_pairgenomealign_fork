@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `SAMTOOLS_DICT`  |             | 1.21        |
 | `SAMTOOLS_FAIDX` |             | 1.21        |
 
-## [v2.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "Goya champuru" - [May 9th 2025]
+## [v2.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "Goya champuru" - [May 16th 2025]
 
 ### `Added`
 
@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 
 - In alignment plots, contig names are now written with a nice scalable font instead of being pixellised ([#44](https://github.com/nf-core/pairgenomealign/issues/44)).
+- Conforms to nf-core template version 3.2.1 ([#54](https://github.com/nf-core/pairgenomealign/pull/54)).
+- Removed some old linting exceptions.
+- Removed the `gfastats` modules, which was actually not used.
+- Make sure the subworkflows collect all module versions.
+- Fix plot IDs for comptatibility with MultiQC 1.28.
 
 ### `Parameters`
 
