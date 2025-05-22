@@ -12,7 +12,6 @@ nextflow_workflow {
     tag "samtools/dict"
     tag "samtools/faidx"
 
-
     test("sarscov2 - fasta") {
 
         when {
