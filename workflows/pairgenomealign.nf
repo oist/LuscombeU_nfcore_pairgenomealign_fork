@@ -90,7 +90,7 @@ workflow PAIRGENOMEALIGN {
     ch_targetgenome_gzi = [[],[]]
     ch_targetgenome_dic = [[],[]]
 
-    if (params.export_aln_to.contains('cram') |params.export_aln_to.contains('bam')) {
+    if (params.export_aln_to.contains('cram') | params.export_aln_to.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
         ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
