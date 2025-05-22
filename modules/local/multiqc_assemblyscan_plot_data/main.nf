@@ -1,5 +1,4 @@
 process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
-    tag "${json.baseName}"
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
