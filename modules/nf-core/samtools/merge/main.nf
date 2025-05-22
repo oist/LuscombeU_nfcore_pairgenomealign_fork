@@ -34,7 +34,6 @@ process SAMTOOLS_MERGE {
         merge \\
         --threads ${task.cpus-1} \\
         $args \\
-        ${reference} \\
         ${prefix}.${file_type} \\
         $input_files
 
