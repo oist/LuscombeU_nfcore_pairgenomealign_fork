@@ -15,6 +15,7 @@ include { MULTIQC                          } from '../modules/nf-core/multiqc/ma
 include { paramsSummaryMap                 } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc             } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML           } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/local/fasta_bgzip_index_dict_samtools'
 include { methodsDescriptionText           } from '../subworkflows/local/utils_nfcore_pairgenomealign_pipeline'
 
 /*
@@ -81,12 +82,29 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
+    // If we export to CRAM we need a BGZIPped genome, indexed, and its sequence dictionary,
+    // if we export to SAM or BAM this is also nice to have,
+    // otherwise we need placeholders.
+    ch_targetgenome_faz = [[],[]]
+    ch_targetgenome_fai = [[],[]]
+    ch_targetgenome_gzi = [[],[]]
+    ch_targetgenome_dic = [[],[]]
+
+    if (params.export_aln_to.contains('cram') |params.export_aln_to.contains('bam')) {
+        FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
+        ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
+        ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
+        ch_targetgenome_gzi = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.gzi
+        ch_targetgenome_dic = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.dict
+        ch_versions = ch_versions.mix(FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.versions)
+    }
+
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o. map {it + params.export_aln_to},
-            [[],[]],
-            [[],[]],
-            [[],[]]
+            ch_targetgenome_faz,
+            ch_targetgenome_fai,
+            ch_targetgenome_gzi
         )
     }
 

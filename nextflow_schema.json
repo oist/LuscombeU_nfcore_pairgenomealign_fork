@@ -94,11 +94,13 @@
                     "enum": [
                         "no_export",
                         "axt",
+                        "bam",
                         "bed",
                         "blast",
                         "blasttab",
                         "blasttab+",
                         "chain",
+                        "cram",
                         "gff",
                         "html",
                         "psl",
