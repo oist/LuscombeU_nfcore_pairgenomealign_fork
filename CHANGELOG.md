@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- Support for export to BAM and CRAM formats ([#31](https://github.com/nf-core/pairgenomealign/issues/31)) ([#43](https://github.com/nf-core/pairgenomealign/issues/43))
+- Support for export to BAM and CRAM formats ([#31](https://github.com/nf-core/pairgenomealign/issues/31)) ([#43](https://github.com/nf-core/pairgenomealign/issues/43)).
 
 ### `Dependencies`
 
@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `SAMTOOLS_BGZIP` |             | 1.21        |
 | `SAMTOOLS_DICT`  |             | 1.21        |
 | `SAMTOOLS_FAIDX` |             | 1.21        |
+
+### `Fixed`
+
+- Remove noisy tag in the `MULTIQC_ASSEMBLYSCAN_PLOT_DATA` local module ([#64](https://github.com/nf-core/pairgenomealign/issues/64)).
 
 ## [v2.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "Goya champuru" - [May 16th 2025]
 
