@@ -85,6 +85,8 @@ The poly-N regions longer than 9 bases in each genome sequence often indicate co
 - `multiqc/`
   - `multiqc_report.html`: a standalone HTML file that can be viewed in your web browser.
   - `multiqc_data/`: directory containing parsed statistics from the different tools used in the pipeline.
+    - `/multiqc_data/multiqc_train.txt`: table reporting the alignment parameters chosen by `last-train`, for each sample.
+    - `multiqc_data/multiqc_last_o2o.txt`: table reporting the nucleotide percent identity in the alignments computed by `lastal`, for each sample.
   - `multiqc_plots/`: directory containing static images from the report in various formats.
   - `assemblyscan_plot_data`: GC content and contig length statistics parsed from `assemblyscan` for MultiQC with a local module.
 
@@ -116,7 +118,7 @@ Alignment parameters computed by `last-train` can be displayed by MultiQC as vio
 
 #### Alignment
 
-Alignment statistics can be displayed by MultiQC as violin plots.
+Alignment statistics can be displayed by MultiQC as violin plots.  There is no standard way to compute nucleotide identity ([May A. 2004](https://doi.org/10.1111/mec.17776)), therefore the pipeline reports two alternatives, including or excluding gaps from the computation.
 
 ![Example of alignment statistics for primate genomes aligned to the human genome](images/mqc_last_o2o-stats.png "Alignment statistics")
 
