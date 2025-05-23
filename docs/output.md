@@ -37,11 +37,13 @@ Basic statistics on nucleotide content and contig length are collected for align
 
 - `alignment/`
   - `*.train` is the alignment parameters computed by `last-train` (optional)
+  - `*.train.tsv` reports some of the parameters computed by `last-train` for MultiQC (optional)
   - `*.m2m_aln.maf.gz` is the _**many-to-many**_ alignment between _target_ and _query_ genomes. (optional through the `--m2m` option)
   - `*.m2o_aln.maf.gz` is the _**many-to-one**_ alignment regions of the _target_ genome are matched at most once by the _query_ genome. (optional through the `--m2m` option)
   - `*.o2m_aln.maf.gz` is the _**one-to-many**_ alignment between the _target_ and _query_ genomes. (optional through the `--m2m` option)
   - `*.o2o_aln.maf.gz` is the _**one-to-one**_ alignment between the _target_ and _query_ genomes.
-  - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_aln_to` parameter. These extra files are always compressed with gzip when their format is text-based.
+  - `*.o2o_aln.tsv` reports nucleotide percent identity of the _**one-to-one**_ alignment for MultiQC.
+  - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_aln_to` parameter. These extra files are always compressed with gzip when their format is text-based. The SAM/BAM/CRAM files are always sorted. Their header features all sequences from the _target_ genome, including the ones that did not align to the _query_ so that alignment files can be merged without disturbing the sort order.
 
 </details>
 
