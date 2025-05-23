@@ -29,6 +29,7 @@ The main steps of the pipeline are:
 2. Genome indexing ([`lastdb`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastdb.rst)).
 3. Genome pairwise alignments ([`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst)).
 4. Alignment plotting ([`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst)).
+5. Alignment export to various formats with [`maf-convert`](https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst), plus [`Samtools`](https://www.htslib.org/) for SAM/BAM/CRAM.
 
 The pipeline can generate four kinds of outputs, called _many-to-many_, _many-to-one_, _one-to-many_ and _one-to-one_, depending on whether sequences of one genome are allowed match the other genome multiple times or not.
 

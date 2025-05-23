@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "fasta_bgzip_index_dict_samtools"
+description: Sort SAM/BAM/CRAM file
+keywords:
+  - bgzip
+  - faidx
+  - dict
+  - fasta
+components:
+  - samtools/bgzip
+  - samtools/dict
+  - samtools/faidx
+input:
+  - ch_fasta:
+      type: file
+      description: |
+        FASTA file, compressed or not.
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fa.gz,fa.bz2,fa.xz,fasta,fasta.gz,fasta.bz2,fasta.xz}"
+output:
+  - fasta_gz:
+      type: file
+      description: |
+        Channel containing FASTA filed compressed with the BGZF algorithm.
+        Original files are re-used when they were already BGZF-compressed.
+        Structure: [ val(meta), path(fasta_gz) ]
+      pattern: "*.{fa.gz,fasta.gz}"
+  - fai:
+      type: file
+      description: |
+        Channel containing FASTA index files
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - gzi:
+      type: file
+      description: |
+        Channel containing bgzip index files
+        Structure: [ val(meta), path(gzi) ]
+      pattern: "*.gzi"
+  - dict:
+      type: file
+      description: |
+        Channel containing sequence dictionary files
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
+  - versions:
+      type: file
+      description: |
+        File containing software versions
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@charles-plessy"
+maintainers:
+  - "@charles-plessy"
