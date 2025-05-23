@@ -110,7 +110,7 @@ Contig length statistics can be displayed by MultiQC as violin plots.
 
 ![Example of a contig length report for primate genomes](images/mqc_contigs_length_statistics.png "Contig length statistics")
 
-#### TRaining parameters
+#### Training parameters
 
 Alignment parameters computed by `last-train` can be displayed by MultiQC as violin plots.
 
@@ -118,7 +118,7 @@ Alignment parameters computed by `last-train` can be displayed by MultiQC as vio
 
 #### Alignment
 
-Alignment statistics can be displayed by MultiQC as violin plots.  There is no standard way to compute nucleotide identity ([May A. 2004](https://doi.org/10.1111/mec.17776)), therefore the pipeline reports two alternatives, including or excluding gaps from the computation.
+Alignment statistics can be displayed by MultiQC as violin plots. There is no standard way to compute nucleotide identity ([May A. 2004](https://doi.org/10.1016/j.str.2004.04.001)), therefore the pipeline reports two alternatives, including or excluding gaps from the computation.
 
 ![Example of alignment statistics for primate genomes aligned to the human genome](images/mqc_last_o2o-stats.png "Alignment statistics")
 
