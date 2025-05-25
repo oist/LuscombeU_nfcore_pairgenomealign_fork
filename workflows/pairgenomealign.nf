@@ -104,7 +104,8 @@ workflow PAIRGENOMEALIGN {
             pairalign_out.o2o. map {it + params.export_aln_to},
             ch_targetgenome_faz,
             ch_targetgenome_fai,
-            ch_targetgenome_gzi
+            ch_targetgenome_gzi,
+            ch_targetgenome_dic
         )
     }
 
