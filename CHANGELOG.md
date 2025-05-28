@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SAM/BAM/CRAM alignments files are sorted and their header features all sequences of the _target_ genome.
 - Report ungapped percent identity ([#46](https://github.com/nf-core/pairgenomealign/issues/46)).
 - Update full-size test genomes to feature more T2T assemblies ([#59](https://github.com/nf-core/pairgenomealign/issues/59)).
+- Use a single mulled container for LAST, Samtools and open-fonts, to save ~280 Mb of downloads ([#58](https://github.com/nf-core/pairgenomealign/issues/58)).
 
 ### `Dependencies`
 
