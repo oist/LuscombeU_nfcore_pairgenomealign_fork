@@ -90,7 +90,8 @@ workflow PAIRGENOMEALIGN {
     ch_targetgenome_gzi = [[],[]]
     ch_targetgenome_dic = [[],[]]
 
-    if (params.export_aln_to.contains('cram') | params.export_aln_to.contains('bam')) {
+    export_formats = params.export_aln_to.tokenize(',')
+    if (export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
         ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
@@ -101,7 +102,7 @@ workflow PAIRGENOMEALIGN {
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
-            pairalign_out.o2o. map {it + params.export_aln_to},
+            pairalign_out.o2o.combine(Channel.fromList(export_formats)),
             ch_targetgenome_faz,
             ch_targetgenome_fai,
             ch_targetgenome_gzi,

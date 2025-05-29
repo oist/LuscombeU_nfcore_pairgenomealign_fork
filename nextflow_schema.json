@@ -90,25 +90,10 @@
                 "export_aln_to": {
                     "type": "string",
                     "default": "no_export",
-                    "description": "Convert output to a different format than MAF.",
-                    "enum": [
-                        "no_export",
-                        "axt",
-                        "bam",
-                        "bed",
-                        "blast",
-                        "blasttab",
-                        "blasttab+",
-                        "chain",
-                        "cram",
-                        "gff",
-                        "html",
-                        "psl",
-                        "sam",
-                        "tab"
-                    ],
+                    "description": "Convert the final _one-to-one_ alignment to a different format than MAF.",
+                    "pattern": "^((no_export|axt|bam|bed|blast|blasttab|blasttab+|chain|cram|gff|html|psl|sam|tab)?,?)*(?<!,)$",
                     "fa_icon": "fas fa-file-export",
-                    "help_text": "Output extra files for the final _one-to-one_ alignment results in AXT, GFF or SAM format. This is useful for downstream tools that do not parse MAF. The files are always compressed with `gzip`."
+                    "help_text": "Multiple formats separated with commas. Supported formats are `axt`, `bam`, `bed`, `blast`, `blasttab`, `blasttab+`, `chain`, `cram`, `gff`, `html`, `psl`, `sam` and `tab`. This is useful for downstream tools that do not parse MAF. The files in text format are always compressed with `gzip`."
                 },
                 "m2m": {
                     "type": "boolean",
