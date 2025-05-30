@@ -44,15 +44,16 @@ workflow PAIRGENOMEALIGN {
         ch_samplesheet
     )
 
-    // Extract statistics on contig length and GC content
+    // Allow to skip statistics on contig length and GC content
     //
-    ASSEMBLYSCAN (
-        ch_samplesheet
-    )
-    // Parse assembly-scan's JSON for MultiQC
-    MULTIQC_ASSEMBLYSCAN_PLOT_DATA (
-        ASSEMBLYSCAN.out.json.collect{it[1]}
-    )
+    if (! params.skip_assembly_qc ) {
+        ASSEMBLYSCAN ( ch_samplesheet )
+        ch_versions = ch_versions.mix(ASSEMBLYSCAN.out.versions)
+        MULTIQC_ASSEMBLYSCAN_PLOT_DATA (
+            ASSEMBLYSCAN.out.json.collect{it[1]}
+        )
+        ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.tsv)
+    }
 
     // Prefix query ids with target genome name before producing alignment files
     //
@@ -90,7 +91,8 @@ workflow PAIRGENOMEALIGN {
     ch_targetgenome_gzi = [[],[]]
     ch_targetgenome_dic = [[],[]]
 
-    if (params.export_aln_to.contains('cram') | params.export_aln_to.contains('bam')) {
+    export_formats = params.export_aln_to.tokenize(',')
+    if (export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
         ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
@@ -101,7 +103,7 @@ workflow PAIRGENOMEALIGN {
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
-            pairalign_out.o2o. map {it + params.export_aln_to},
+            pairalign_out.o2o.combine(Channel.fromList(export_formats)),
             ch_targetgenome_faz,
             ch_targetgenome_fai,
             ch_targetgenome_gzi,
@@ -114,7 +116,6 @@ workflow PAIRGENOMEALIGN {
 
     ch_versions = ch_versions
         .mix( CUTN_TARGET.out.versions)
-        .mix(ASSEMBLYSCAN.out.versions)
         .mix(   pairalign_out.versions)
 
     softwareVersionsToYAML(ch_versions)
@@ -151,7 +152,6 @@ workflow PAIRGENOMEALIGN {
 
     ch_multiqc_files = ch_multiqc_files
         .mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-        .mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.tsv)
         .mix(pairalign_out.multiqc)
         .mix(ch_collated_versions)
         .mix(
