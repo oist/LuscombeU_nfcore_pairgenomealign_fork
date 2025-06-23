@@ -117,7 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Broken`
 
-- In retrospect it was found that his version (only) is not compatible with
+- In retrospect it was found that this version (only) is not compatible with
   Nextflow 25.04 or higher. Please use `v1.1.0` instead if you need the same
   functionality and software version numbers.
 
