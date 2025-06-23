@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Document the `multiqc_train.txt` and `multiqc_last_o2o.txt` aggregating alignment statistics ([#52](https://github.com/nf-core/pairgenomealign/issues/52)).
 - Point the test configs samplesheets to `nf-core/test-datasets` in order to run the AWS full tests ([#62](https://github.com/nf-core/pairgenomealign/issues/62)).
 - Update metro map, in white background ([#71](https://github.com/nf-core/pairgenomealign/issues/71)).
+- Removed the `last/mafswap` module, which was actually not used.
 
 ## [v2.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "Goya champuru" - [May 16th 2025]
 
@@ -113,6 +114,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `MultiQC`  | 1.25.1      | 1.27        |
 
 ## [v1.1.1](https://github.com/nf-core/pairgenomealign/releases/tag/1.1.1) "Kani nabe" - [December 17th, 2024]
+
+### `Broken`
+
+- In retrospect it was found that this version (only) is not compatible with
+  Nextflow 25.04 or higher. Please use `v1.1.0` instead if you need the same
+  functionality and software version numbers.
 
 ### `Fixed`
 
