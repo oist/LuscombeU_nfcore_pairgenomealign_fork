@@ -115,6 +115,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.1.1](https://github.com/nf-core/pairgenomealign/releases/tag/1.1.1) "Kani nabe" - [December 17th, 2024]
 
+### `Broken`
+
+- In retrospect it was found that his version (only) is not compatible with
+  Nextflow 25.04 or higher. Please use `v1.1.0` instead if you need the same
+  functionality and software version numbers.
+
 ### `Fixed`
 
 - This release brings the pipeline to the standards of Nextflow 24.10.1 and
