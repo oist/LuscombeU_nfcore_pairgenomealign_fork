@@ -12,6 +12,7 @@ process LAST_MAFCONVERT {
     tuple val(meta2), path(fasta)
     tuple val(meta3), path(fai)
     tuple val(meta4), path(gzi)
+    tuple val(meta5), path(dict)
 
     output:
     tuple val(meta), path("*.axt.gz"),             optional:true, emit: axt_gz
@@ -20,7 +21,7 @@ process LAST_MAFCONVERT {
     tuple val(meta), path("*.blast.gz"),           optional:true, emit: blast_gz
     tuple val(meta), path("*.blasttab.gz"),        optional:true, emit: blasttab_gz
     tuple val(meta), path("*.chain.gz"),           optional:true, emit: chain_gz
-    tuple val(meta), path("*.cram"), path(fasta),  optional:true, emit: cram
+    tuple val(meta), path("*.cram"),               optional:true, emit: cram
     tuple val(meta), path("*.gff.gz"),             optional:true, emit: gff_gz
     tuple val(meta), path("*.html.gz"),            optional:true, emit: html_gz
     tuple val(meta), path("*.psl.gz"),             optional:true, emit: psl_gz
@@ -37,9 +38,8 @@ process LAST_MAFCONVERT {
     """
     set -o pipefail
 
-    if [ -f "$fasta" ]; then
-        samtools dict $fasta -u ./${fasta} -a ${meta2.id} -o ${fasta}.dict
-        DICT_ARGS="-f ${fasta}.dict"
+    if [ -f "$dict" ]; then
+        DICT_ARGS="-f ${dict}"
     else
         DICT_ARGS="-d"
     fi
