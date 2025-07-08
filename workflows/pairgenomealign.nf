@@ -5,8 +5,6 @@
 */
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
-include { SAMTOOLS_BGZIP as ALIGNMENT_BGZ  } from '../modules/nf-core/samtools/bgzip/main'
-include { SAMTOOLS_FAIDX as ALIGNMENT_FAI  } from '../modules/nf-core/samtools/faidx/main'
 include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { LAST_MAFCONVERT as ALIGNMENT_CRAM} from '../modules/nf-core/last/mafconvert/main'
@@ -19,6 +17,7 @@ include { MULTIQC                          } from '../modules/nf-core/multiqc/ma
 include { paramsSummaryMap                 } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc             } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML           } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/local/fasta_bgzip_index_dict_samtools'
 include { methodsDescriptionText           } from '../subworkflows/local/utils_nfcore_pairgenomealign_pipeline'
 
 /*
@@ -89,33 +88,27 @@ workflow PAIRGENOMEALIGN {
     // If we export to CRAM we need a samtools index,
     // if we export to BAM the index is also nice to have,
     // otherwise we need placeholders.
-    ch_targetgenome_fa  = [[],[]]
+    ch_targetgenome_faz = [[],[]]
     ch_targetgenome_fai = [[],[]]
     ch_targetgenome_gzi = [[],[]]
+    ch_targetgenome_dic = [[],[]]
 
     if (params.cram | params.export_aln_to.contains('cram') | params.export_aln_to.contains('bam')) {
-        // Guarantee BGZIP compression
-        ALIGNMENT_BGZ ( ch_targetgenome )
-        ch_versions = ch_versions.mix(ALIGNMENT_BGZ.out.versions)
-        ch_targetgenome_fa = ALIGNMENT_BGZ.out.fasta
-
-        // Index BGZIP-compressed file
-        ALIGNMENT_FAI (
-            ch_targetgenome_fa,
-            [[],[]],
-            false
-        )
-        ch_versions = ch_versions.mix(ALIGNMENT_FAI.out.versions)
-        ch_targetgenome_fai = ALIGNMENT_FAI.out.fai
-        ch_targetgenome_gzi = ALIGNMENT_FAI.out.gzi
+        FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
+        ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
+        ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
+        ch_targetgenome_gzi = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.gzi
+        ch_targetgenome_dic = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.dict
+        ch_versions = ch_versions.mix(FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.versions)
     }
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o. map {it + params.export_aln_to},
-            ch_targetgenome_fa,
+            ch_targetgenome_faz,
             ch_targetgenome_fai,
-            ch_targetgenome_gzi
+            ch_targetgenome_gzi,
+            ch_targetgenome_dic
         )
     }
 
@@ -128,16 +121,17 @@ workflow PAIRGENOMEALIGN {
         }
         ALIGNMENT_CRAM(
             o2o_alignments.map {it + "cram"},
-            ch_targetgenome_fa,
+            ch_targetgenome_faz,
             ch_targetgenome_fai,
-            ch_targetgenome_gzi
+            ch_targetgenome_gzi,
+            ch_targetgenome_dic
         )
         // Output a single CRAM file under the target genome name.
         ALIGNMENT_MERGE(
             ALIGNMENT_CRAM.out.cram.map { it -> [[id:params.targetName], it[1]] }.groupTuple(),
-            ch_targetgenome_fa,
+            ch_targetgenome_faz,
             ch_targetgenome_fai,
-            ch_targetgenome_gzi
+            ch_targetgenome_gzi,
         )
     }
 
