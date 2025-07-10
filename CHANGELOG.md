@@ -3,11 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.2.0dev](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.0)
+## [v2.2.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.0) "Chagara ponzu" - [May 29th 2025]
 
 ### `Added`
 
 - Support for export to BAM and CRAM formats ([#31](https://github.com/nf-core/pairgenomealign/issues/31)) ([#43](https://github.com/nf-core/pairgenomealign/issues/43)).
+- SAM/BAM/CRAM alignments files are sorted and their header features all sequences of the _target_ genome.
+- Report ungapped percent identity ([#46](https://github.com/nf-core/pairgenomealign/issues/46)).
+- Update full-size test genomes to feature more T2T assemblies ([#59](https://github.com/nf-core/pairgenomealign/issues/59)).
+- Use a single mulled container for LAST, Samtools and open-fonts, to save ~280 Mb of downloads ([#58](https://github.com/nf-core/pairgenomealign/issues/58)).
+- Allow export to multiple formats (comma-separated list) ([#42](https://github.com/nf-core/pairgenomealign/issues/42)).
+- Allow skipping of the assembly QC with `--skip_assembly_qc` ([#53](https://github.com/nf-core/pairgenomealign/issues/53)).
 
 ### `Dependencies`
 
@@ -17,9 +23,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `SAMTOOLS_DICT`  |             | 1.21        |
 | `SAMTOOLS_FAIDX` |             | 1.21        |
 
+### `Parameters`
+
+| Old parameter | New parameter        |
+| ------------- | -------------------- |
+|               | `--skip_assembly_qc` |
+
 ### `Fixed`
 
 - Remove noisy tag in the `MULTIQC_ASSEMBLYSCAN_PLOT_DATA` local module ([#64](https://github.com/nf-core/pairgenomealign/issues/64)).
+- Restore BED format support ([#56](https://github.com/nf-core/pairgenomealign/issues/56)).
+- Document the `multiqc_train.txt` and `multiqc_last_o2o.txt` aggregating alignment statistics ([#52](https://github.com/nf-core/pairgenomealign/issues/52)).
+- Point the test configs samplesheets to `nf-core/test-datasets` in order to run the AWS full tests ([#62](https://github.com/nf-core/pairgenomealign/issues/62)).
+- Update metro map, in white background ([#71](https://github.com/nf-core/pairgenomealign/issues/71)).
+- Removed the `last/mafswap` module, which was actually not used.
 
 ## [v2.1.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.1.0) "Goya champuru" - [May 16th 2025]
 
@@ -97,6 +114,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | `MultiQC`  | 1.25.1      | 1.27        |
 
 ## [v1.1.1](https://github.com/nf-core/pairgenomealign/releases/tag/1.1.1) "Kani nabe" - [December 17th, 2024]
+
+### `Broken`
+
+- In retrospect it was found that this version (only) is not compatible with
+  Nextflow 25.04 or higher. Please use `v1.1.0` instead if you need the same
+  functionality and software version numbers.
 
 ### `Fixed`
 

@@ -37,11 +37,13 @@ Basic statistics on nucleotide content and contig length are collected for align
 
 - `alignment/`
   - `*.train` is the alignment parameters computed by `last-train` (optional)
+  - `*.train.tsv` reports some of the parameters computed by `last-train` for MultiQC (optional)
   - `*.m2m_aln.maf.gz` is the _**many-to-many**_ alignment between _target_ and _query_ genomes. (optional through the `--m2m` option)
   - `*.m2o_aln.maf.gz` is the _**many-to-one**_ alignment regions of the _target_ genome are matched at most once by the _query_ genome. (optional through the `--m2m` option)
   - `*.o2m_aln.maf.gz` is the _**one-to-many**_ alignment between the _target_ and _query_ genomes. (optional through the `--m2m` option)
   - `*.o2o_aln.maf.gz` is the _**one-to-one**_ alignment between the _target_ and _query_ genomes.
-  - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_aln_to` parameter. These extra files are always compressed.
+  - `*.o2o_aln.tsv` reports nucleotide percent identity of the _**one-to-one**_ alignment for MultiQC.
+  - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_aln_to` parameter. These extra files are always compressed with gzip when their format is text-based. The SAM/BAM/CRAM files are always sorted. Their header features all sequences from the _target_ genome, including the ones that did not align to the _query_ so that alignment files can be merged without disturbing the sort order.
 
 </details>
 
@@ -60,9 +62,9 @@ Genomes are aligned witn [`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/
 
 </details>
 
-Dot plots are representing the pairwise genome alignments and produced with the [`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst) tool. By default, their maximal width is fixed to aproximately 1000 pixels, so that the _target_ genome is always represented at the same scale in all plots. In the one-to-one alignment example below, the `hg38` human genome (_target_) is represented on the horizontal axis and a monkey genopme (_Macaca mulatta_ accession number `GCA\_003339765.3`) on the vertical axis (_query_). Regions containing unknown (`N`) sequences are on pink background. Forward (+/+) alignments are plotted in red and reverse (+/– or –/+) in blue. _Target_ (human) contigs are displayed in their original order. _Query_ contigs (monkey) are reordered and possibly reverse-complemented to diagonalise the plot as much as possible. The names of reverse-complemented contigs are printed in blue.
+Dot plots are representing the pairwise genome alignments and produced with the [`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst) tool. By default, their maximal width is fixed to aproximately 1000 pixels, so that the _target_ genome is always represented at the same scale in all plots. In the one-to-one alignment example below, the `hg38` human genome (_target_) is represented on the horizontal axis and a monkey genopme (_Macaca mulatta_ accession number `GCA\_049350105.1`) on the vertical axis (_query_). Regions containing unknown (`N`) sequences are on pink background. Forward (+/+) alignments are plotted in red and reverse (+/– or –/+) in blue. _Target_ (human) contigs are displayed in their original order. _Query_ contigs (monkey) are reordered and possibly reverse-complemented to diagonalise the plot as much as possible. The names of reverse-complemented contigs are printed in blue.
 
-![Example of a dot-plot produced by the pipeline after aligning human and macaque genomes](images/Homo_sapiens_GCA_000001405.29_GRCh38.p14___Macaca_mulatta_GCA_003339765.3.o2o_plt.png "Human–Monkey comparison")
+![Example of a dot-plot produced by the pipeline after aligning human and macaque genomes](images/Homo_sapiens_GRCh38.p14___Macaca_mulatta_GCA_049350105.1.o2o_plt.png "Human–Monkey comparison")
 
 ### `N` regions
 
@@ -85,6 +87,8 @@ The poly-N regions longer than 9 bases in each genome sequence often indicate co
 - `multiqc/`
   - `multiqc_report.html`: a standalone HTML file that can be viewed in your web browser.
   - `multiqc_data/`: directory containing parsed statistics from the different tools used in the pipeline.
+    - `/multiqc_data/multiqc_train.txt`: table reporting the alignment parameters chosen by `last-train`, for each sample.
+    - `multiqc_data/multiqc_last_o2o.txt`: table reporting the nucleotide percent identity in the alignments computed by `lastal`, for each sample.
   - `multiqc_plots/`: directory containing static images from the report in various formats.
   - `assemblyscan_plot_data`: GC content and contig length statistics parsed from `assemblyscan` for MultiQC with a local module.
 
@@ -108,7 +112,7 @@ Contig length statistics can be displayed by MultiQC as violin plots.
 
 ![Example of a contig length report for primate genomes](images/mqc_contigs_length_statistics.png "Contig length statistics")
 
-#### TRaining parameters
+#### Training parameters
 
 Alignment parameters computed by `last-train` can be displayed by MultiQC as violin plots.
 
@@ -116,7 +120,7 @@ Alignment parameters computed by `last-train` can be displayed by MultiQC as vio
 
 #### Alignment
 
-Alignment statistics can be displayed by MultiQC as violin plots.
+Alignment statistics can be displayed by MultiQC as violin plots. There is no standard way to compute nucleotide identity ([May A. 2004](https://doi.org/10.1016/j.str.2004.04.001)), therefore the pipeline reports two alternatives, including or excluding gaps from the computation.
 
 ![Example of alignment statistics for primate genomes aligned to the human genome](images/mqc_last_o2o-stats.png "Alignment statistics")
 

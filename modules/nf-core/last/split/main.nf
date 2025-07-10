@@ -4,8 +4,8 @@ process LAST_SPLIT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0d/0d27a2649f1291ff817dc8f73357ffac206424cd972d3855421e4258acc600f7/data'
-        : 'community.wave.seqera.io/library/last:1611--e1193b3871fa0975'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
+        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
 
     input:
     tuple val(meta), path(maf)
@@ -30,15 +30,18 @@ process LAST_SPLIT {
             FS="\t";  # Set field separator as tab
             totalMatches = 0;
             totalAlignmentLength = 0;
-            print "Sample\tTotalAlignmentLength\tPercentSimilarity";  # Header for MultiQC
+            totalAlignedBases = 0;
+            print "Sample\tTotalAlignmentLength\tPercentIdentity\tPercentIdentityNoGaps";  # Header for MultiQC
         }
         {
-            totalMatches += \$1 + \$3;  # Sum matches and repMatches
+            totalMatches         += \$1 +       \$3            ;  # Sum matches          and repMatches
             totalAlignmentLength += \$1 + \$2 + \$3 + \$6 + \$8;  # Sum matches, misMatches, repMatches, qBaseInsert, and tBaseInsert
+            totalAlignedBases    += \$1 + \$2 + \$3            ;  # Sum matches, misMatches, repMatches
         }
         END {
-            percentSimilarity = (totalAlignmentLength > 0) ? (totalMatches / totalAlignmentLength * 100) : 0;
-            print "$meta.id" "\t" totalAlignmentLength "\t" percentSimilarity;  # Data in TSV format
+            percentIdentity       = (totalAlignmentLength > 0) ? (totalMatches / totalAlignmentLength * 100) : 0;
+            percentIdentityNoGaps = (totalAlignmentLength > 0) ? (totalMatches / totalAlignedBases    * 100) : 0;
+            print "$meta.id" "\t" totalAlignmentLength "\t" percentIdentity "\t" percentIdentityNoGaps;  # Data in TSV format
         }'
     }
 
