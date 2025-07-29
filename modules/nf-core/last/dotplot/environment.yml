@@ -3,5 +3,7 @@
 channels:
   - conda-forge
   - bioconda
+
 dependencies:
-  - bioconda::fastqc=0.12.1
+  - bioconda::last=1611
+  - conda-forge::open-fonts=0.7.0
