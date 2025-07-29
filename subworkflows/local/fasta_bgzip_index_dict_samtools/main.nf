@@ -29,4 +29,3 @@ workflow FASTA_BGZIP_INDEX_DICT_SAMTOOLS {
 
     versions = ch_versions                     // channel: [ versions.yml ]
 }
-
