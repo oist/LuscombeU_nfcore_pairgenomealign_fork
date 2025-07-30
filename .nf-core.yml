@@ -1,7 +1,7 @@
 lint:
   files_unchanged:
     - assets/nf-core-pairgenomealign_logo_light.png
-nf_core_version: 3.2.1
+nf_core_version: 3.3.2
 repository_type: pipeline
 template:
   author: charles-plessy
@@ -11,4 +11,4 @@ template:
   name: pairgenomealign
   org: nf-core
   outdir: .
-  version: 1.1.1
+  version: 2.2.0
