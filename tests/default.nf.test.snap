@@ -112,8 +112,8 @@
                 "targetGenome.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test1.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test2.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "contig_length_mqc.tsv:md5,0d36dc6de1b0665729136eba0b5e2bf2",
-                "gc_summary_mqc.tsv:md5,2a25c04c21df63bd8201dafdc0e97f26",
+                "contig_length_mqc.tsv:md5,851b7c50f78b040264f44762d0035110",
+                "gc_summary_mqc.tsv:md5,3d6f3875c87fb7c810bbeff004bea4ba",
                 "multiqc_base_content_summary_plot.txt:md5,34b6c2cfdbeea4d761b6b1361d95b1c8",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7",
@@ -125,6 +125,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-07-31T10:09:33.783791255"
+        "timestamp": "2025-07-31T10:41:58.488356662"
     }
 }
