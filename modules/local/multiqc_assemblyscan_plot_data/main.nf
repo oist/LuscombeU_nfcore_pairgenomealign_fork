@@ -31,7 +31,7 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     echo "#    title: 'Per-base percentage'" >> gc_summary_mqc.tsv
     echo "#    ylab: ''" >> gc_summary_mqc.tsv
     echo "id\tpercent A\tpercent C\tpercent G\tpercent T\tpercent N\tpercent non-ACGTN" >> gc_summary_mqc.tsv
-    for i in \$(echo ${json} | sort)
+    for i in ${json}
     do
         printf "\$(basename \$i .json)\t" >> gc_summary_mqc.tsv
         jq -r '[.contig_percent_a, .contig_percent_c, .contig_percent_g, .contig_percent_t, .contig_percent_n, .contig_non_acgtn] | @tsv' \$i >> gc_summary_mqc.tsv
@@ -47,7 +47,7 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     echo "#    title: 'Contigs length statistics'" >> contig_length_mqc.tsv
     echo "#    ylab: 'length'" >> contig_length_mqc.tsv
     echo "id\tTOTAL contig len.\tMin contig len.\tMAX contig len.\tTotal contigs\tContigs > 1k\tContigs > 10k" >> contig_length_mqc.tsv
-    for i in \$(echo ${json} | sort)
+    for i in ${json}
     do
         printf "\$(basename \$i .json)\t" >> contig_length_mqc.tsv
         jq -r '[.total_contig_length, .min_contig_length, .max_contig_length, .total_contig, .contigs_greater_1k, .contigs_greater_10k] | @tsv' \$i >> contig_length_mqc.tsv
