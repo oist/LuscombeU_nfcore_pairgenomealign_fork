@@ -11,4 +11,4 @@ template:
   name: pairgenomealign
   org: nf-core
   outdir: .
-  version: 2.2.0
+  version: 2.2.1dev

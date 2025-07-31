@@ -49,9 +49,11 @@ workflow PAIRGENOMEALIGN {
     if (! params.skip_assembly_qc ) {
         ASSEMBLYSCAN ( ch_samplesheet )
         ch_versions = ch_versions.mix(ASSEMBLYSCAN.out.versions)
-        MULTIQC_ASSEMBLYSCAN_PLOT_DATA (
-            ASSEMBLYSCAN.out.json.collect{it[1]}
-        )
+        assemblyscan_sorted_json_files = ASSEMBLYSCAN.out.json
+          .toSortedList { a, b -> a[0].id <=> b[0].id }
+          .map { sorted_list -> sorted_list.collect { it[1] } }
+        // Sorted intput is needed for stable MD5 output
+        MULTIQC_ASSEMBLYSCAN_PLOT_DATA ( assemblyscan_sorted_json_files )
         ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.tsv)
     }
 
