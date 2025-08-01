@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added missing pipeline and subworkflow test snapshots and stabilise line order in some output files ([#84](https://github.com/nf-core/pairgenomealign/pull/84)).
 - Update modules to latest version, thereby pulling an important fix for a race condition in `last/mafconvert` ([#87](https://github.com/nf-core/pairgenomealign/pull/87)), ([#88](https://github.com/nf-core/pairgenomealign/pull/88)).
 - Report `jq` version used in `MULTIQC_ASSEMBLYSCAN_PLOT_DATA` ([#81](https://github.com/nf-core/pairgenomealign/pull/81)).
+- Document module names in tube map ([#74](https://github.com/nf-core/pairgenomealign/pull/74)).
+- Add mising modules in tube map ([#68](https://github.com/nf-core/pairgenomealign/pull/68)).
+- Materialise output files in tube map ([#75](https://github.com/nf-core/pairgenomealign/pull/75)).
 
 ### `Dependencies`
 
