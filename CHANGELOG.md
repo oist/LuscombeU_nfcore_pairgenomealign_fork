@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Conforms to nf-core template version 3.3.2 ([#83](https://github.com/nf-core/pairgenomealign/pull/83)).
 - Added missing pipeline and subworkflow test snapshots and stabilise line order in some output files ([#84](https://github.com/nf-core/pairgenomealign/pull/84)).
+- Update modules to latest version, thereby pulling an important fix for a race condition in `last/mafconvert` ([#87](https://github.com/nf-core/pairgenomealign/pull/87)), ([#85](https://github.com/nf-core/pairgenomealign/pull/85)).
+
+### `Dependencies`
+
+| Dependency | Old version | New version |
+| ---------- | ----------- | ----------- |
+| `MultiQC`  | 1.28        | 1.30        |
 
 ## [v2.2.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.0) "Chagara ponzu" - [May 29th 2025]
 
