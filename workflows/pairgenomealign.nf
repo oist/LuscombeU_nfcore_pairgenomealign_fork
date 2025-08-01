@@ -55,6 +55,7 @@ workflow PAIRGENOMEALIGN {
         // Sorted intput is needed for stable MD5 output
         MULTIQC_ASSEMBLYSCAN_PLOT_DATA ( assemblyscan_sorted_json_files )
         ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.tsv)
+        ch_versions = ch_versions.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.versions)
     }
 
     // Prefix query ids with target genome name before producing alignment files

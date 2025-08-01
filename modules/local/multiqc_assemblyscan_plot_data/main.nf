@@ -15,6 +15,7 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
 
     output:
     path ("*_mqc.tsv"),  emit: tsv
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -52,5 +53,23 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
         printf "\$(basename \$i .json)\t" >> contig_length_mqc.tsv
         jq -r '[.total_contig_length, .min_contig_length, .max_contig_length, .total_contig, .contigs_greater_1k, .contigs_greater_10k] | @tsv' \$i >> contig_length_mqc.tsv
     done
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        jq: \$(jq --version 2>&1 | sed 's/jq-//')
+    END_VERSIONS
+    """
+
+    stub:
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    touch gc_summary_mqc.tsv
+    touch contig_length_mqc.tsv
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        jq: \$(jq --version 2>&1 | sed 's/jq-//')
+    END_VERSIONS
     """
 }
