@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
-- Conforms to nf-core template version 3.3.2 ([#83](https://github.com/nf-core/pairgenomealign/pull/83)).
+- Conforms to nf-core template version 3.3.2, hopefully fixing AWS tests ([#85](https://github.com/nf-core/pairgenomealign/pull/85)) ([#83](https://github.com/nf-core/pairgenomealign/pull/83)).
 - Added missing pipeline and subworkflow test snapshots and stabilise line order in some output files ([#84](https://github.com/nf-core/pairgenomealign/pull/84)).
-- Update modules to latest version, thereby pulling an important fix for a race condition in `last/mafconvert` ([#87](https://github.com/nf-core/pairgenomealign/pull/87)), ([#85](https://github.com/nf-core/pairgenomealign/pull/85)).
+- Update modules to latest version, thereby pulling an important fix for a race condition in `last/mafconvert` ([#87](https://github.com/nf-core/pairgenomealign/pull/87)), ([#88](https://github.com/nf-core/pairgenomealign/pull/88)).
 
 ### `Dependencies`
 
