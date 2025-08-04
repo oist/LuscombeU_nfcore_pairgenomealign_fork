@@ -7,8 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
-- Conforms to nf-core template version 3.3.2 ([#83](https://github.com/nf-core/pairgenomealign/pull/83)).
+- Conforms to nf-core template version 3.3.2, hopefully fixing AWS tests ([#85](https://github.com/nf-core/pairgenomealign/pull/85)) ([#83](https://github.com/nf-core/pairgenomealign/pull/83)).
 - Added missing pipeline and subworkflow test snapshots and stabilise line order in some output files ([#84](https://github.com/nf-core/pairgenomealign/pull/84)).
+- Update modules to latest version, thereby pulling an important fix for a race condition in `last/mafconvert` ([#87](https://github.com/nf-core/pairgenomealign/pull/87)), ([#88](https://github.com/nf-core/pairgenomealign/pull/88)).
+- Report `jq` version used in `MULTIQC_ASSEMBLYSCAN_PLOT_DATA` ([#81](https://github.com/nf-core/pairgenomealign/pull/81)).
+- Document module names in tube map ([#74](https://github.com/nf-core/pairgenomealign/pull/74)).
+- Add mising modules in tube map ([#68](https://github.com/nf-core/pairgenomealign/pull/68)).
+- Materialise output files in tube map ([#75](https://github.com/nf-core/pairgenomealign/pull/75)).
+
+### `Dependencies`
+
+| Dependency | Old version | New version |
+| ---------- | ----------- | ----------- |
+| `MultiQC`  | 1.28        | 1.30        |
 
 ## [v2.2.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.0) "Chagara ponzu" - [May 29th 2025]
 
