@@ -14,7 +14,7 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     path(json)
 
     output:
-    path ("*_mqc.tsv"),  emit: tsv
+    path ("*_mqc.tsv") ,  emit: tsv
     path "versions.yml", emit: versions
 
     when:
