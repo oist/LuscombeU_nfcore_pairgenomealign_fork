@@ -143,7 +143,7 @@ workflow PAIRALIGN_M2M {
     ALIGNMENT_SPLIT_O2O (
         ALIGNMENT_SPLIT_M2O.out.maf
     )
-    ch_versions = ch_versions.mix(ALIGNMENT_SPLIT_O2O_FLT.out.versions)
+    ch_versions = ch_versions.mix(ALIGNMENT_SPLIT_O2O.out.versions)
     if (! (params.skip_dotplot_o2o) ) {
         ALIGNMENT_DOTPLOT_O2O (
             ALIGNMENT_SPLIT_O2O.out.maf.join(ch_queries_bed),

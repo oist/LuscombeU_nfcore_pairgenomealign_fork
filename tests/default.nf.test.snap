@@ -1,0 +1,134 @@
+{
+    "-profile test": {
+        "content": [
+            20,
+            {
+                "ALIGNMENT_DOTPLOT_M2O": {
+                    "last": 1611
+                },
+                "ALIGNMENT_DOTPLOT_O2O": {
+                    "last": 1611
+                },
+                "ALIGNMENT_LASTAL_M2O": {
+                    "last": 1611
+                },
+                "ALIGNMENT_LASTDB": {
+                    "last": 1611
+                },
+                "ALIGNMENT_SPLIT_O2O": {
+                    "last": 1611
+                },
+                "ALIGNMENT_TRAIN": {
+                    "last": 1611
+                },
+                "ASSEMBLYSCAN": {
+                    "assemblyscan": "0.4.1"
+                },
+                "CUTN_TARGET": {
+                    "seqtk": "1.4-r122"
+                },
+                "MULTIQC_ASSEMBLYSCAN_PLOT_DATA": {
+                    "jq": "1.7.1"
+                },
+                "Workflow": {
+                    "nf-core/pairgenomealign": "v2.2.1"
+                }
+            },
+            [
+                "alignment",
+                "alignment/target___test1.m2o_plt.png",
+                "alignment/target___test1.o2o_aln.maf.gz",
+                "alignment/target___test1.o2o_aln.tsv",
+                "alignment/target___test1.o2o_plt.png",
+                "alignment/target___test1.sam.gz",
+                "alignment/target___test1.train",
+                "alignment/target___test1.train.tsv",
+                "alignment/target___test2.m2o_plt.png",
+                "alignment/target___test2.o2o_aln.maf.gz",
+                "alignment/target___test2.o2o_aln.tsv",
+                "alignment/target___test2.o2o_plt.png",
+                "alignment/target___test2.sam.gz",
+                "alignment/target___test2.train",
+                "alignment/target___test2.train.tsv",
+                "assemblyscan",
+                "assemblyscan/test1.json",
+                "assemblyscan/test2.json",
+                "cutn",
+                "cutn/targetGenome.bed",
+                "cutn/test1.bed",
+                "cutn/test2.bed",
+                "multiqc",
+                "multiqc/assemblyscan_plot_data",
+                "multiqc/assemblyscan_plot_data/contig_length_mqc.tsv",
+                "multiqc/assemblyscan_plot_data/gc_summary_mqc.tsv",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/BETA-multiqc.parquet",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_base_content_summary_plot.txt",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_contigs_length_statistics_plot.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_last_o2o.txt",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_data/multiqc_train.txt",
+                "multiqc/multiqc_plots",
+                "multiqc/multiqc_plots/pdf",
+                "multiqc/multiqc_plots/pdf/base_content_summary_plot-cnt.pdf",
+                "multiqc/multiqc_plots/pdf/base_content_summary_plot-pct.pdf",
+                "multiqc/multiqc_plots/pdf/contigs_length_statistics_plot.pdf",
+                "multiqc/multiqc_plots/pdf/last_o2o.pdf",
+                "multiqc/multiqc_plots/pdf/train.pdf",
+                "multiqc/multiqc_plots/png",
+                "multiqc/multiqc_plots/png/base_content_summary_plot-cnt.png",
+                "multiqc/multiqc_plots/png/base_content_summary_plot-pct.png",
+                "multiqc/multiqc_plots/png/contigs_length_statistics_plot.png",
+                "multiqc/multiqc_plots/png/last_o2o.png",
+                "multiqc/multiqc_plots/png/train.png",
+                "multiqc/multiqc_plots/svg",
+                "multiqc/multiqc_plots/svg/base_content_summary_plot-cnt.svg",
+                "multiqc/multiqc_plots/svg/base_content_summary_plot-pct.svg",
+                "multiqc/multiqc_plots/svg/contigs_length_statistics_plot.svg",
+                "multiqc/multiqc_plots/svg/last_o2o.svg",
+                "multiqc/multiqc_plots/svg/train.svg",
+                "multiqc/multiqc_report.html",
+                "pipeline_info",
+                "pipeline_info/nf_core_pairgenomealign_software_mqc_versions.yml"
+            ],
+            [
+                "target___test1.m2o_plt.png:md5,e724b83e019743759706e42d51ab987c",
+                "target___test1.o2o_aln.maf.gz:md5,a5bef93ad94cd32e62503bbb993e17cf",
+                "target___test1.o2o_aln.tsv:md5,19b18bcb79fbaff65967160566546216",
+                "target___test1.o2o_plt.png:md5,e724b83e019743759706e42d51ab987c",
+                "target___test1.sam.gz:md5,1e7ce899a96c522af7cd716dda2addff",
+                "target___test1.train:md5,0024bdd7f4129fcecebeddc9e844389c",
+                "target___test1.train.tsv:md5,d4ffa79ce19cc67164804b5dbc34b4c8",
+                "target___test2.m2o_plt.png:md5,9f969c075068688c8b0d8e45c902efef",
+                "target___test2.o2o_aln.maf.gz:md5,35f2b1fda59aec6a2e7b90bf93d9bd07",
+                "target___test2.o2o_aln.tsv:md5,bbdfc5bf501b41df1330b0e10e173529",
+                "target___test2.o2o_plt.png:md5,5692a7095b111d2470abe0951527f295",
+                "target___test2.sam.gz:md5,8dcdb07614097a2a55f7c3f717eda97e",
+                "target___test2.train:md5,276f08718454c0b7b016b96474055100",
+                "target___test2.train.tsv:md5,06491581f51dda4637ec441676841c48",
+                "test1.json:md5,9140e3d43f2d676f62e1325ace5dd8bd",
+                "test2.json:md5,32d34d97e75fd3444cf1f9588070b5df",
+                "targetGenome.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "test1.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "test2.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "contig_length_mqc.tsv:md5,851b7c50f78b040264f44762d0035110",
+                "gc_summary_mqc.tsv:md5,3d6f3875c87fb7c810bbeff004bea4ba",
+                "multiqc_base_content_summary_plot.txt:md5,34b6c2cfdbeea4d761b6b1361d95b1c8",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7",
+                "multiqc_last_o2o.txt:md5,f101fe8063599dfa30ff286403209853",
+                "multiqc_train.txt:md5,29c3f1f223d94d90df2068199fe617ba"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-08-05T09:27:55.405056507"
+    }
+}

@@ -19,7 +19,7 @@ workflow FASTA_BGZIP_INDEX_DICT_SAMTOOLS {
     ch_versions = ch_versions.mix(SAMTOOLS_FAIDX.out.versions)
 
     SAMTOOLS_DICT  ( SAMTOOLS_BGZIP.out.fasta )
-    ch_versions = ch_versions.mix(SAMTOOLS_DICT .out.versions)
+    ch_versions = ch_versions.mix(SAMTOOLS_DICT.out.versions)
 
     emit:
     fasta_gz = SAMTOOLS_BGZIP.out.fasta        // channel: [ val(meta),  fasta.gz ]
@@ -29,4 +29,3 @@ workflow FASTA_BGZIP_INDEX_DICT_SAMTOOLS {
 
     versions = ch_versions                     // channel: [ versions.yml ]
 }
-
