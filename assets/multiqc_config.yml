@@ -53,6 +53,18 @@ custom_data:
       id:
         title: "ID"
         description: "target__query"
+      TargetSequences:
+        title: "Target sequences"
+        description: "Number of sequences in the target genome"
+      TargetLength:
+        title: "Target length"
+        description: "Total length of the target genome"
+      QuerySequences:
+        title: "Query sequences"
+        description: "Number of sequences in the query genome"
+      QueryLength:
+        title: "Query length"
+        description: "Total length of the query genome"
       TotalAlignmentLength:
         title: "Total alignment length"
       PercentIdentity:
