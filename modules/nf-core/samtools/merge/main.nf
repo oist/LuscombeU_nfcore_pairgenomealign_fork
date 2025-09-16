@@ -30,6 +30,10 @@ process SAMTOOLS_MERGE {
     def file_type = input_files instanceof List ? input_files[0].getExtension() : input_files.getExtension()
     def reference = fasta ? "--reference ${fasta}" : ""
     """
+    # Note: To prevent relative reference path be replaced with absolute path, we disable cache and EBI querying.
+    # This will not be needed in after htslib > 1.21 is released, see https://github.com/samtools/htslib/pull/1881
+    export REF_CACHE='.'
+    export REF_PATH='.'
     samtools \\
         merge \\
         --threads ${task.cpus-1} \\
