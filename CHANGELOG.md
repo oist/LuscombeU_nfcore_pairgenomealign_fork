@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - GFF export with genome information
  - Genome lengths and chromosome numbers reported
  - 20h * attempts for samtools merge
+ - `process_medium` for `last/split`
 
 The rest should be similar to v2.2.1.
 
