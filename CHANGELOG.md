@@ -3,6 +3,23 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.3.0dev](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.1) "tbd" - [tbd]
+
+### `Added`
+
+- The alignment modules now report the length and number of sequences of the _target_ and _query_ genomes.
+- The GFF files now report the length of each _target_ sequences in their header.
+- Resource usage of the `last/split` module was revised from _high_ to _medium_ following benchmarks on vertebrate genomes.
+
+### `Dependencies`
+
+| Dependency       | Old version | New version |
+| ---------------- | ----------- | ----------- |
+| `MultiQC`        | 1.30        | 1.31        |
+| `SAMTOOLS_BGZIP` | 1.21        | 1.22.1      |
+| `SAMTOOLS_DICT`  | 1.21        | 1.22.1      |
+| `SAMTOOLS_FAIDX` | 1.21        | 1.22.1      |
+
 ## [v2.2.1](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.1) "C’est quoi ça?" - [August 5th 2025]
 
 ### `Fixed`
