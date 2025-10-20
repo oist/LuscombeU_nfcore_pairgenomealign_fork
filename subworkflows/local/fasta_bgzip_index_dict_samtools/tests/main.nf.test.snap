@@ -1,0 +1,95 @@
+{
+    "sarscov2 - fasta": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz:md5,6e9fe4042a72f2345f644f239272b7e6"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz.fai:md5,9da2a56e2853dc8c0b86a9e7229c9fe5"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz.gzi:md5,7dea362b3fac8e00956a4952a3d4f474"
+                    ]
+                ],
+                "3": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz.dict:md5,f953d89119d6d0ae5ceab0c81aac83f6"
+                    ]
+                ],
+                "4": [
+                    "versions.yml:md5,2eaf0c4b36636d3321599dcff1b2c0ea",
+                    "versions.yml:md5,3a95ae193360da51d01e9cfccdbfc74a",
+                    "versions.yml:md5,69ccb03f4e3fda6002d3faca55426d2a"
+                ],
+                "dict": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz.dict:md5,f953d89119d6d0ae5ceab0c81aac83f6"
+                    ]
+                ],
+                "fai": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz.fai:md5,9da2a56e2853dc8c0b86a9e7229c9fe5"
+                    ]
+                ],
+                "fasta_gz": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz:md5,6e9fe4042a72f2345f644f239272b7e6"
+                    ]
+                ],
+                "gzi": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.fasta.gz.gzi:md5,7dea362b3fac8e00956a4952a3d4f474"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,2eaf0c4b36636d3321599dcff1b2c0ea",
+                    "versions.yml:md5,3a95ae193360da51d01e9cfccdbfc74a",
+                    "versions.yml:md5,69ccb03f4e3fda6002d3faca55426d2a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-07-31T09:54:00.831095632"
+    }
+}
