@@ -1,7 +1,6 @@
 {
     "-profile test": {
         "content": [
-            20,
             {
                 "ALIGNMENT_DOTPLOT_M2O": {
                     "last": 1611
@@ -62,9 +61,9 @@
                 "multiqc/assemblyscan_plot_data/contig_length_mqc.tsv",
                 "multiqc/assemblyscan_plot_data/gc_summary_mqc.tsv",
                 "multiqc/multiqc_data",
-                "multiqc/multiqc_data/BETA-multiqc.parquet",
                 "multiqc/multiqc_data/llms-full.txt",
                 "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
                 "multiqc/multiqc_data/multiqc_base_content_summary_plot.txt",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_contigs_length_statistics_plot.txt",
@@ -127,8 +126,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
+            "nextflow": "25.04.8"
         },
-        "timestamp": "2025-08-05T09:27:55.405056507"
+        "timestamp": "2025-10-20T15:46:06.81523499"
     }
 }
