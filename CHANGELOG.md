@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Milestone 2.3beta5
 
  - Apply the fix on last/train to pick the correct substitution_percent_identity.
+ - Compute base alignment matrix and save it in a file.
 
 ## Milestone 2.3beta2
 

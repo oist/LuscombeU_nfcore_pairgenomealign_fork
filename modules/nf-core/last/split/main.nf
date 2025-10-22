@@ -13,6 +13,7 @@ process LAST_SPLIT {
     output:
     tuple val(meta), path("*.maf.gz"), emit: maf
     tuple val(meta), path("*.tsv")   , emit: multiqc
+    tuple val(meta), path("*.matrix.txt")   , emit: matrix
     path "versions.yml"              , emit: versions
 
     when:
@@ -77,6 +78,7 @@ process LAST_SPLIT {
         last-split $args |
         tee >(get_genome_stats > ${prefix}.genomestats.txt) |
         tee >(gzip --no-name   > ${prefix}.maf.gz) |
+        tee >(maf-convert5.py matrix > ${prefix}.matrix.txt)|
         maf-convert psl |
         calculate_psl_metrics  > ${prefix}.alignmentstats.txt
 
