@@ -4,8 +4,8 @@ process LAST_DOTPLOT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
-        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/38/386dbe9821e6f2eebd5bcc67b3c82e2b730135c51bb565bae6511b24aba17e56/data'
+        : 'community.wave.seqera.io/library/last_open-fonts:b8d1af8fd12256e2'}"
 
     input:
     tuple val(meta), path(maf), path(annot_b)
@@ -16,7 +16,8 @@ process LAST_DOTPLOT {
     output:
     tuple val(meta), path("*.gif"), optional:true, emit: gif
     tuple val(meta), path("*.png"), optional:true, emit: png
-    path "versions.yml"                          , emit: versions
+    // last-dotplot has no --version option so let's use lastal from the same suite
+    tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -39,12 +40,6 @@ process LAST_DOTPLOT {
         $annot_b_arg \\
         - \\
         $prefix.$format
-
-    # last-dotplot has no --version option so let's use lastal from the same suite
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        last: \$(lastal --version | sed 's/lastal //')
-    END_VERSIONS
     """
 
     stub:
@@ -52,12 +47,6 @@ process LAST_DOTPLOT {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch $prefix.$format
-
-    # last-dotplot has no --version option so let's use lastal from the same suite
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        last: \$(lastal --version | sed 's/lastal //')
-    END_VERSIONS
     """
 
 }

@@ -4,8 +4,8 @@ process LAST_MAFCONVERT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
-        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0b/0b03259f4457e393e47dfd87ea744afea462bd8614b14867e6b3640ae760f41f/data'
+        : 'community.wave.seqera.io/library/last_samtools:a6d74d4fe63f646a'}"
 
     input:
     tuple val(meta), path(maf), val(format)
@@ -27,7 +27,8 @@ process LAST_MAFCONVERT {
     tuple val(meta), path("*.psl.gz"),             optional:true, emit: psl_gz
     tuple val(meta), path("*.sam.gz"),             optional:true, emit: sam_gz
     tuple val(meta), path("*.tab.gz"),             optional:true, emit: tab_gz
-    path "versions.yml"                                         , emit: versions
+    // last-dotplot has no --version option so let's use lastal from the same suite
+    tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -38,13 +39,36 @@ process LAST_MAFCONVERT {
     """
     set -o pipefail
 
+    dict2gff3() { awk '
+        BEGIN {
+            print "##gff-version 3"
+        }
+        \$1 == "@SQ" {
+            seq_name   = ""
+            seq_length = ""
+            for (i = 1; i <= NF; i++) {
+                if      (\$i ~ /^SN:/) seq_name   = substr(\$i, 4)
+                else if (\$i ~ /^LN:/) seq_length = substr(\$i, 4)
+            }
+            if (seq_name != "" && seq_length != "") {
+                printf "##sequence-region %s 1 %s\\n", seq_name, seq_length
+            }
+        }' "\${1:-/dev/stdin}"
+    }
+
     if [ -f "$dict" ]; then
         DICT_ARGS="-f ${dict}"
+        [ "$format" = "gff" ] && dict2gff3 ${dict}          > "${prefix}.head.gff"
     else
         DICT_ARGS="-d"
+        [ "$format" = "gff" ] && printf "##gff-version 3\\n" > "${prefix}.head.gff"
     fi
 
     case $format in
+        gff)
+            cat "${prefix}.head.gff" <(maf-convert $args -n gff $maf) |
+                gzip --no-name > ${prefix}.gff.gz
+            ;;
         sam)
             maf-convert $args \$DICT_ARGS sam $maf -r 'ID:${meta.id} SM:${meta.id}' |
                 samtools sort -O sam |
@@ -61,21 +85,15 @@ process LAST_MAFCONVERT {
             # This will not be needed in after htslib > 1.21 is released, see https://github.com/samtools/htslib/pull/1881
             export REF_CACHE='.'
             export REF_PATH='.'
+            # Note 4: CRAM version 3.0 is enforced until htsjdk, and therefore nf-test, supports 3.1
             maf-convert $args \$DICT_ARGS sam $maf -r 'ID:${meta.id} SM:${meta.id}' |
-                samtools sort -O cram -o ${prefix}.cram
+                samtools sort -O cram,version=3.0 -o ${prefix}.cram
             ;;
         *)
             maf-convert $args $format $maf |
                 gzip --no-name > ${prefix}.${format}.gz
             ;;
     esac
-
-    # maf-convert has no --version option but lastdb (part of the same package) has.
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        last: \$(lastdb --version 2>&1 | sed 's/lastdb //')
-        samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
-    END_VERSIONS
     """
 
     stub:
@@ -93,12 +111,5 @@ process LAST_MAFCONVERT {
             echo stub | gzip --no-name > ${prefix}.${format}.gz
             ;;
     esac
-
-    # maf-convert has no --version option but lastdb (part of the same package) has.
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        last: \$(lastdb --version 2>&1 | sed 's/lastdb //')
-        samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
-    END_VERSIONS
     """
 }
