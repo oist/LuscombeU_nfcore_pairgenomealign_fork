@@ -9,8 +9,6 @@ workflow FASTA_BGZIP_INDEX_DICT_SAMTOOLS {
 
     main:
 
-    ch_versions = Channel.empty()
-
     // Guarantee BGZIP compression
     SAMTOOLS_BGZIP ( ch_fasta )
 
@@ -23,6 +21,4 @@ workflow FASTA_BGZIP_INDEX_DICT_SAMTOOLS {
     fai      = SAMTOOLS_FAIDX.out.fai          // channel: [ val(meta),  fai ]
     gzi      = SAMTOOLS_FAIDX.out.gzi          // channel: [ val(meta),  gzi ]
     dict     = SAMTOOLS_DICT .out.dict         // channel: [ val(meta),  dict ]
-
-    versions = ch_versions                     // channel: [ versions.yml ]
 }

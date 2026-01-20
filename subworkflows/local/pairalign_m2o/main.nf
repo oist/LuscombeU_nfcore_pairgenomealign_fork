@@ -29,8 +29,6 @@ workflow PAIRALIGN_M2O {
 
     main:
 
-    ch_versions = Channel.empty()
-
     // Index the target genome
     //
     ALIGNMENT_LASTDB (
@@ -109,9 +107,7 @@ workflow PAIRALIGN_M2O {
         .mix(ALIGNMENT_SPLIT_O2O.out.multiqc.collect{ it[1]} )
     m2o = ALIGNMENT_LASTAL_M2O.out.maf
     o2o = ALIGNMENT_SPLIT_O2O.out.maf
-    versions = ch_versions                     // channel: [ versions.yml ]
-}
-
+    }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     THE END

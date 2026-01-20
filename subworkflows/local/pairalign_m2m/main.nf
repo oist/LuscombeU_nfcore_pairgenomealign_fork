@@ -35,8 +35,6 @@ workflow PAIRALIGN_M2M {
 
     main:
 
-    ch_versions = Channel.empty()
-
     // Index the target genome
     //
     ALIGNMENT_LASTDB (
@@ -158,7 +156,6 @@ workflow PAIRALIGN_M2M {
     m2o = ALIGNMENT_SPLIT_M2O.out.maf
     o2m = ALIGNMENT_SPLIT_O2M.out.maf
     o2o = ALIGNMENT_SPLIT_O2O.out.maf
-    versions = ch_versions                     // channel: [ versions.yml ]
 }
 
 /*

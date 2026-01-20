@@ -111,9 +111,6 @@ workflow PAIRGENOMEALIGN {
         )
     }
 
-    ch_versions = ch_versions
-        .mix(   pairalign_out.versions)
-
     // Collate and save software versions
     //
     def topic_versions = Channel.topic("versions")
