@@ -55,6 +55,6 @@ output:
         Channel containing one-to-one alignment in MAF format
         Structure: [meta, maf]
 authors:
-  - "@nf-core/pairgenomealign"
+  - "@charles-plessy"
 maintainers:
-  - "@nf-core/pairgenomealign"
+  - "@charles-plessy"
