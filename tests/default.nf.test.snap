@@ -104,14 +104,14 @@
                 "target___test1.o2o_aln.tsv:md5,0400eb0d527a2e69d0ceaeff6e1e072c",
                 "target___test1.o2o_plt.png:md5,e724b83e019743759706e42d51ab987c",
                 "target___test1.sam.gz:md5,1e7ce899a96c522af7cd716dda2addff",
-                "target___test1.train:md5,553b396397bd06ee18dacd6e39210b49",
+                "target___test1.train:md5,0024bdd7f4129fcecebeddc9e844389c",
                 "target___test1.train.tsv:md5,ffa807400265316cdf91de75286c1ac0",
                 "target___test2.m2o_plt.png:md5,9f969c075068688c8b0d8e45c902efef",
                 "target___test2.o2o_aln.maf.gz:md5,35f2b1fda59aec6a2e7b90bf93d9bd07",
                 "target___test2.o2o_aln.tsv:md5,6f0563aabaae562a5e38bb2e89fb2f79",
                 "target___test2.o2o_plt.png:md5,5692a7095b111d2470abe0951527f295",
                 "target___test2.sam.gz:md5,8dcdb07614097a2a55f7c3f717eda97e",
-                "target___test2.train:md5,a86c2cc75e540d0ad2a1417fe78bd483",
+                "target___test2.train:md5,276f08718454c0b7b016b96474055100",
                 "target___test2.train.tsv:md5,4d054581c85f745f4e21e0c436bcb6a6",
                 "test1.json:md5,bcef4e2bf296339c1ca7c513b483de96",
                 "test2.json:md5,3af6c8a55ed7c1cfeaa5bd8e8a336244",
@@ -131,6 +131,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-01-20T18:08:22.087868352"
+        "timestamp": "2026-01-21T10:53:14.857164657"
     }
 }
