@@ -33,7 +33,7 @@
                     "seqtk": "1.4-r122"
                 },
                 "Workflow": {
-                    "nf-core/pairgenomealign": "v2.2.2dev"
+                    "nf-core/pairgenomealign": "v2.2.2"
                 }
             },
             [
@@ -131,6 +131,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-01-21T10:53:14.857164657"
+        "timestamp": "2026-01-22T12:01:54.344233947"
     }
 }
