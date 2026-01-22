@@ -21,38 +21,38 @@ input:
   - ch_target:
       type: channel
       description: |
-        Channel containing the target genome file
+        The target genome file
         Structure: [meta, fasta]
   - ch_queries:
       type: channel
       description: |
-        Channel containing query genome sequences from samplesheet
+        Query genome sequences from samplesheet
         Structure: [meta, fasta]
   - ch_target_bed:
       type: channel
       description: |
-        Channel containing BED file with positions of poly-N stretches in target genome
+        BED file with positions of poly-N stretches in target genome
         Structure: [meta, bed]
   - ch_queries_bed:
       type: channel
       description: |
-        Channel containing BED files with positions of poly-N stretches in query genomes
+        BED files with positions of poly-N stretches in query genomes
         Structure: [meta, bed]
 output:
   - multiqc:
       type: channel
       description: |
-        Channel containing MultiQC compatible files from training and split operations
+        MultiQC compatible files from training and split operations
         Structure: [file]
   - m2o:
       type: channel
       description: |
-        Channel containing many-to-one alignment in MAF format
+        Many-to-one alignment in MAF format
         Structure: [meta, maf]
   - o2o:
       type: channel
       description: |
-        Channel containing one-to-one alignment in MAF format
+        One-to-one alignment in MAF format
         Structure: [meta, maf]
 authors:
   - "@charles-plessy"
