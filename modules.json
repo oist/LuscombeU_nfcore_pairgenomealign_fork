@@ -12,7 +12,7 @@
                     },
                     "last/dotplot": {
                         "branch": "master",
-                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "git_sha": "1f966905b442fa623130663471eac3b9c5d35527",
                         "installed_by": ["modules"]
                     },
                     "last/lastal": {
@@ -27,7 +27,7 @@
                     },
                     "last/mafconvert": {
                         "branch": "master",
-                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "git_sha": "1f966905b442fa623130663471eac3b9c5d35527",
                         "installed_by": ["modules"]
                     },
                     "last/split": {
