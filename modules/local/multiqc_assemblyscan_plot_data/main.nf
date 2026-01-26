@@ -15,7 +15,8 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
 
     output:
     path ("*_mqc.tsv") ,  emit: tsv
-    path "versions.yml", emit: versions
+    // multi-qc has no --version option so let's use lastal from the same suite
+    tuple val("${task.process}"), val('jq'), eval("jq --version 2>&1 | sed 's/jq-//'"), emit: versions_jq, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
