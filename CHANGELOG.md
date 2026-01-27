@@ -3,6 +3,25 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.2](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.2) "Juicy" - [January 26th 2026]
+
+### `Fixed`
+
+- Conforms to nf-core template version `3.5.1` (https://nf-co.re/blog/2025/tools-3_5_0)[#95](https://github.com/nf-core/pairgenomealign/issues/95)[#98](https://github.com/nf-core/pairgenomealign/issues/98).
+- Fixed nf-core logo ([#90](https://github.com/nf-core/pairgenomealign/issues/90)).
+- Adjusted process requirements to `test_full` case ([#61](https://github.com/nf-core/pairgenomealign/issues/61)).
+- Set an icon in the `--targetName` option in the documentation ([#92](https://github.com/nf-core/pairgenomealign/issues/92)).
+- Fixed a bug of `last/train` records the wrong value for percent identity ([#96](https://github.com/nf-core/pairgenomealign/issues/96)).
+- Merged output channels in `last/dotplot` ([#100](https://github.com/nf-core/pairgenomealign/issues/100))
+- Created missing `meta.yml` for subworkflows ([#101](https://github.com/nf-core/pairgenomealign/issues/101)).
+
+### `Dependencies`
+
+| Dependency     | Old version | New version |
+| -------------- | ----------- | ----------- |
+| `assemblyscan` | 0.4.1       | 1.0.0       |
+| `MultiQC`      | 1.30        | 1.33        |
+
 ## [v2.2.1](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.1) "C’est quoi ça?" - [August 5th 2025]
 
 ### `Fixed`

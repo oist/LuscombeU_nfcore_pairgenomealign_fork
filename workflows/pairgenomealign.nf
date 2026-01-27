@@ -48,14 +48,12 @@ workflow PAIRGENOMEALIGN {
     //
     if (! params.skip_assembly_qc ) {
         ASSEMBLYSCAN ( ch_samplesheet )
-        ch_versions = ch_versions.mix(ASSEMBLYSCAN.out.versions)
-        assemblyscan_sorted_json_files = ASSEMBLYSCAN.out.json
+        assemblyscan_sorted_json_files = ASSEMBLYSCAN.out.report
           .toSortedList { a, b -> a[0].id <=> b[0].id }
           .map { sorted_list -> sorted_list.collect { it[1] } }
         // Sorted intput is needed for stable MD5 output
         MULTIQC_ASSEMBLYSCAN_PLOT_DATA ( assemblyscan_sorted_json_files )
         ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.tsv)
-        ch_versions = ch_versions.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.versions)
     }
 
     // Prefix query ids with target genome name before producing alignment files
@@ -101,7 +99,6 @@ workflow PAIRGENOMEALIGN {
         ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
         ch_targetgenome_gzi = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.gzi
         ch_targetgenome_dic = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.dict
-        ch_versions = ch_versions.mix(FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.versions)
     }
 
     if (!(params.export_aln_to == "no_export")) {
@@ -113,10 +110,6 @@ workflow PAIRGENOMEALIGN {
             ch_targetgenome_dic
         )
     }
-
-    ch_versions = ch_versions
-        .mix( CUTN_TARGET.out.versions)
-        .mix(   pairalign_out.versions)
 
     // Collate and save software versions
     //
