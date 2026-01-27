@@ -32,6 +32,9 @@
                 "CUTN_TARGET": {
                     "seqtk": "1.4-r122"
                 },
+                "MULTIQC_ASSEMBLYSCAN_PLOT_DATA": {
+                    "jq": "1.7.1"
+                },
                 "Workflow": {
                     "nf-core/pairgenomealign": "v2.2.2"
                 }
@@ -129,8 +132,8 @@
         ],
         "meta": {
             "nf-test": "0.9.3",
-            "nextflow": "25.10.2"
+            "nextflow": "25.10.3"
         },
-        "timestamp": "2026-01-22T12:01:54.344233947"
+        "timestamp": "2026-01-26T21:38:53.205556283"
     }
 }
