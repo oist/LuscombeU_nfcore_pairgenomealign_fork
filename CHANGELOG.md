@@ -5,19 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Milestone 2.3beta5
 
- - Apply the fix on last/train to pick the correct substitution_percent_identity.
- - Compute base alignment matrix and save it in a file.
+ - Compute base alignment matrix and save it in a file. (https://github.com/nf-core/pairgenomealign/issues/102)
 
 ## Milestone 2.3beta2
 
- - Merged CRAM output
- - Symmetric scoring matrix
- - GFF export with genome information
+ - Merged CRAM output (https://github.com/nf-core/pairgenomealign/issues/60)
+ - Symmetric scoring matrix (https://github.com/nf-core/pairgenomealign/issues/91)
+ - GFF export with genome information (https://github.com/nf-core/pairgenomealign/issues/70)
  - Genome lengths and chromosome numbers reported
  - 20h * attempts for samtools merge
- - `process_medium` for `last/split`
 
-The rest should be similar to v2.2.1.
+The rest should be similar to v2.2.2.
 
 ## [v2.2.1](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.1) "C’est quoi ça?" - [August 5th 2025]
 
