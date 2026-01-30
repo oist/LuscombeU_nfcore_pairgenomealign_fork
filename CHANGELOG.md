@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.2.2](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.2) "Juicy" - [January 26th 2026]
+## [v2.2.2](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.2) "Juicy" - [January 30th 2026]
 
 ### `Fixed`
 
@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug of `last/train` records the wrong value for percent identity ([#96](https://github.com/nf-core/pairgenomealign/issues/96)).
 - Merged output channels in `last/dotplot` ([#100](https://github.com/nf-core/pairgenomealign/issues/100))
 - Created missing `meta.yml` for subworkflows ([#101](https://github.com/nf-core/pairgenomealign/issues/101)).
+- Exclude PNG files from pipeline test, because not reproducible in conda.
 
 ### `Dependencies`
 
