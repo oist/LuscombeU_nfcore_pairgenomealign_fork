@@ -12,7 +12,7 @@
                     },
                     "last/dotplot": {
                         "branch": "master",
-                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "git_sha": "1f966905b442fa623130663471eac3b9c5d35527",
                         "installed_by": ["modules"]
                     },
                     "last/lastal": {
@@ -27,7 +27,7 @@
                     },
                     "last/mafconvert": {
                         "branch": "master",
-                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "git_sha": "1f966905b442fa623130663471eac3b9c5d35527",
                         "installed_by": ["modules"]
                     },
                     "last/split": {
@@ -76,12 +76,12 @@
                     },
                     "utils_nfcore_pipeline": {
                         "branch": "master",
-                        "git_sha": "271e7fc14eb1320364416d996fb077421f3faed2",
+                        "git_sha": "65f5e638d901a51534c68fd5c1c19e8112fb4df1",
                         "installed_by": ["subworkflows"]
                     },
                     "utils_nfschema_plugin": {
                         "branch": "master",
-                        "git_sha": "4b406a74dc0449c0401ed87d5bfff4252fd277fd",
+                        "git_sha": "fdc08b8b1ae74f56686ce21f7ea11ad11990ce57",
                         "installed_by": ["subworkflows"]
                     }
                 }

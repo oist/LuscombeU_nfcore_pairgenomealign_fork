@@ -43,12 +43,27 @@ output:
         Channel containing sequence dictionary files
         Structure: [ val(meta), path(dict) ]
       pattern: "*.dict"
-  - versions:
-      type: file
-      description: |
-        File containing software versions
-        Structure: [ path(versions.yml) ]
-      pattern: "versions.yml"
+  - versions_samtools:
+      - - "${task.process}":
+            type: string
+            description: The name of the process
+        - samtools:
+            type: string
+            description: The name of the tool
+        - "samtools --version | head -n 1 | sed 's/^.*samtools //'":
+            type: eval
+            description: The expression to obtain the version of the tool
+topics:
+  versions:
+    - - "${task.process}":
+          type: string
+          description: The name of the process
+      - samtools:
+          type: string
+          description: The name of the tool
+      - "samtools --version | head -n 1 | sed 's/^.*samtools //'":
+          type: eval
+          description: The expression to obtain the version of the tool
 authors:
   - "@charles-plessy"
 maintainers:
