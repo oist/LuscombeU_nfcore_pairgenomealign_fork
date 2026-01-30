@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
-- Conforms to nf-core template version `3.5.1` (https://nf-co.re/blog/2025/tools-3_5_0)[#95](https://github.com/nf-core/pairgenomealign/issues/95)[#98](https://github.com/nf-core/pairgenomealign/issues/98).
+- Conforms to [nf-core template version `3.5.1`](https://nf-co.re/blog/2025/tools-3_5_0) ([#95](https://github.com/nf-core/pairgenomealign/issues/95), [#98](https://github.com/nf-core/pairgenomealign/issues/98)).
 - Fixed nf-core logo ([#90](https://github.com/nf-core/pairgenomealign/issues/90)).
 - Adjusted process requirements to `test_full` case ([#61](https://github.com/nf-core/pairgenomealign/issues/61)).
 - Set an icon in the `--targetName` option in the documentation ([#92](https://github.com/nf-core/pairgenomealign/issues/92)).
