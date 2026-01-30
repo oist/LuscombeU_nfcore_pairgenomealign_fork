@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a bug of `last/train` records the wrong value for percent identity ([#96](https://github.com/nf-core/pairgenomealign/issues/96)).
 - Merged output channels in `last/dotplot` ([#100](https://github.com/nf-core/pairgenomealign/issues/100))
 - Created missing `meta.yml` for subworkflows ([#101](https://github.com/nf-core/pairgenomealign/issues/101)).
-- Exclude PNG files from pipeline test, because not reproducible in conda. 
+- Exclude PNG files from pipeline test, because not reproducible in conda.
 
 ### `Dependencies`
 
