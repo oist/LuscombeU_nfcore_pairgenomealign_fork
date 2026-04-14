@@ -55,8 +55,7 @@ The parameters are described in details in the [online documentation](https://nf
 [LAST cookbook]: https://gitlab.com/mcfrith/last/-/blob/main/doc/last-cookbook.rst
 [LAST tuning]: https://gitlab.com/mcfrith/last/-/blob/main/doc/last-tuning.rst
 
-
-- The pipeline uses `lastal --split` by default unless `--m2m` is enabled. With `--split`, LAST directly computes a _many‑to‑one_ (m2o) alignment during alignment, rather than generating a full _many‑to‑many_ (m2m) alignment first. In this mode, the m2m and one‑to‑many (o2m) alignment outputs are not generated, which significantly reduces disk usage and post‑processing overhead. In LAST, the progression m2m → m2o → o2o corresponds to the classical notion of chaining, but is formulated as a single global optimisation problem rather than a post‑hoc chaining step. See the [`last-split` documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst)
+- The pipeline uses `lastal --split` by default unless `--m2m` is enabled. With `--split`, LAST directly computes a _many‑to‑one_ (m2o) alignment during alignment, rather than generating a full _many‑to‑many_ (m2m) alignment first, which significantly reduces disk usage and post‑processing overhead. In LAST, the progression m2m → m2o → o2o corresponds to the classical notion of chaining, but is formulated as a single global optimisation problem rather than a post‑hoc chaining step. See the [`last-split` documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst)
 - The `last-train` commands runs with `--revsym` as the DNA strands play equivalent roles in the studied genomes.
 
 ## Running the pipeline
