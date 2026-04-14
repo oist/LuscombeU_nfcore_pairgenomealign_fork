@@ -21,7 +21,11 @@
 
 ## Introduction
 
-**nf-core/pairgenomealign** is a reproducible pipeline for pairwise whole‑genome alignment built on the LAST toolchain. It aligns one or more _query_ genomes to a _target_ genome using adaptive seeding, trained scoring parameters, and global‑score optimisation (chaining). The pipeline supports both closely and distantly related genomes by allowing users to tune the target index seeding to trade off speed and memory usage against alignment sensitivity and specificity. Other alignment parameters are automatically inferred by LAST, reducing the need for manual tuning. Alignments can be reported unfiltered (e.g. for self‑alignments, duplication analyses, or repeat exploration) or reduced to a best global one‑to‑one set (e.g. for synteny analyses). Output is provided in coordinate‑only formats (PSL, GFF) or full alignment formats (MAF, SAM/BAM/CRAM), together with pairwise dot‑plot-style visualisations for rapid inspection.
+**nf-core/pairgenomealign** is a reproducible pipeline for pairwise whole‑genome alignment built on the LAST toolchain. It aligns one or more _query_ genomes to a _target_ genome using adaptive seeding, trained scoring parameters, and global‑score optimisation (chaining).
+
+The pipeline supports both closely and distantly related genomes by allowing users to tune the target index seeding to trade off speed and memory usage against alignment sensitivity and specificity. Other alignment parameters are automatically inferred by LAST, reducing the need for manual tuning.
+
+Alignments can be reported unfiltered (e.g. for self‑alignments, duplication analyses, or repeat exploration) or reduced to a best global one‑to‑one set (e.g. for synteny analyses). Output is provided in coordinate‑only formats (PSL, GFF) or full alignment formats (MAF, SAM/BAM/CRAM), together with pairwise dot‑plot-style visualisations for rapid inspection.
 
 ![Tubemap workflow summary](docs/images/pairgenomealign-tubemap.png "Tubemap workflow summary")
 
