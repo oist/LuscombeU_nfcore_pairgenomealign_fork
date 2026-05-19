@@ -5,14 +5,65 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
-                    "fastqc": {
+                    "assemblyscan": {
                         "branch": "master",
-                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "git_sha": "947e154c66b92eb041baca20d14d1d9ab0b47182",
+                        "installed_by": ["modules"]
+                    },
+                    "last/dotplot": {
+                        "branch": "master",
+                        "git_sha": "1f966905b442fa623130663471eac3b9c5d35527",
+                        "installed_by": ["modules"]
+                    },
+                    "last/lastal": {
+                        "branch": "master",
+                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "installed_by": ["modules"]
+                    },
+                    "last/lastdb": {
+                        "branch": "master",
+                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "installed_by": ["modules"]
+                    },
+                    "last/mafconvert": {
+                        "branch": "master",
+                        "git_sha": "1f966905b442fa623130663471eac3b9c5d35527",
+                        "installed_by": ["modules"]
+                    },
+                    "last/split": {
+                        "branch": "master",
+                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
+                        "installed_by": ["modules"]
+                    },
+                    "last/train": {
+                        "branch": "master",
+                        "git_sha": "d92ad4055433d66d3e3eb4fd8d729d6ae9f75693",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "008f9d3e61209bf995edac3ba531f54e269e1215",
+                        "git_sha": "80cba9452fb1e9bb79884976fa1ca0e671949aa2",
+                        "installed_by": ["modules"]
+                    },
+                    "samtools/bgzip": {
+                        "branch": "master",
+                        "git_sha": "0d265a14027515eaa36a9d3a931655b918781145",
+                        "installed_by": ["modules"]
+                    },
+                    "samtools/dict": {
+                        "branch": "master",
+                        "git_sha": "9a48bce39a67e2cb34b8f125fc1d50f0ad98b616",
+                        "installed_by": ["modules"]
+                    },
+                    "samtools/faidx": {
+                        "branch": "master",
+                        "git_sha": "9a48bce39a67e2cb34b8f125fc1d50f0ad98b616",
+                        "installed_by": ["modules"]
+                    },
+                    "seqtk/cutn": {
+                        "branch": "master",
+                        "git_sha": "a46713779030a5f508117080cbf4b693dd4c6e33",
                         "installed_by": ["modules"]
                     }
                 }

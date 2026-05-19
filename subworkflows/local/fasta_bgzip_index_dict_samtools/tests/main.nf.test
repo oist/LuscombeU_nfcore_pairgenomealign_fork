@@ -1,0 +1,35 @@
+nextflow_workflow {
+
+    name "Test Subworkflow FASTA_BGZIP_INDEX_DICT_SAMTOOLS"
+    script "../main.nf"
+    workflow "FASTA_BGZIP_INDEX_DICT_SAMTOOLS"
+
+    tag "subworkflows"
+    tag "subworkflows_"
+    tag "subworkflows/fasta_bgzip_index_dict_samtools"
+    tag "samtools"
+    tag "samtools/bgzip"
+    tag "samtools/dict"
+    tag "samtools/faidx"
+
+    test("sarscov2 - fasta") {
+
+        when {
+            workflow {
+                """
+                input[0] = [
+                    [ id:'test', single_end:false ], // meta map
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true),
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(workflow.out).match()}
+            )
+        }
+    }
+}
