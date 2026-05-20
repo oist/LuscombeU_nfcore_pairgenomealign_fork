@@ -36,18 +36,22 @@
                     "jq": "1.7.1"
                 },
                 "Workflow": {
-                    "nf-core/pairgenomealign": "v2.2.2"
+                    "nf-core/pairgenomealign": "v2.2.2dev"
                 }
             },
             [
                 "alignment",
+                "alignment/target___test1.m2o_plt.png",
                 "alignment/target___test1.o2o_aln.maf.gz",
                 "alignment/target___test1.o2o_aln.tsv",
+                "alignment/target___test1.o2o_plt.png",
                 "alignment/target___test1.sam.gz",
                 "alignment/target___test1.train",
                 "alignment/target___test1.train.tsv",
+                "alignment/target___test2.m2o_plt.png",
                 "alignment/target___test2.o2o_aln.maf.gz",
                 "alignment/target___test2.o2o_aln.tsv",
+                "alignment/target___test2.o2o_plt.png",
                 "alignment/target___test2.sam.gz",
                 "alignment/target___test2.train",
                 "alignment/target___test2.train.tsv",
@@ -70,36 +74,37 @@
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_contigs_length_statistics_plot.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
-                "multiqc/multiqc_data/multiqc_last_o2o.txt",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
                 "multiqc/multiqc_data/multiqc_sources.txt",
-                "multiqc/multiqc_data/multiqc_train.txt",
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_plots/pdf",
                 "multiqc/multiqc_plots/pdf/base_content_summary_plot-cnt.pdf",
                 "multiqc/multiqc_plots/pdf/base_content_summary_plot-pct.pdf",
                 "multiqc/multiqc_plots/pdf/contigs_length_statistics_plot.pdf",
-                "multiqc/multiqc_plots/pdf/last_o2o.pdf",
-                "multiqc/multiqc_plots/pdf/train.pdf",
                 "multiqc/multiqc_plots/png",
+                "multiqc/multiqc_plots/png/base_content_summary_plot-cnt.png",
+                "multiqc/multiqc_plots/png/base_content_summary_plot-pct.png",
+                "multiqc/multiqc_plots/png/contigs_length_statistics_plot.png",
                 "multiqc/multiqc_plots/svg",
                 "multiqc/multiqc_plots/svg/base_content_summary_plot-cnt.svg",
                 "multiqc/multiqc_plots/svg/base_content_summary_plot-pct.svg",
                 "multiqc/multiqc_plots/svg/contigs_length_statistics_plot.svg",
-                "multiqc/multiqc_plots/svg/last_o2o.svg",
-                "multiqc/multiqc_plots/svg/train.svg",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
                 "pipeline_info/nf_core_pairgenomealign_software_mqc_versions.yml"
             ],
             [
+                "target___test1.m2o_plt.png:md5,e724b83e019743759706e42d51ab987c",
                 "target___test1.o2o_aln.maf.gz:md5,a5bef93ad94cd32e62503bbb993e17cf",
                 "target___test1.o2o_aln.tsv:md5,0400eb0d527a2e69d0ceaeff6e1e072c",
+                "target___test1.o2o_plt.png:md5,e724b83e019743759706e42d51ab987c",
                 "target___test1.sam.gz:md5,1e7ce899a96c522af7cd716dda2addff",
                 "target___test1.train:md5,0024bdd7f4129fcecebeddc9e844389c",
                 "target___test1.train.tsv:md5,ffa807400265316cdf91de75286c1ac0",
+                "target___test2.m2o_plt.png:md5,9f969c075068688c8b0d8e45c902efef",
                 "target___test2.o2o_aln.maf.gz:md5,35f2b1fda59aec6a2e7b90bf93d9bd07",
                 "target___test2.o2o_aln.tsv:md5,6f0563aabaae562a5e38bb2e89fb2f79",
+                "target___test2.o2o_plt.png:md5,5692a7095b111d2470abe0951527f295",
                 "target___test2.sam.gz:md5,8dcdb07614097a2a55f7c3f717eda97e",
                 "target___test2.train:md5,276f08718454c0b7b016b96474055100",
                 "target___test2.train.tsv:md5,4d054581c85f745f4e21e0c436bcb6a6",
@@ -112,15 +117,13 @@
                 "gc_summary_mqc.tsv:md5,3d6f3875c87fb7c810bbeff004bea4ba",
                 "multiqc_base_content_summary_plot.txt:md5,34b6c2cfdbeea4d761b6b1361d95b1c8",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7",
-                "multiqc_last_o2o.txt:md5,3ec0aebbb13b24ec78edc99cb41c176e",
-                "multiqc_train.txt:md5,c774d54da9e23a823c24f5fb4fdbe2b5"
+                "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7"
             ]
         ],
+        "timestamp": "2026-05-20T11:23:19.915228462",
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.3"
-        },
-        "timestamp": "2026-01-30T13:33:01.800648879"
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
     }
 }
