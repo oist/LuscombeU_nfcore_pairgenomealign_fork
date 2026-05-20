@@ -27,7 +27,7 @@ Query_2,query2_assembly.fasta
 …
 ```
 
-Each row represents a fasta file. Use multiple rows as in the example above to accomodate multiple query genomes.
+Each row represents a fasta file. Use multiple rows as in the example above to accomodate multiple _query_ genomes. You need a samplesheet even if you have a single _query_.
 
 | Column   | Description                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------- |
@@ -40,15 +40,22 @@ An [example samplesheet](../assets/samplesheet_full.csv) has been provided with 
 
 The parameters are described in details in the [online documentation](https://nf-co.re/pairgenomealign/parameters). Expert users can pass extra command line arguments to LAST commands. Apart from this the following options are of special importance:
 
-- `--m2m` enables the computation of the _many-to-many_ alignment, which is the only one to be useful in the case of self-alignments, but which on the other hand can exhaust computing resources in the case of very large genomes.
-- Likewise, when comparing very similar and repetitive genomes (like two vertebrate genomes from the same species), any dotplot other than for the _one-to-one_ alignment will be heavy to compute and useless anyway, because the whole page will be filled with dots. The `--skip_dotplot_*` options are there to solve that problem.
-- Users who need a different format than MAF can check the `--export_aln_to` parameter to generate extra files.
+- `--seed` selects the LAST seeding scheme used to index the target genome and determines the trade‑off between alignment sensitivity, run time, and memory usage. See the [LAST seeding documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst) for details.
+  - `YASS` (default): searches for long and weak similarities by allowing mismatches but not gaps; a general‑purpose default suitable for many use cases.
+    _(Note: `RY4` may replace `YASS` as the default in a future major release.)_
+  - `MAM8`: highest sensitivity; suitable for bacterial genomes and some small, distantly related invertebrate genomes (slow and memory‑intensive).
+  - `RY4`: balanced sensitivity and performance; suitable for aligning any pair of vertebrate genomes.
+  - `RY128`: fastest and most memory‑efficient; suitable for large, closely related genomes such as primates, at the cost of reduced sensitivity.
+- `--m2m` enables the computation of the _many-to-many_ alignment, which reports alignments without enforcing uniqueness. This mode is required for self‑alignments and is useful for duplication or repeat analyses, but can exhaust computing resources on large or highly repetitive genomes.
+- The `--skip_dotplot_*` options disable dotplot visualisations. This is particularly useful when comparing very similar and repetitive genomes (for example, two vertebrate genomes from the same species), where dotplots other than the _one‑to‑one_ alignment can become extremely dense and difficult to interpret, without affecting the underlying alignments.
+- Users who need formats other than MAF can use the `--export_aln_to` parameter to generate additional coordinate‑based (PSL, GFF) or full alignment (SAM/BAM/CRAM) outputs for downstream analyses. Other formats like Axt or Chain are also supported.
 
 ## Fixed arguments (taken from the [LAST cookbook][] and the [LAST tuning][] manual)
 
 [LAST cookbook]: https://gitlab.com/mcfrith/last/-/blob/main/doc/last-cookbook.rst
 [LAST tuning]: https://gitlab.com/mcfrith/last/-/blob/main/doc/last-tuning.rst
 
+- The pipeline uses `lastal --split` by default unless `--m2m` is enabled. With `--split`, LAST directly computes a _many‑to‑one_ (m2o) alignment during alignment, rather than generating a full _many‑to‑many_ (m2m) alignment first, which significantly reduces disk usage and post‑processing overhead. In LAST, the progression m2m → m2o → o2o corresponds to the classical notion of chaining, but is formulated as a single global optimisation problem rather than a post‑hoc chaining step. See the [`last-split` documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst)
 - The `last-train` commands runs with `--revsym` as the DNA strands play equivalent roles in the studied genomes.
 
 ## Running the pipeline
