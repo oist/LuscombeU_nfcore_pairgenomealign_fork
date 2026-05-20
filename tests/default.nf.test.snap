@@ -36,7 +36,7 @@
                     "jq": "1.7.1"
                 },
                 "Workflow": {
-                    "nf-core/pairgenomealign": "v2.2.2dev"
+                    "nf-core/pairgenomealign": "v2.2.3"
                 }
             },
             [
@@ -120,7 +120,7 @@
                 "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7"
             ]
         ],
-        "timestamp": "2026-05-20T11:23:19.915228462",
+        "timestamp": "2026-05-20T15:25:20.281406716",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.4"
