@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
-- Conforms to [nf-core template version `4.0.2`](https://nf-co.re/blog/2026/tools-4_0_0) ([#107](https://github.com/nf-core/pairgenomealign/issues/107).
-- Improve description of what the pipeline does and how ([#108](https://github.com/nf-core/pairgenomealign/issues/108).
+- Conforms to [nf-core template version `4.0.2`](https://nf-co.re/blog/2026/tools-4_0_0) ([#107](https://github.com/nf-core/pairgenomealign/issues/107)).
+- Improve description of what the pipeline does and how ([#108](https://github.com/nf-core/pairgenomealign/issues/108)).
 
 ### `Dependencies`
 
