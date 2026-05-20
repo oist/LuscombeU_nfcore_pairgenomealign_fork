@@ -56,8 +56,6 @@ process MULTIQC_ASSEMBLYSCAN_PLOT_DATA {
     """
 
     stub:
-    def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch gc_summary_mqc.tsv
     touch contig_length_mqc.tsv

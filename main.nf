@@ -52,6 +52,10 @@ workflow NFCORE_PAIRGENOMEALIGN {
     //
     PAIRGENOMEALIGN (
         samplesheet,
+        params.multiqc_config,
+        params.multiqc_logo,
+        params.multiqc_methods_description,
+        params.outdir,
         target_genome
     )
     emit:
@@ -103,7 +107,6 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        params.hook_url,
         NFCORE_PAIRGENOMEALIGN.out.multiqc_report
     )
 }
