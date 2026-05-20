@@ -42,7 +42,7 @@ The parameters are described in details in the [online documentation](https://nf
 
 - `--seed` selects the LAST seeding scheme used to index the target genome and determines the trade‑off between alignment sensitivity, run time, and memory usage. See the [LAST seeding documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst) for details.
   - `YASS` (default): searches for long and weak similarities by allowing mismatches but not gaps; a general‑purpose default suitable for many use cases.
-    *(Note: `RY4` may replace `YASS` as the default in a future major release.)*
+    _(Note: `RY4` may replace `YASS` as the default in a future major release.)_
   - `MAM8`: highest sensitivity; suitable for bacterial genomes and some small, distantly related invertebrate genomes (slow and memory‑intensive).
   - `RY4`: balanced sensitivity and performance; suitable for aligning any pair of vertebrate genomes.
   - `RY128`: fastest and most memory‑efficient; suitable for large, closely related genomes such as primates, at the cost of reduced sensitivity.
