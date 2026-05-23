@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.3](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.3) "Reitou mikan" - [May 20th 2026]
+
+### `Fixed`
+
+- Conforms to [nf-core template version `4.0.2`](https://nf-co.re/blog/2026/tools-4_0_0) ([#107](https://github.com/nf-core/pairgenomealign/issues/107)).
+- Improve description of what the pipeline does and how ([#108](https://github.com/nf-core/pairgenomealign/issues/108)).
+
+### `Dependencies`
+
+| Dependency | Old version | New version |
+| ---------- | ----------- | ----------- |
+| `MultiQC`  | 1.33        | 1.34        |
+
 ## [v2.2.2](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.2) "Juicy" - [January 30th 2026]
 
 ### `Fixed`

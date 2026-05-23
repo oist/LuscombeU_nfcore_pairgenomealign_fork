@@ -27,7 +27,7 @@ Query_2,query2_assembly.fasta
 …
 ```
 
-Each row represents a fasta file. Use multiple rows as in the example above to accomodate multiple query genomes.
+Each row represents a fasta file. Use multiple rows as in the example above to accomodate multiple _query_ genomes. You need a samplesheet even if you have a single _query_.
 
 | Column   | Description                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------- |
@@ -40,15 +40,22 @@ An [example samplesheet](../assets/samplesheet_full.csv) has been provided with 
 
 The parameters are described in details in the [online documentation](https://nf-co.re/pairgenomealign/parameters). Expert users can pass extra command line arguments to LAST commands. Apart from this the following options are of special importance:
 
-- `--m2m` enables the computation of the _many-to-many_ alignment, which is the only one to be useful in the case of self-alignments, but which on the other hand can exhaust computing resources in the case of very large genomes.
-- Likewise, when comparing very similar and repetitive genomes (like two vertebrate genomes from the same species), any dotplot other than for the _one-to-one_ alignment will be heavy to compute and useless anyway, because the whole page will be filled with dots. The `--skip_dotplot_*` options are there to solve that problem.
-- Users who need a different format than MAF can check the `--export_aln_to` parameter to generate extra files.
+- `--seed` selects the LAST seeding scheme used to index the target genome and determines the trade‑off between alignment sensitivity, run time, and memory usage. See the [LAST seeding documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst) for details.
+  - `YASS` (default): searches for long and weak similarities by allowing mismatches but not gaps; a general‑purpose default suitable for many use cases.
+    _(Note: `RY4` may replace `YASS` as the default in a future major release.)_
+  - `MAM8`: highest sensitivity; suitable for bacterial genomes and some small, distantly related invertebrate genomes (slow and memory‑intensive).
+  - `RY4`: balanced sensitivity and performance; suitable for aligning any pair of vertebrate genomes.
+  - `RY128`: fastest and most memory‑efficient; suitable for large, closely related genomes such as primates, at the cost of reduced sensitivity.
+- `--m2m` enables the computation of the _many-to-many_ alignment, which reports alignments without enforcing uniqueness. This mode is required for self‑alignments and is useful for duplication or repeat analyses, but can exhaust computing resources on large or highly repetitive genomes.
+- The `--skip_dotplot_*` options disable dotplot visualisations. This is particularly useful when comparing very similar and repetitive genomes (for example, two vertebrate genomes from the same species), where dotplots other than the _one‑to‑one_ alignment can become extremely dense and difficult to interpret, without affecting the underlying alignments.
+- Users who need formats other than MAF can use the `--export_aln_to` parameter to generate additional coordinate‑based (PSL, GFF) or full alignment (SAM/BAM/CRAM) outputs for downstream analyses. Other formats like Axt or Chain are also supported.
 
 ## Fixed arguments (taken from the [LAST cookbook][] and the [LAST tuning][] manual)
 
 [LAST cookbook]: https://gitlab.com/mcfrith/last/-/blob/main/doc/last-cookbook.rst
 [LAST tuning]: https://gitlab.com/mcfrith/last/-/blob/main/doc/last-tuning.rst
 
+- The pipeline uses `lastal --split` by default unless `--m2m` is enabled. With `--split`, LAST directly computes a _many‑to‑one_ (m2o) alignment during alignment, rather than generating a full _many‑to‑many_ (m2m) alignment first, which significantly reduces disk usage and post‑processing overhead. In LAST, the progression m2m → m2o → o2o corresponds to the classical notion of chaining, but is formulated as a single global optimisation problem rather than a post‑hoc chaining step. See the [`last-split` documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst)
 - The `last-train` commands runs with `--revsym` as the DNA strands play equivalent roles in the studied genomes.
 
 ## Running the pipeline
@@ -75,7 +82,7 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
 > [!WARNING]
-> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/running/run-pipelines#configuring-pipelines), other infrastructural tweaks (such as output directories), or module arguments (args).
 
 The above pipeline run specified with a params file in yaml format:
 
@@ -180,19 +187,19 @@ Specify the path to a specific config file (this is a core Nextflow command). Se
 
 Whilst the default requirements set within the pipeline will hopefully work for most people and with most input data, you may find that you want to customise the compute resources that the pipeline requests. Each step in the pipeline has a default set of requirements for number of CPUs, memory and time. For most of the pipeline steps, if the job exits with any of the error codes specified [here](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L18) it will automatically be resubmitted with higher resources request (2 x original, then 3 x original). If it still fails after the third attempt then the pipeline execution is stopped.
 
-To change the resource requests, please see the [max resources](https://nf-co.re/docs/usage/configuration#max-resources) and [tuning workflow resources](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources) section of the nf-core website.
+To change the resource requests, please see the [max resources](https://nf-co.re/docs/running/configuration/nextflow-for-your-system#set-max-resources) and [customise process resources](https://nf-co.re/docs/running/configuration/nextflow-for-your-system#customize-process-resources) section of the nf-core website.
 
 ### Custom Containers
 
 In some cases, you may wish to change the container or conda environment used by a pipeline steps for a particular tool. By default, nf-core pipelines use containers and software from the [biocontainers](https://biocontainers.pro/) or [bioconda](https://bioconda.github.io/) projects. However, in some cases the pipeline specified version maybe out of date.
 
-To use a different container from the default container or conda environment specified in a pipeline, please see the [updating tool versions](https://nf-co.re/docs/usage/configuration#updating-tool-versions) section of the nf-core website. Also please note that this pipeline uses a [Wave container](https://seqera.io/containers/) combining LAST, Samtools, and open fonts, to save the user from downloading multiple overlapping images (LAST alone, Samtools alone, LAST plus Samtools, and LAST plus open fonts). Changing this container is the simplest way to update LAST if you wish so.
+To use a different container from the default container or conda environment specified in a pipeline, please see the [updating tool versions](https://nf-co.re/docs/running/configuration/nextflow-for-your-system#update-tool-versions) section of the nf-core website. Also please note that this pipeline uses a [Wave container](https://seqera.io/containers/) combining LAST, Samtools, and open fonts, to save the user from downloading multiple overlapping images (LAST alone, Samtools alone, LAST plus Samtools, and LAST plus open fonts). Changing this container is the simplest way to update LAST if you wish so.
 
 ### Custom Tool Arguments
 
 A pipeline might not always support every possible argument or option of a particular tool used in pipeline. Fortunately, nf-core pipelines provide some freedom to users to insert additional parameters that the pipeline does not include by default.
 
-To learn how to provide additional arguments to a particular tool of the pipeline, please see the [customising tool arguments](https://nf-co.re/docs/usage/configuration#customising-tool-arguments) section of the nf-core website.
+To learn how to provide additional arguments to a particular tool of the pipeline, please see the [customising tool arguments](https://nf-co.re/docs/running/configuration/nextflow-for-your-system#modifying-tool-arguments) section of the nf-core website.
 
 ### nf-core/configs
 

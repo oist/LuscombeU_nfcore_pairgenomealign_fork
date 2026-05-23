@@ -10,8 +10,8 @@
 [![GitHub Actions Linting Status](https://github.com/nf-core/pairgenomealign/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/pairgenomealign/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pairgenomealign/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.13910535-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.13910535)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.04.0-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
-[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.5.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.5.1)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.0.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.0.2)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -21,7 +21,11 @@
 
 ## Introduction
 
-**nf-core/pairgenomealign** is a bioinformatics pipeline that aligns one or more _query_ genomes to a _target_ genome, and plots pairwise representations.
+**nf-core/pairgenomealign** is a reproducible pipeline for pairwise whole‑genome alignment built on the LAST toolchain. It aligns one or more _query_ genomes to a _target_ genome using adaptive seeding, trained scoring parameters, and global‑score optimisation (chaining).
+
+The pipeline supports both closely and distantly related genomes by allowing users to tune the target index seeding to trade off speed and memory usage against alignment sensitivity and specificity. Other alignment parameters are automatically inferred by LAST, reducing the need for manual tuning.
+
+Alignments can be reported unfiltered (e.g. for self‑alignments, duplication analyses, or repeat exploration) or reduced to a best global one‑to‑one set (e.g. for synteny analyses). Output is provided in coordinate‑only formats (PSL, GFF) or full alignment formats (MAF, SAM/BAM/CRAM), together with pairwise dot‑plot-style visualisations for rapid inspection.
 
 ![Tubemap workflow summary](docs/images/pairgenomealign-tubemap.png "Tubemap workflow summary")
 
@@ -29,18 +33,16 @@ The main steps of the pipeline are:
 
 1. Genome QC ([`assembly-scan`](https://github.com/rpetit3/assembly-scan)).
 2. Genome indexing ([`lastdb`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastdb.rst)).
-3. Genome pairwise alignments ([`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst)).
-4. Alignment plotting ([`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst)).
-5. Alignment export to various formats with [`maf-convert`](https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst), plus [`Samtools`](https://www.htslib.org/) for SAM/BAM/CRAM.
-
-The pipeline can generate four kinds of outputs, called _many-to-many_, _many-to-one_, _one-to-many_ and _one-to-one_, depending on whether sequences of one genome are allowed match the other genome multiple times or not.
-
-These alignments are output in [MAF](https://genome.ucsc.edu/FAQ/FAQformat.html#format5) format, and optional line plot representations are output in PNG format.
+3. Alignment parameter discovery ([`last-train`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-train.rst)).
+4. Whole-genome pairwise alignments ([`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst)).
+5. Reduction to _one-to-one_ relations ([`last-split`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst))
+6. Alignment plotting ([`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst)).
+7. Alignment export to various formats with [`maf-convert`](https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst), plus [`Samtools`](https://www.htslib.org/) for SAM/BAM/CRAM.
 
 ## Usage
 
 > [!NOTE]
-> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/get_started/environment_setup/overview) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/get_started/run-your-first-pipeline) with `-profile test` before running the workflow on actual data.
 
 First, prepare a samplesheet with your input data that looks as follows:
 
@@ -65,7 +67,7 @@ nextflow run nf-core/pairgenomealign \
 ```
 
 > [!WARNING]
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/running/run-pipelines#using-parameter-files).
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/pairgenomealign/usage) and the [parameter documentation](https://nf-co.re/pairgenomealign/parameters).
 
@@ -89,7 +91,7 @@ We thank the following people for their extensive assistance in the development 
 
 ## Contributions and Support
 
-If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
+If you would like to contribute to this pipeline, please see the [contributing guidelines](docs/CONTRIBUTING.md).
 
 For further information or help, don't hesitate to get in touch on the [Slack `#pairgenomealign` channel](https://nfcore.slack.com/channels/pairgenomealign) (you can join with [this invite](https://nf-co.re/join/slack)).
 
