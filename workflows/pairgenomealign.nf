@@ -6,6 +6,8 @@
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
+include { LAST_DOTPLOT as MULTIQC_THUMBS   } from '../modules/nf-core/last/dotplot/main'
+include { MULTIQC_THUMBS_HTML              } from '../modules/local/multiqc_thumbs_html/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
@@ -114,6 +116,22 @@ workflow PAIRGENOMEALIGN {
             ch_targetgenome_gzi,
             ch_targetgenome_dic
         )
+    }
+
+    if (params.multiqc_thumbs != 0) {
+        MULTIQC_THUMBS(
+            pairalign_out.o2o.map { x -> [x[0], x[1], []] },
+            [[],[]],
+            "png",
+            params.dotplot_filter
+        )
+        MULTIQC_THUMBS_HTML(
+            MULTIQC_THUMBS.out.plot
+                .map { meta, file -> file }
+                .collect(),
+            params.multiqc_thumbs
+        )
+        ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_THUMBS_HTML.out.html)
     }
 
     // Collate and save software versions
