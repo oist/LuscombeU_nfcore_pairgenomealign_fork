@@ -49,6 +49,8 @@ Basic statistics on nucleotide content and contig length are collected for align
 
 Genomes are aligned witn [`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst) after alignment parameters have been determined with [`last-train`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-train.rst). _**Many-to-many**_ alignments are progressively converted to _**one-to-one**_ with [`last-split`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst).
 
+To speed up alignment, both strands of the target genome are indexed. This doubles memory usage and may produce output files containing `-/+` alignments, which are not supported by some downstream pipelines. To disable this behavior, use `--strand forward`.
+
 ### Dot plots
 
 <details markdown="1">
