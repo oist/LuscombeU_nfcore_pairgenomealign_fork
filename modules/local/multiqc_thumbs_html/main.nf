@@ -33,7 +33,7 @@ process MULTIQC_THUMBS_HTML {
         name=\$(basename "\$img")
         label=\${name%.o2o_thumb.png}
 
-        b64=\$(base64 -w 0 "\$img")
+        b64=\$(base64 "\$img" | tr -d '\n')
 
         echo "<div style='display:inline-block; margin:5px;'>" >> \${out_file}
         echo "<img src='data:image/png;base64,\${b64}' width='${width}' title='\${label}'>" >> \${out_file}
