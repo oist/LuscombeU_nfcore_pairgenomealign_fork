@@ -197,6 +197,14 @@
                     "description": "Remove isolated alignments with the `maf-filter` tool.",
                     "help_text": "The filter often removes noise in the plots, but in some cases can also remove too much alignments. Be careful when interpreting the results.",
                     "fa_icon": "fas fa-filter"
+                },
+                "multiqc_thumbs": {
+                    "type": "integer",
+                    "default": 0,
+                    "fa_icon": "fas fa-th",
+                    "description": "Size of the alignments thumbnails in MultiQC (default 0 turns it off; 100 is a good value to start with).",
+                    "help_text": "Produces small pairwise alignment plots to be displayed in MultiQC. The value is the number of pixels given to the biggest genome. Labels and sequence boundaries are turned off.",
+                    "minimum": 0
                 }
             },
             "fa_icon": "fas fa-cogs"
