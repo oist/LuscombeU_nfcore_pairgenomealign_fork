@@ -60,6 +60,11 @@
                         "git_sha": "9a48bce39a67e2cb34b8f125fc1d50f0ad98b616",
                         "installed_by": ["modules"]
                     },
+                    "samtools/merge": {
+                        "branch": "master",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "installed_by": ["modules"]
+                    },
                     "seqtk/cutn": {
                         "branch": "master",
                         "git_sha": "a46713779030a5f508117080cbf4b693dd4c6e33",
