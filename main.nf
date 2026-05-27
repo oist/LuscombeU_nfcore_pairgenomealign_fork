@@ -91,11 +91,21 @@ workflow {
         .map { file_obj -> [ [id:params.targetName], file_obj] }
         .set { ch_target }
 
+    if ( params.query ) {
+        channel
+            .value( params.query )
+            .map { filename -> file(filename, checkIfExists: true) }
+            .map { file_obj -> [ [id:params.queryName],  file_obj] }
+            .set { ch_query }
+    } else {
+        ch_query = PIPELINE_INITIALISATION.out.samplesheet
+    }
+
     //
     // WORKFLOW: Run main workflow
     //
     NFCORE_PAIRGENOMEALIGN (
-        PIPELINE_INITIALISATION.out.samplesheet,
+        ch_query,
         ch_target
     )
     //
