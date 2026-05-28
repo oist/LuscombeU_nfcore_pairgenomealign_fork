@@ -18,41 +18,17 @@ input:
         Structure: [ val(meta), path(fasta) ]
       pattern: "*.{fa,fa.gz,fa.bz2,fa.xz,fasta,fasta.gz,fasta.bz2,fasta.xz}"
 output:
-  - fasta_gz:
+  - fasta_fai_gzi_dict:
       type: file
       description: |
-        Channel containing FASTA filed compressed with the BGZF algorithm.
-        Original files are re-used when they were already BGZF-compressed.
-        Structure: [ val(meta), path(fasta_gz) ]
-      pattern: "*.{fa.gz,fasta.gz}"
-  - fai:
-      type: file
-      description: |
-        Channel containing FASTA index files
-        Structure: [ val(meta), path(fai) ]
-      pattern: "*.fai"
-  - gzi:
-      type: file
-      description: |
-        Channel containing bgzip index files
-        Structure: [ val(meta), path(gzi) ]
-      pattern: "*.gzi"
-  - dict:
-      type: file
-      description: |
-        Channel containing sequence dictionary files
-        Structure: [ val(meta), path(dict) ]
-      pattern: "*.dict"
-  - versions_samtools:
-      - - "${task.process}":
-            type: string
-            description: The name of the process
-        - samtools:
-            type: string
-            description: The name of the tool
-        - "samtools --version | head -n 1 | sed 's/^.*samtools //'":
-            type: eval
-            description: The expression to obtain the version of the tool
+        Channel containing:
+          - BGZF-compressed FASTA
+          - FASTA index (.fai)
+          - BGZF index (.gzi)
+          - sequence dictionary (.dict)
+        Structure:
+          [ val(meta), path(fasta_gz), path(fai), path(gzi), path(dict) ]
+      pattern: "*"
 topics:
   versions:
     - - "${task.process}":

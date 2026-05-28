@@ -91,30 +91,18 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
-    // If we export to CRAM we need a BGZIPped genome, indexed, and its sequence dictionary,
-    // if we export to SAM or BAM this is also nice to have,
-    // otherwise we need placeholders.
-    ch_targetgenome_faz = [[],[]]
-    ch_targetgenome_fai = [[],[]]
-    ch_targetgenome_gzi = [[],[]]
-    ch_targetgenome_dic = [[],[]]
-
     export_formats = params.export_aln_to.tokenize(',')
     if (export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
-        ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
-        ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
-        ch_targetgenome_gzi = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.gzi
-        ch_targetgenome_dic = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.dict
     }
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(Channel.fromList(export_formats)),
-            ch_targetgenome_faz,
-            ch_targetgenome_fai,
-            ch_targetgenome_gzi,
-            ch_targetgenome_dic
+            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, fasta] },
+            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
+            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
+            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
         )
     }
 
