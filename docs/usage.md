@@ -14,7 +14,7 @@ You need at least two genomes, a _target_, which will be indexed, and one or mor
 
 The target genome sequence is taken from a FASTA-formated file passed by the `--target` parameter. Its masking information (sequences in lower-case letters) is first discarded, and then simple repeats (like `cacacacacacacacac`) are converted to lower-case (`lastdb -R01`). The lowercased letters in the _target_ **and** in the _query_ will be excluded for initial matches (`lastdb -c`). Both strands of the genome are indexed (`lastdb -S2`).
 
-### Samplesheet for query genome(s)
+### Query genome(s)
 
 You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use the `--input` parameter to specify its location. It has to be a comma-separated file with 2 columns, a header row and single or multiple sample rows (genome samples) as shown in the examples below.
 
@@ -35,6 +35,8 @@ Each row represents a fasta file. Use multiple rows as in the example above to a
 | `fasta`  | Full path to Fasta/fa/gz file                                                                |
 
 An [example samplesheet](../assets/samplesheet_full.csv) has been provided with the pipeline.
+
+For your convenience when you have only one _query_ genome, you can skip the creation of the samplesheet and use the `--query` and `--queryName` options instead of `--input`.
 
 ## Options
 

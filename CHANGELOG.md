@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `--multi_cram` option to produce a multi-query CRAM file combining all the alignments ([#60](https://github.com/nf-core/pairgenomealign/pull/60)).
 - New `--multiqc_thumbs` option to produce alignment thumbnails in the MultiQC report ([#93](https://github.com/nf-core/pairgenomealign/pull/93)).
 - New `--strand` option to index only one strand of the genome, which reduces memory usage at the expense of speed, and suppresses `-/+` alignments ([#97](https://github.com/nf-core/pairgenomealign/pull/97)).
+- New `--query` and `--queryName` convenience options to skip samplesheet creation when there is only one _query_ genome to align ([#112](https://github.com/nf-core/pairgenomealign/pull/112)).
+
+### `Parameters`
+
+| Old parameter | New parameter      |
+| ------------- | ------------------ |
+|               | `--multiqc_thumbs` |
+|               | `--query`          |
+|               | `--queryName`      |
+|               | `--strand`         |
 
 ### `Dependencies`
 
