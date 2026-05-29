@@ -5,7 +5,9 @@
 */
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
+include { LAST_MAFCONVERT as ALIGNMENT_CRAM} from '../modules/nf-core/last/mafconvert/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
+include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
 include { LAST_DOTPLOT as MULTIQC_THUMBS   } from '../modules/nf-core/last/dotplot/main'
 include { MULTIQC_THUMBS_HTML              } from '../modules/local/multiqc_thumbs_html/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
@@ -92,7 +94,7 @@ workflow PAIRGENOMEALIGN {
     }
 
     export_formats = params.export_aln_to.tokenize(',')
-    if (export_formats.contains('cram') | export_formats.contains('bam')) {
+    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_genome_for_cram = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
     } else {
@@ -106,6 +108,35 @@ workflow PAIRGENOMEALIGN {
             ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
             ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
             ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
+        )
+    }
+
+    if (params.multi_cram) {
+        // We want the read group IDs to be just the query genome name (which is already long enough).
+        o2o_alignments = pairalign_out.o2o.map { meta, alns ->
+            def newMeta = meta.clone()    // Avoids unexpected propagation to pairalign_out.o2o's meta.id.
+            newMeta.id = newMeta.id.replaceAll(/^.*___/, '')
+            [newMeta, alns]
+        }
+        ALIGNMENT_CRAM(
+            o2o_alignments.map {it + "cram"},
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fasta] },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
+        )
+        // Collect all per-query CRAMs into a single merged CRAM per target genome
+        ch_merge_input = ALIGNMENT_CRAM.out.alignment
+            // Rename and use as grouping key
+            .map { meta, cram -> tuple(params.targetName, cram) }
+            // group all CRAMs
+            .groupTuple()
+            // convert to SAMTOOLS_MERGE input format
+            .map { id, crams -> tuple([id: id], crams, []) }
+        // Output a single CRAM file under the target genome name.
+        ALIGNMENT_MERGE(
+            ch_merge_input,
+            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, fasta, fai, gzi] }
         )
     }
 
