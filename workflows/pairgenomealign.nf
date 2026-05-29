@@ -94,15 +94,18 @@ workflow PAIRGENOMEALIGN {
     export_formats = params.export_aln_to.tokenize(',')
     if (export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
+        ch_genome_for_cram = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
+    } else {
+        ch_genome_for_cram = channel.value( [[:], [], [], [], []] )
     }
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(Channel.fromList(export_formats)),
-            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, fasta] },
-            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
-            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
-            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fasta] },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
         )
     }
 
