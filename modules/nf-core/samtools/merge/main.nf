@@ -24,7 +24,9 @@ process SAMTOOLS_MERGE {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     def file_type = input_files instanceof List ? input_files[0].getExtension() : input_files.getExtension()
-    def reference = fasta ? "--reference ${fasta}" : ""
+    // In this pipeline we know that the input CRAM files have a correct relative path to the reference, and we want to keep it.
+    // Passing --reference transforms the link to an absolute path containing temporary folder path.
+    def reference = ""
     """
     # Note: --threads value represents *additional* CPUs to allocate (total CPUs = 1 + --threads).
     samtools \\
