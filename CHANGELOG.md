@@ -28,7 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | ---------------- | ----------- | ----------- |
 | `SAMTOOLS_MERGE` |             | 1.23.1      |
 
-
 ## [v2.2.3](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.3) "Reitou mikan" - [May 20th 2026]
 
 ### `Fixed`
