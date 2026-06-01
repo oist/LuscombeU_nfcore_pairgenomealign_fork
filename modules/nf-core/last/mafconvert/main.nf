@@ -4,8 +4,8 @@ process LAST_MAFCONVERT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0b/0b03259f4457e393e47dfd87ea744afea462bd8614b14867e6b3640ae760f41f/data'
-        : 'community.wave.seqera.io/library/last_samtools:a6d74d4fe63f646a'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/7d/7d15a331df686b7ee164f261adbab4b32428e1be45131632401f5a7065190a7c/data'
+        : 'community.wave.seqera.io/library/bcftools_last_samtools_open-fonts:019cda8440684aa1'}"
 
     input:
     tuple val(meta), path(maf), val(format)
@@ -27,6 +27,10 @@ process LAST_MAFCONVERT {
     tuple val(meta), path("*.psl.gz"),             optional:true, emit: psl_gz
     tuple val(meta), path("*.sam.gz"),             optional:true, emit: sam_gz
     tuple val(meta), path("*.tab.gz"),             optional:true, emit: tab_gz
+    tuple val(meta), path("*.vcf.gz"),             optional:true, emit: vcf_gz
+    tuple val(meta), path("*.bcf"),                optional:true, emit: bcf
+    tuple val(meta), path("*.csi"),                optional:true, emit: csi
+    tuple val(meta), path("*.stats"),              optional:true, emit: stats
     path "versions.yml"                                         , emit: versions
 
     when:
@@ -72,6 +76,12 @@ process LAST_MAFCONVERT {
             maf-convert $args \$DICT_ARGS sam $maf -r 'ID:${meta.id} SM:${meta.id}' |
                 samtools sort -O sam |
                 gzip --no-name > ${prefix}.sam.gz
+            ;;
+        bcf)
+            maf-convert $args \$DICT_ARGS sam $maf -r 'ID:${meta.id} SM:${meta.id}' |
+                samtools sort -u | bcftools mpileup --fasta-ref $fasta -Ou -B - | bcftools call --ploidy 1 -m -Ob > ${prefix}.bcf
+            bcftools index ${prefix}.bcf
+            bcftools stats ${prefix}.bcf > ${prefix}.stats
             ;;
         bam)
             maf-convert $args \$DICT_ARGS sam $maf -r 'ID:${meta.id} SM:${meta.id}' |

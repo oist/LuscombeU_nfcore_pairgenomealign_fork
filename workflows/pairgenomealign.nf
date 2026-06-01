@@ -6,8 +6,10 @@
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
 include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
+include { BCFTOOLS_MERGE as ALIGNMENT_MERGE_BCF} from '../modules/nf-core/bcftools/merge/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { LAST_MAFCONVERT as ALIGNMENT_CRAM} from '../modules/nf-core/last/mafconvert/main'
+include { LAST_MAFCONVERT as ALIGNMENT_BCF } from '../modules/nf-core/last/mafconvert/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
@@ -93,7 +95,7 @@ workflow PAIRGENOMEALIGN {
     ch_targetgenome_gzi = [[],[]]
     ch_targetgenome_dic = [[],[]]
 
-    if (params.cram | params.export_aln_to.contains('cram') | params.export_aln_to.contains('bam')) {
+    if (params.cram | params.bcf | params.export_aln_to.contains('cram') | params.export_aln_to.contains('bcf') | params.export_aln_to.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
         ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
@@ -132,6 +134,30 @@ workflow PAIRGENOMEALIGN {
             ch_targetgenome_faz,
             ch_targetgenome_fai,
             ch_targetgenome_gzi,
+        )
+    }
+
+    if (params.bcf) {
+        // We want the read group IDs to be just the query genome name (which is already long enough).
+        o2o_alignments = pairalign_out.o2o.map { meta, alns ->
+            def newMeta = meta.clone()    // Avoids unexpected propagation to pairalign_out.o2o's meta.id.
+            newMeta.id = newMeta.id.replaceAll(/^.*___/, '')
+            [newMeta, alns]
+        }
+        ALIGNMENT_BCF(
+            o2o_alignments.map {it + "bcf"},
+            ch_targetgenome_faz,
+            ch_targetgenome_fai,
+            ch_targetgenome_gzi,
+            ch_targetgenome_dic
+        )
+        // Output a single BCF file under the target genome name.
+        ch_bcfs = ALIGNMENT_BCF.out.bcf.map { it -> [[id:params.targetName], it[1]] }.groupTuple()
+        ch_csis = ALIGNMENT_BCF.out.csi.map { it -> [[id:params.targetName], it[1]] }.groupTuple()
+        ch_merge_bcf_in = ch_bcfs.join(ch_csis).map {meta, bcfs, csis -> [meta, bcfs, csis, []]} 
+        ALIGNMENT_MERGE_BCF(
+            ch_merge_bcf_in,
+            ch_targetgenome_faz.join(ch_targetgenome_fai),
         )
     }
 

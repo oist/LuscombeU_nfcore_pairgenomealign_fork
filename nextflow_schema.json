@@ -102,6 +102,7 @@
                         "no_export",
                         "axt",
                         "bam",
+                        "bcf",
                         "bed",
                         "blast",
                         "blasttab",
