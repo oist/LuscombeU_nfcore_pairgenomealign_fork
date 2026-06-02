@@ -127,10 +127,10 @@ ch_targetgenome = ch_genome_for_cram
         }
         ALIGNMENT_CRAM(
             o2o_alignments.map {it + "cram"},
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fasta] },
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
+            ch_targetgenome.fasta,
+            ch_targetgenome.fai,
+            ch_targetgenome.gzi,
+            ch_targetgenome.dict
         )
         // Collect all per-query CRAMs into a single merged CRAM per target genome
         ch_merge_input = ALIGNMENT_CRAM.out.alignment
