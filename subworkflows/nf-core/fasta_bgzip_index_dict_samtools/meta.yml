@@ -1,15 +1,16 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
 name: "fasta_bgzip_index_dict_samtools"
-description: Sort SAM/BAM/CRAM file
+description: Ensure BGZF compression, index, and produce a sequence size summary and a sequence dictionary for each FASTA file.
 keywords:
   - bgzip
   - faidx
   - dict
   - fasta
 components:
-  - samtools/bgzip
+  - htslib/bgziptabix
   - samtools/dict
   - samtools/faidx
+
 input:
   - ch_fasta:
       type: file
@@ -17,6 +18,7 @@ input:
         FASTA file, compressed or not.
         Structure: [ val(meta), path(fasta) ]
       pattern: "*.{fa,fa.gz,fa.bz2,fa.xz,fasta,fasta.gz,fasta.bz2,fasta.xz}"
+
 output:
   - fasta_fai_gzi_dict:
       type: file
@@ -25,21 +27,12 @@ output:
           - BGZF-compressed FASTA
           - FASTA index (.fai)
           - BGZF index (.gzi)
+          - sequence size summary (.sizes)
           - sequence dictionary (.dict)
         Structure:
-          [ val(meta), path(fasta_gz), path(fai), path(gzi), path(dict) ]
+          [ val(meta), path(fasta_gz), path(fai), path(gzi), path(sizes), path(dict) ]
       pattern: "*"
-topics:
-  versions:
-    - - "${task.process}":
-          type: string
-          description: The name of the process
-      - samtools:
-          type: string
-          description: The name of the tool
-      - "samtools --version | head -n 1 | sed 's/^.*samtools //'":
-          type: eval
-          description: The expression to obtain the version of the tool
+
 authors:
   - "@charles-plessy"
 maintainers:

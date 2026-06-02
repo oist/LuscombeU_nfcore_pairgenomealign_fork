@@ -19,7 +19,7 @@ include { MULTIQC                          } from '../modules/nf-core/multiqc/ma
 include { paramsSummaryMap                 } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc             } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML           } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/local/fasta_bgzip_index_dict_samtools'
+include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/nf-core/fasta_bgzip_index_dict_samtools/main'
 include { methodsDescriptionText           } from '../subworkflows/local/utils_nfcore_pairgenomealign_pipeline'
 
 /*
@@ -93,7 +93,7 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
-    ch_genome_for_cram = channel.value( [[:], [], [], [], []] )
+    ch_genome_for_cram = channel.value( [[:], [], [], [], [], []] )
     export_formats = params.export_aln_to.tokenize(',')
     if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
@@ -101,8 +101,7 @@ workflow PAIRGENOMEALIGN {
     }
 
     ch_targetgenome = ch_genome_for_cram
-      .first()
-      .multiMap { meta, fasta, fai, gzi, dict ->
+      .multiMap { meta, fasta, fai, gzi, _sizes, dict ->
           fasta: [meta, fasta]
           fai:   [meta, fai]
           gzi:   [meta, gzi]
@@ -144,7 +143,7 @@ workflow PAIRGENOMEALIGN {
         // Output a single CRAM file under the target genome name.
         ALIGNMENT_MERGE(
             ch_merge_input,
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fasta, fai, gzi ] },
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, _sizes, _dict -> [meta, fasta, fai, gzi ] },
         )
     }
 
