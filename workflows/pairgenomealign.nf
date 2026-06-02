@@ -93,21 +93,22 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
+    ch_genome_for_cram = channel.value( [[:], [], [], [], []] )
     export_formats = params.export_aln_to.tokenize(',')
     if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_genome_for_cram = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
-    } else {
-        ch_genome_for_cram = channel.value( [[:], [], [], [], []] )
     }
-ch_targetgenome = ch_genome_for_cram
-  .first()
-  .multiMap { meta, fasta, fai, gzi, dict ->
-      fasta: [meta,fasta]
-      fai: [meta,fai]
-      gzi: [meta,gzi]
-      dict: [meta,dict
-   }
+
+    ch_targetgenome = ch_genome_for_cram
+      .first()
+      .multiMap { meta, fasta, fai, gzi, dict ->
+          fasta: [meta, fasta]
+          fai:   [meta, fai]
+          gzi:   [meta, gzi]
+          dict:  [meta, dict]
+    }
+
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(Channel.fromList(export_formats)),
