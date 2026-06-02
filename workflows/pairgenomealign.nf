@@ -100,7 +100,14 @@ workflow PAIRGENOMEALIGN {
     } else {
         ch_genome_for_cram = channel.value( [[:], [], [], [], []] )
     }
-
+ch_targetgenome = ch_genome_for_cram
+  .first()
+  .multiMap { meta, fasta, fai, gzi, dict -> 
+      fasta: [meta,fasta]
+      fai: [meta,fai]
+      gzi: [meta,gzi]
+      dict: [meta,dict
+   }
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(Channel.fromList(export_formats)),
