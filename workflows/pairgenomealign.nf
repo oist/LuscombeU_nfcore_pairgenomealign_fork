@@ -9,6 +9,7 @@ include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/m
 include { SAMTOOLS_STATS as ALIGNMENT_CRAM_STATS } from '../modules/nf-core/samtools/stats/main'
 include { BCFTOOLS_MERGE as ALIGNMENT_MERGE_BCF} from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_STATS as ALIGNMENT_BCF_STATS} from '../modules/nf-core/bcftools/stats/main'
+include { BCFTOOLS_VIEW as ALIGNMENT_BCF_SNPS} from '../modules/nf-core/bcftools/view/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
 include { LAST_MAFCONVERT as ALIGNMENT_CRAM} from '../modules/nf-core/last/mafconvert/main'
 include { LAST_MAFCONVERT as ALIGNMENT_BCF } from '../modules/nf-core/last/mafconvert/main'
@@ -164,6 +165,12 @@ workflow PAIRGENOMEALIGN {
         ALIGNMENT_MERGE_BCF(
             ch_merge_bcf_in,
             ch_targetgenome_faz.join(ch_targetgenome_fai),
+        )
+        ALIGNMENT_BCF_SNPS(
+            ALIGNMENT_MERGE_BCF.out.vcf.join(ALIGNMENT_MERGE_BCF.out.index).map{ meta, bcf, index -> [[id:meta.id+"_snp"], bcf, index ]},
+            [],
+            [],
+            []
         )
         ALIGNMENT_BCF_STATS(
             ALIGNMENT_MERGE_BCF.out.vcf.join(ALIGNMENT_MERGE_BCF.out.index)),
