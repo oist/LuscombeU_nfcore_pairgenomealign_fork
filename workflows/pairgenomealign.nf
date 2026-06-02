@@ -111,10 +111,10 @@ ch_targetgenome = ch_genome_for_cram
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(Channel.fromList(export_formats)),
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fasta] },
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fai]   },
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, gzi]   },
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, dict]  }
+            ch_targetgenome.fasta,
+            ch_targetgenome.fai,
+            ch_targetgenome.gzi,
+            ch_targetgenome.dict
         )
     }
 
