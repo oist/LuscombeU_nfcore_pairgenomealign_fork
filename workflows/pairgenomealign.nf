@@ -6,6 +6,7 @@
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
 include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
+include { SAMTOOLS_STATS as ALIGNMENT_CRAM_STATS } from '../modules/nf-core/samtools/stats/main'
 include { BCFTOOLS_MERGE as ALIGNMENT_MERGE_BCF} from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_STATS as ALIGNMENT_BCF_STATS} from '../modules/nf-core/bcftools/stats/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
@@ -135,6 +136,10 @@ workflow PAIRGENOMEALIGN {
             ch_targetgenome_faz,
             ch_targetgenome_fai,
             ch_targetgenome_gzi,
+        )
+        ALIGNMENT_CRAM_STATS(
+            ALIGNMENT_MERGE.out.cram.join(ALIGNMENT_MERGE.out.crai),
+            ch_targetgenome_faz.join(ch_targetgenome_fai).join(ch_targetgenome_gzi)
         )
     }
 
