@@ -143,7 +143,7 @@ ch_targetgenome = ch_genome_for_cram
         // Output a single CRAM file under the target genome name.
         ALIGNMENT_MERGE(
             ch_merge_input,
-            FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.map { meta, fasta, fai, gzi, dict -> [meta, fasta, fai, gzi] }
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, dict -> [meta, fasta, fai, gzi ] },
         )
     }
 
