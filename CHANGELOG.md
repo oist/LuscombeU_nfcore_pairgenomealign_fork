@@ -7,18 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
+- New `--multi_cram` option to produce a multi-query CRAM file combining all the alignments ([#60](https://github.com/nf-core/pairgenomealign/pull/60)).
 - New `--multiqc_thumbs` option to produce alignment thumbnails in the MultiQC report ([#93](https://github.com/nf-core/pairgenomealign/pull/93)).
 - New `--strand` option to index only one strand of the genome, which reduces memory usage at the expense of speed, and suppresses `-/+` alignments ([#97](https://github.com/nf-core/pairgenomealign/pull/97)).
 - New `--query` and `--queryName` convenience options to skip samplesheet creation when there is only one _query_ genome to align ([#112](https://github.com/nf-core/pairgenomealign/pull/112)).
+
+### `Fixed`
+
+- Using the nf-core version of the `FASTA_BGZIP_INDEX_DICT_SAMTOOLS` subworkflow that we just contributed.
 
 ### `Parameters`
 
 | Old parameter | New parameter      |
 | ------------- | ------------------ |
+|               | `--multi_cram`     |
 |               | `--multiqc_thumbs` |
 |               | `--query`          |
 |               | `--queryName`      |
 |               | `--strand`         |
+
+### `Dependencies`
+
+| Dependency          | Old version | New version |
+| ------------------- | ----------- | ----------- |
+| `SAMTOOLS_BGZIP`    | 1.21        |             |
+| `SAMTOOLS_DICT`     | 1.21        | 1.23.1      |
+| `SAMTOOLS_FAIDX`    | 1.21        | 1.23.1      |
+| `SAMTOOLS_MERGE`    |             | 1.23.1      |
+| `HTSLIB_BGZIPTABIX` |             | 1.23.1      |
 
 ## [v2.2.3](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.3) "Reitou mikan" - [May 20th 2026]
 

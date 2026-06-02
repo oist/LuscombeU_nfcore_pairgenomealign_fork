@@ -51,6 +51,7 @@ The parameters are described in details in the [online documentation](https://nf
 - `--m2m` enables the computation of the _many-to-many_ alignment, which reports alignments without enforcing uniqueness. This mode is required for self‑alignments and is useful for duplication or repeat analyses, but can exhaust computing resources on large or highly repetitive genomes.
 - The `--skip_dotplot_*` options disable dotplot visualisations. This is particularly useful when comparing very similar and repetitive genomes (for example, two vertebrate genomes from the same species), where dotplots other than the _one‑to‑one_ alignment can become extremely dense and difficult to interpret, without affecting the underlying alignments.
 - Users who need formats other than MAF can use the `--export_aln_to` parameter to generate additional coordinate‑based (PSL, GFF) or full alignment (SAM/BAM/CRAM) outputs for downstream analyses. Other formats like Axt or Chain are also supported.
+- `--multi_cram` produces a single CRAM file that combines all alignments. It is neither a pangenome nor a multiple sequence alignment; however, once you make use of it—by loading it into the [Integrative Genomics Viewer](https://igv.org/), or extracting slices and converting them into multiple sequence alignments—it becomes a very powerful resource.
 
 ## Fixed arguments (taken from the [LAST cookbook][] and the [LAST tuning][] manual)
 
