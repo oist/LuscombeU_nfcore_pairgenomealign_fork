@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 
 - Using the nf-core version of the `FASTA_BGZIP_INDEX_DICT_SAMTOOLS` subworkflow that we just contributed.
+- Check for input file existence in the parameter schema [#51](https://github.com/nf-core/pairgenomealign/pull/51)).
 
 ### `Parameters`
 

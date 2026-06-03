@@ -15,6 +15,7 @@
             "properties": {
                 "target": {
                     "type": "string",
+                    "exists": true,
                     "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
                     "format": "file-path",
                     "description": "Path or URL to a FASTA genome file for the _target_ genome.",
@@ -22,6 +23,7 @@
                 },
                 "query": {
                     "type": "string",
+                    "exists": true,
                     "description": "Path or URL to a FASTA genome file for the _query_ genome.",
                     "fa_icon": "fas fa-file-code",
                     "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
@@ -126,6 +128,7 @@
                 },
                 "lastal_params": {
                     "type": "string",
+                    "exists": true,
                     "description": "Path to a file containing alignment parameters or a scoring matrix. If this option is used, `last-train` will be skipped and alignment parameters will be the same for each query.",
                     "fa_icon": "far fa-file-alt"
                 },
