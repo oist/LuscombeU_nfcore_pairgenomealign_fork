@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `--multiqc_thumbs` option to produce alignment thumbnails in the MultiQC report ([#93](https://github.com/nf-core/pairgenomealign/issues/93)).
 - New `--strand` option to index only one strand of the genome, which reduces memory usage at the expense of speed, and suppresses `-/+` alignments ([#97](https://github.com/nf-core/pairgenomealign/issues/97)).
 - New `--query` and `--queryName` convenience options to skip samplesheet creation when there is only one _query_ genome to align ([#112](https://github.com/nf-core/pairgenomealign/issues/112)).
-- In the GFF export format, the _target_ genome sequence lenghts are now exported in `##sequence-region` fields ([#70](https://github.com/nf-core/pairgenomealign/issues/70)).
+- In the GFF export format, the _target_ genome sequence lengths are now exported in `##sequence-region` fields ([#70](https://github.com/nf-core/pairgenomealign/issues/70)).
 
 ### `Fixed`
 
