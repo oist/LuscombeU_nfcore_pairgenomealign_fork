@@ -95,7 +95,7 @@ workflow PAIRGENOMEALIGN {
 
     ch_genome_for_cram = channel.value( [[:], [], [], [], [], []] )
     export_formats = params.export_aln_to.tokenize(',')
-    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam')) {
+    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('gff')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_genome_for_cram = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
     }
