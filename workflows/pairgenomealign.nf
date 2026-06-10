@@ -46,6 +46,7 @@ workflow PAIRGENOMEALIGN {
 
     // Extract coordinates of poly-N regions; they are often contig boundaries in scaffolds
     //
+    if ( ! params.reads ) {
     CUTN_TARGET (
         // Avoid file name conflicts when target genome is also in the list of queries
         ch_targetgenome.map { meta, file -> [ [id:'targetGenome'] , file ] }
@@ -53,6 +54,14 @@ workflow PAIRGENOMEALIGN {
     CUTN_QUERY (
         ch_samplesheet
     )
+    // Prefix query ids with target genome name before producing alignment files
+    //
+    ch_samplesheet = ch_samplesheet
+        .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
+    ch_seqtk_cutn_query = CUTN_QUERY.out.bed
+        .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
+
+    }
 
     // Allow to skip statistics on contig length and GC content
     //
@@ -65,13 +74,6 @@ workflow PAIRGENOMEALIGN {
         MULTIQC_ASSEMBLYSCAN_PLOT_DATA ( assemblyscan_sorted_json_files )
         ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_ASSEMBLYSCAN_PLOT_DATA.out.tsv)
     }
-
-    // Prefix query ids with target genome name before producing alignment files
-    //
-    ch_samplesheet = ch_samplesheet
-        .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
-    ch_seqtk_cutn_query = CUTN_QUERY.out.bed
-        .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
 
     // Align with either the many-to-many or the many-to-one subworkflow
     // and collect the output under a fixed name
