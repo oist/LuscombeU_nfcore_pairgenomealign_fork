@@ -169,8 +169,8 @@
                 "multi_cram": {
                     "type": "boolean",
                     "fa_icon": "fas fa-align-center",
-                    "description": "kjhkjh",
-                    "help_text": "aCX"
+                    "description": "Produce a multi-query CRAM file combining all the alignments.",
+                    "help_text": "Each read group in the CRAM file represents a one-to-one alignment of a _query_ genome to the _target_. This is neither a pangenome nor a multiple sequence alignment, but is useful for visualisation in genome browsers or exporting real MSAs from genomic regions of interest."
                 }
             },
             "fa_icon": "fas fa-cogs"
