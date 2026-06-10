@@ -70,22 +70,6 @@ workflow NFCORE_PAIRGENOMEALIGN {
 workflow {
 
     main:
-    // Validate mutually exclusive parameters
-    if (params.input && params.query) {
-        error """
-        ❌ Invalid parameter combination
-
-        You provided both:
-          --input  (sample sheet)
-          --query  (single genome)
-
-        These options are mutually exclusive.
-
-        👉 Use only one:
-           • --input : for multiple samples via a sample sheet
-           • --query : for a single query genome (no sample sheet required)
-        """
-    }
     //
     // SUBWORKFLOW: Run initialisation tasks
     //
@@ -107,21 +91,11 @@ workflow {
         .map { file_obj -> [ [id:params.targetName], file_obj] }
         .set { ch_target }
 
-    if ( params.query ) {
-        channel
-            .value( params.query )
-            .map { filename -> file(filename, checkIfExists: true) }
-            .map { file_obj -> [ [id:params.queryName],  file_obj] }
-            .set { ch_query }
-    } else {
-        ch_query = PIPELINE_INITIALISATION.out.samplesheet
-    }
-
     //
     // WORKFLOW: Run main workflow
     //
     NFCORE_PAIRGENOMEALIGN (
-        ch_query,
+        PIPELINE_INITIALISATION.out.samplesheet,
         ch_target
     )
     //
