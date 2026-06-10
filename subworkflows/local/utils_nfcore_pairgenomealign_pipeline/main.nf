@@ -135,6 +135,12 @@ workflow PIPELINE_INITIALISATION {
             .set { ch_samplesheet }
     }
 
+    if ( params.reads ) {
+        ch_samplesheet = ch_samplesheet.map { sample, _fasta,  fastq -> [sample, fastq] }
+    } else {
+        ch_samplesheet = ch_samplesheet.map { sample,  fasta, _fastq -> [sample, fasta] }
+    }
+
     emit:
     samplesheet = ch_samplesheet
     versions    = ch_versions

@@ -15,6 +15,7 @@ include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairali
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
 include { SEQTK_CUTN as CUTN_QUERY         } from '../modules/nf-core/seqtk/cutn/main'
 include { PAIRALIGN_M2O                    } from '../subworkflows/local/pairalign_m2o/main'
+include { PAIRALIGN_READS                  } from '../subworkflows/local/pairalign_reads/main'
 include { MULTIQC                          } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap                 } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc             } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -55,7 +56,7 @@ workflow PAIRGENOMEALIGN {
 
     // Allow to skip statistics on contig length and GC content
     //
-    if (! params.skip_assembly_qc ) {
+    if ( !(params.reads || params.skip_assembly_qc) ) {
         ASSEMBLYSCAN ( ch_samplesheet )
         assemblyscan_sorted_json_files = ASSEMBLYSCAN.out.report
           .toSortedList { a, b -> a[0].id <=> b[0].id }
@@ -75,7 +76,12 @@ workflow PAIRGENOMEALIGN {
     // Align with either the many-to-many or the many-to-one subworkflow
     // and collect the output under a fixed name
     //
-    if (!(params.m2m)) {
+    if (params.reads) {
+        PAIRALIGN_READS (
+            ch_targetgenome,
+            ch_samplesheet
+        )
+    } else if (!(params.m2m)) {
         PAIRALIGN_M2O (
             ch_targetgenome,
             ch_samplesheet,

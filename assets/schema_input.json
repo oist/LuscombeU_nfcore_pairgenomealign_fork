@@ -19,8 +19,19 @@
                 "exists": true,
                 "pattern": "^\\S+\\.f(ast|n)?a(\\.gz)?$",
                 "errorMessage": "Fasta file for genomes must be provided, cannot contain spaces and must have extension `.fa`, `.fa.gz`, `.fna`, `.fna.gz`, `.fasta` or `.fasta.gz`"
+            },
+            "fastq": {
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+                "pattern": "^\\S+\\.f(ast|n)?q(\\.gz)?$",
+                "errorMessage": "Optional Fastq file for reads can be provided. Their names cannot contain spaces and must have extension `.fq`, `.fq.gz`, `.fnq`, `.fnq.gz`, `.fastq` or `.fastq.gz`"
             }
         },
-        "required": ["sample", "fasta"]
+        "required": ["sample"],
+        "anyOf": [
+            { "required": ["fasta"] },
+            { "required": ["fastq"] }
+        ]
     }
 }

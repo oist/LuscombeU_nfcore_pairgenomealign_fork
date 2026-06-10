@@ -16,6 +16,7 @@ process LAST_MAFCONVERT {
 
     output:
     tuple val(meta), path("*.{axt.gz,bam,bed.gz,blast.gz,blasttab.gz,chain.gz,cram,gff.gz,html.gz,psl.gz,sam.gz,tab.gz}"), emit: alignment
+    tuple val(meta), path("*.{bai,crai}"), emit: index
     // last-dotplot has no --version option so let's use lastal from the same suite
     tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
 
@@ -24,6 +25,7 @@ process LAST_MAFCONVERT {
 
     script:
     def args = task.ext.args ?: ''
+    def args2 = task.ext.args2 ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     set -o pipefail
@@ -76,7 +78,7 @@ process LAST_MAFCONVERT {
             export REF_PATH='.'
             # Note 4: CRAM version 3.0 is enforced until htsjdk, and therefore nf-test, supports 3.1
             maf-convert $args \$DICT_ARGS sam $maf -r 'ID:${meta.id} SM:${meta.id}' |
-                samtools sort -O cram,version=3.0 -o ${prefix}.cram
+                samtools sort -O cram,version=3.0 -o ${prefix}.cram $args2
             ;;
         *)
             maf-convert $args $format $maf |
