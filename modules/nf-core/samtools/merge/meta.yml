@@ -1,11 +1,10 @@
-name: samtools_faidx
-description: Index FASTA file, and optionally generate a file of chromosome
-  sizes
+name: samtools_merge
+description: Merge BAM or CRAM file
 keywords:
-  - index
-  - fasta
-  - faidx
-  - chromosome
+  - merge
+  - bam
+  - sam
+  - cram
 tools:
   - samtools:
       description: |
@@ -15,72 +14,78 @@ tools:
       homepage: http://www.htslib.org/
       documentation: http://www.htslib.org/doc/samtools.html
       doi: 10.1093/bioinformatics/btp352
-      licence:
-        - "MIT"
+      licence: ["MIT"]
       identifier: biotools:samtools
 input:
   - - meta:
         type: map
         description: |
+          Groovy Map containing sample information
+          e.g. [ id:'test', single_end:false ]
+    - input_files:
+        type: file
+        description: BAM/CRAM file
+        pattern: "*.{bam,cram,sam}"
+        ontologies: []
+    - index_files:
+        type: file
+        description: BAI/CRAI/CSI index file
+        pattern: "*.{bai,crai,csi}"
+        ontologies: []
+  - - meta2:
+        type: map
+        description: |
           Groovy Map containing reference information
-          e.g. [ id:'test' ]
+          e.g. [ id:'genome' ]
     - fasta:
         type: file
-        description: FASTA file
-        pattern: "*.{fa,fasta}"
+        description: Reference file the CRAM was created with (optional)
+        pattern: "*.{fasta,fa}"
         ontologies: []
     - fai:
         type: file
-        description: FASTA index file
-        pattern: "*.{fai}"
+        description: Index of the reference file the CRAM was created with (optional)
+        pattern: "*.fai"
         ontologies: []
-  - get_sizes:
-      type: boolean
-      description: use cut to get the sizes of the index (true) or not (false)
+    - gzi:
+        type: file
+        description: Index of the compressed reference file the CRAM was created with
+          (optional)
+        pattern: "*.gzi"
+        ontologies: []
 output:
-  fa:
+  bam:
     - - meta:
           type: map
           description: |
             Groovy Map containing sample information
             e.g. [ id:'test', single_end:false ]
-      - "*.{fa,fasta}":
+      - ${prefix}.bam:
           type: file
-          description: FASTA file
-          pattern: "*.{fa}"
+          description: BAM file
+          pattern: "*.{bam}"
           ontologies: []
-  sizes:
+  cram:
     - - meta:
           type: map
           description: |
             Groovy Map containing sample information
             e.g. [ id:'test', single_end:false ]
-      - "*.sizes":
+      - ${prefix}.cram:
           type: file
-          description: File containing chromosome lengths
-          pattern: "*.{sizes}"
+          description: CRAM file
+          pattern: "*.{cram}"
           ontologies: []
-  fai:
+  index:
     - - meta:
           type: map
           description: |
             Groovy Map containing sample information
             e.g. [ id:'test', single_end:false ]
-      - "*.fai":
+      - "*.{bai,crai,csi}":
           type: file
-          description: FASTA index file
-          pattern: "*.{fai}"
-          ontologies: []
-  gzi:
-    - - meta:
-          type: map
-          description: |
-            Groovy Map containing sample information
-            e.g. [ id:'test', single_end:false ]
-      - "*.gzi":
-          type: file
-          description: Optional gzip index file for compressed inputs
-          pattern: "*.gzi"
+          description: BAM index file (optional)
+          pattern: "*.{bai,crai,csi}"
           ontologies: []
   versions_samtools:
     - - ${task.process}:
@@ -90,8 +95,9 @@ output:
           type: string
           description: The tool name
       - "samtools version | sed '1!d;s/.* //'":
-          type: eval
+          type: string
           description: The command used to generate the version of the tool
+
 topics:
   versions:
     - - ${task.process}:
@@ -101,13 +107,16 @@ topics:
           type: string
           description: The tool name
       - "samtools version | sed '1!d;s/.* //'":
-          type: eval
+          type: string
           description: The command used to generate the version of the tool
 authors:
-  - "@drpatelh"
-  - "@ewels"
-  - "@phue"
-maintainers:
+  - "@yuukiiwa"
   - "@maxulysse"
-  - "@phue"
+  - "@FriederikeHanssen"
+  - "@ramprasadn"
+maintainers:
+  - "@yuukiiwa"
+  - "@maxulysse"
+  - "@FriederikeHanssen"
+  - "@ramprasadn"
   - "@matthdsm"

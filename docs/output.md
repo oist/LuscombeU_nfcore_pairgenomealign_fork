@@ -44,10 +44,14 @@ Basic statistics on nucleotide content and contig length are collected for align
   - `*.o2o_aln.maf.gz` is the _**one-to-one**_ alignment between the _target_ and _query_ genomes.
   - `*.o2o_aln.tsv` reports nucleotide percent identity of the _**one-to-one**_ alignment for MultiQC.
   - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_aln_to` parameter. These extra files are always compressed with gzip when their format is text-based. The SAM/BAM/CRAM files are always sorted. Their header features all sequences from the _target_ genome, including the ones that did not align to the _query_ so that alignment files can be merged without disturbing the sort order.
+  - The _target_ genome sequence, compressed with `bgzip` and indexed by `samtools` is also present when BAM or CRAM files are produced.
+  - A multi-_query_ CRAM sequence is present when `--multi_cram` is used, named like the _target_ genome but with the `cram` suffix.
 
 </details>
 
 Genomes are aligned witn [`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst) after alignment parameters have been determined with [`last-train`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-train.rst). _**Many-to-many**_ alignments are progressively converted to _**one-to-one**_ with [`last-split`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst).
+
+To speed up alignment, both strands of the target genome are indexed. This doubles memory usage and may produce output files containing `-/+` alignments, which are not supported by some downstream pipelines. To disable this behavior, use `--strand forward`.
 
 ### Dot plots
 

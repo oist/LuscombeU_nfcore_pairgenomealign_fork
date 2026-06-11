@@ -14,7 +14,7 @@ You need at least two genomes, a _target_, which will be indexed, and one or mor
 
 The target genome sequence is taken from a FASTA-formated file passed by the `--target` parameter. Its masking information (sequences in lower-case letters) is first discarded, and then simple repeats (like `cacacacacacacacac`) are converted to lower-case (`lastdb -R01`). The lowercased letters in the _target_ **and** in the _query_ will be excluded for initial matches (`lastdb -c`). Both strands of the genome are indexed (`lastdb -S2`).
 
-### Samplesheet for query genome(s)
+### Query genome(s)
 
 You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use the `--input` parameter to specify its location. It has to be a comma-separated file with 2 columns, a header row and single or multiple sample rows (genome samples) as shown in the examples below.
 
@@ -36,6 +36,8 @@ Each row represents a fasta file. Use multiple rows as in the example above to a
 
 An [example samplesheet](../assets/samplesheet_full.csv) has been provided with the pipeline.
 
+For your convenience when you have only one _query_ genome, you can skip the creation of the samplesheet and use the `--query` and `--queryName` options instead of `--input`.
+
 ## Options
 
 The parameters are described in details in the [online documentation](https://nf-co.re/pairgenomealign/parameters). Expert users can pass extra command line arguments to LAST commands. Apart from this the following options are of special importance:
@@ -49,6 +51,7 @@ The parameters are described in details in the [online documentation](https://nf
 - `--m2m` enables the computation of the _many-to-many_ alignment, which reports alignments without enforcing uniqueness. This mode is required for self‑alignments and is useful for duplication or repeat analyses, but can exhaust computing resources on large or highly repetitive genomes.
 - The `--skip_dotplot_*` options disable dotplot visualisations. This is particularly useful when comparing very similar and repetitive genomes (for example, two vertebrate genomes from the same species), where dotplots other than the _one‑to‑one_ alignment can become extremely dense and difficult to interpret, without affecting the underlying alignments.
 - Users who need formats other than MAF can use the `--export_aln_to` parameter to generate additional coordinate‑based (PSL, GFF) or full alignment (SAM/BAM/CRAM) outputs for downstream analyses. Other formats like Axt or Chain are also supported.
+- `--multi_cram` produces a single CRAM file that combines all alignments. It is neither a pangenome nor a multiple sequence alignment; however, once you make use of it—by loading it into the [Integrative Genomics Viewer](https://igv.org/), or extracting slices and converting them into multiple sequence alignments—it becomes a very powerful resource.
 
 ## Fixed arguments (taken from the [LAST cookbook][] and the [LAST tuning][] manual)
 

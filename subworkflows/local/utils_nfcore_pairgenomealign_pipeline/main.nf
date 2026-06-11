@@ -54,6 +54,22 @@ workflow PIPELINE_INITIALISATION {
     // Validate parameters and generate parameter summary to stdout
     //
 
+    if (params.input && params.query) {
+        error """
+        ❌ Invalid parameter combination
+
+        You provided both:
+          --input  (sample sheet)
+          --query  (single genome)
+
+        These options are mutually exclusive.
+
+        👉 Use only one:
+           • --input : for multiple samples via a sample sheet
+           • --query : for a single query genome (no sample sheet required)
+        """
+    }
+
     def before_text = ""
     def after_text = ""
     before_text = """
@@ -107,9 +123,17 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
-    channel
-        .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-        .set { ch_samplesheet }
+    if ( params.query ) {
+        channel
+            .value( params.query )
+            .map { filename -> file(filename, checkIfExists: true) }
+            .map { file_obj -> [ [id:params.queryName],  file_obj] }
+            .set { ch_samplesheet }
+    } else {
+        channel
+            .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
+            .set { ch_samplesheet }
+    }
 
     emit:
     samplesheet = ch_samplesheet

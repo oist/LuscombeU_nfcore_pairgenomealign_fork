@@ -5,7 +5,11 @@
 */
 
 include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
+include { LAST_MAFCONVERT as ALIGNMENT_CRAM} from '../modules/nf-core/last/mafconvert/main'
 include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
+include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
+include { LAST_DOTPLOT as MULTIQC_THUMBS   } from '../modules/nf-core/last/dotplot/main'
+include { MULTIQC_THUMBS_HTML              } from '../modules/local/multiqc_thumbs_html/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
 include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
@@ -15,7 +19,7 @@ include { MULTIQC                          } from '../modules/nf-core/multiqc/ma
 include { paramsSummaryMap                 } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc             } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML           } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/local/fasta_bgzip_index_dict_samtools'
+include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/nf-core/fasta_bgzip_index_dict_samtools/main'
 include { methodsDescriptionText           } from '../subworkflows/local/utils_nfcore_pairgenomealign_pipeline'
 
 /*
@@ -89,31 +93,74 @@ workflow PAIRGENOMEALIGN {
         pairalign_out = PAIRALIGN_M2M.out
     }
 
-    // If we export to CRAM we need a BGZIPped genome, indexed, and its sequence dictionary,
-    // if we export to SAM or BAM this is also nice to have,
-    // otherwise we need placeholders.
-    ch_targetgenome_faz = [[],[]]
-    ch_targetgenome_fai = [[],[]]
-    ch_targetgenome_gzi = [[],[]]
-    ch_targetgenome_dic = [[],[]]
-
+    ch_genome_for_cram = channel.value( [[:], [], [], [], [], []] )
     export_formats = params.export_aln_to.tokenize(',')
-    if (export_formats.contains('cram') | export_formats.contains('bam')) {
+    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('gff')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
-        ch_targetgenome_faz = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_gz
-        ch_targetgenome_fai = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fai
-        ch_targetgenome_gzi = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.gzi
-        ch_targetgenome_dic = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.dict
+        ch_genome_for_cram = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
+    }
+
+    ch_targetgenome = ch_genome_for_cram
+      .multiMap { meta, fasta, fai, gzi, _sizes, dict ->
+          fasta: [meta, fasta]
+          fai:   [meta, fai]
+          gzi:   [meta, gzi]
+          dict:  [meta, dict]
     }
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(Channel.fromList(export_formats)),
-            ch_targetgenome_faz,
-            ch_targetgenome_fai,
-            ch_targetgenome_gzi,
-            ch_targetgenome_dic
+            ch_targetgenome.fasta,
+            ch_targetgenome.fai,
+            ch_targetgenome.gzi,
+            ch_targetgenome.dict
         )
+    }
+
+    if (params.multi_cram) {
+        // We want the read group IDs to be just the query genome name (which is already long enough).
+        o2o_alignments = pairalign_out.o2o.map { meta, alns ->
+            def newMeta = meta.clone()    // Avoids unexpected propagation to pairalign_out.o2o's meta.id.
+            newMeta.id = newMeta.id.replaceAll(/^.*___/, '')
+            [newMeta, alns]
+        }
+        ALIGNMENT_CRAM(
+            o2o_alignments.map {it + "cram"},
+            ch_targetgenome.fasta,
+            ch_targetgenome.fai,
+            ch_targetgenome.gzi,
+            ch_targetgenome.dict
+        )
+        // Collect all per-query CRAMs into a single merged CRAM per target genome
+        ch_merge_input = ALIGNMENT_CRAM.out.alignment
+            // Rename and use as grouping key
+            .map { meta, cram -> tuple(params.targetName, cram) }
+            // group all CRAMs
+            .groupTuple()
+            // convert to SAMTOOLS_MERGE input format
+            .map { id, crams -> tuple([id: id], crams, []) }
+        // Output a single CRAM file under the target genome name.
+        ALIGNMENT_MERGE(
+            ch_merge_input,
+            ch_genome_for_cram.map { meta, fasta, fai, gzi, _sizes, _dict -> [meta, fasta, fai, gzi ] },
+        )
+    }
+
+    if (params.multiqc_thumbs != 0) {
+        MULTIQC_THUMBS(
+            pairalign_out.o2o.map { x -> [x[0], x[1], []] },
+            [[],[]],
+            "png",
+            params.dotplot_filter
+        )
+        MULTIQC_THUMBS_HTML(
+            MULTIQC_THUMBS.out.plot
+                .map { meta, file -> file }
+                .collect(),
+            params.multiqc_thumbs
+        )
+        ch_multiqc_files = ch_multiqc_files.mix(MULTIQC_THUMBS_HTML.out.html)
     }
 
     // Collate and save software versions

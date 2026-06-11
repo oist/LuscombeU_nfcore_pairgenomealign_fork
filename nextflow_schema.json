@@ -10,8 +10,25 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "target", "outdir"],
+            "required": ["target", "outdir"],
+            "oneOf": [{ "required": ["input"] }, { "required": ["query"] }],
             "properties": {
+                "target": {
+                    "type": "string",
+                    "exists": true,
+                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
+                    "format": "file-path",
+                    "description": "Path or URL to a FASTA genome file for the _target_ genome.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "query": {
+                    "type": "string",
+                    "exists": true,
+                    "description": "Path or URL to a FASTA genome file for the _query_ genome.",
+                    "fa_icon": "fas fa-file-code",
+                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
+                    "help_text": "Simpler than creating a sample sheet when there is only one _query_ genome."
+                },
                 "input": {
                     "type": "string",
                     "format": "file-path",
@@ -23,18 +40,18 @@
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pairgenomealign/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
-                "target": {
-                    "type": "string",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "format": "file-path",
-                    "description": "Path or URL to a FASTA genome file for the _target_ genome.",
-                    "fa_icon": "far fa-file-code"
-                },
                 "targetName": {
                     "type": "string",
                     "default": "target",
                     "help_text": "By default the _target_ genome is named `target` and this name is concatenated with the sample IDs using `___` as a separator to construct alignment file names. Use this option to provide a more informative name for the target genome.",
                     "description": "Target genome name.",
+                    "fa_icon": "fas fa-file-signature"
+                },
+                "queryName": {
+                    "type": "string",
+                    "default": "query",
+                    "description": "Query genome name.",
+                    "help_text": "By default the _query_ genome is named `query` and this name is concatenated with the sample IDs using `___` as a separator to construct alignment file names. Use this option to provide a more informative name for the query genome.",
                     "fa_icon": "fas fa-file-signature"
                 },
                 "skip_assembly_qc": {
@@ -86,6 +103,14 @@
                     "description": "Customise the way to mask the _target_ genome.",
                     "default": "tantan",
                     "fa_icon": "fas fa-theater-masks"
+                },
+                "strand": {
+                    "type": "string",
+                    "default": "both",
+                    "fa_icon": "fas fa-grip-lines",
+                    "description": "Index both strand, or just one.",
+                    "enum": ["both", "forward"],
+                    "help_text": "This is the `-S` parameter of `lastdb`. By default, both strands are indexed.  This roughly doubles the speed of the alignment, but also the memory usage. Also, it causes the presence of -/+ alignments in some output files, which is not supported by toolchains. Turn it off by setting it to `forward`."
                 }
             }
         },
@@ -95,14 +120,6 @@
             "description": "Arguments for the lastdb, last-train, lastal and last-split programs.",
             "default": "",
             "properties": {
-                "export_aln_to": {
-                    "type": "string",
-                    "default": "no_export",
-                    "description": "Convert the final _one-to-one_ alignment to a different format than MAF.",
-                    "pattern": "^((no_export|axt|bam|bed|blast|blasttab|blasttab+|chain|cram|gff|html|psl|sam|tab)?,?)*(?<!,)$",
-                    "fa_icon": "fas fa-file-export",
-                    "help_text": "Multiple formats separated with commas. Supported formats are `axt`, `bam`, `bed`, `blast`, `blasttab`, `blasttab+`, `chain`, `cram`, `gff`, `html`, `psl`, `sam` and `tab`. This is useful for downstream tools that do not parse MAF. The files in text format are always compressed with `gzip`."
-                },
                 "m2m": {
                     "type": "boolean",
                     "description": "Make a many to many alignment",
@@ -111,6 +128,7 @@
                 },
                 "lastal_params": {
                     "type": "string",
+                    "exists": true,
                     "description": "Path to a file containing alignment parameters or a scoring matrix. If this option is used, `last-train` will be skipped and alignment parameters will be the same for each query.",
                     "fa_icon": "far fa-file-alt"
                 },
@@ -130,6 +148,29 @@
                     "default": 0.00001,
                     "fa_icon": "fas fa-cut",
                     "description": "Mismap probability cutoff for `last-split`."
+                }
+            },
+            "fa_icon": "fas fa-cogs"
+        },
+        "export_options": {
+            "title": "Export options",
+            "type": "object",
+            "description": "Export the alignments to various formats",
+            "default": "",
+            "properties": {
+                "export_aln_to": {
+                    "type": "string",
+                    "default": "no_export",
+                    "description": "Convert the final _one-to-one_ alignment to a different format than MAF.",
+                    "pattern": "^((no_export|axt|bam|bed|blast|blasttab|blasttab+|chain|cram|gff|html|psl|sam|tab)?,?)*(?<!,)$",
+                    "fa_icon": "fas fa-file-export",
+                    "help_text": "Multiple formats separated with commas. Supported formats are `axt`, `bam`, `bed`, `blast`, `blasttab`, `blasttab+`, `chain`, `cram`, `gff`, `html`, `psl`, `sam` and `tab`. This is useful for downstream tools that do not parse MAF. The files in text format are always compressed with `gzip`."
+                },
+                "multi_cram": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-align-center",
+                    "description": "Produce a multi-query CRAM file combining all the alignments.",
+                    "help_text": "Each read group in the CRAM file represents a one-to-one alignment of a _query_ genome to the _target_. This is neither a pangenome nor a multiple sequence alignment, but is useful for visualisation in genome browsers or exporting real MSAs from genomic regions of interest."
                 }
             },
             "fa_icon": "fas fa-cogs"
@@ -189,6 +230,14 @@
                     "description": "Remove isolated alignments with the `maf-filter` tool.",
                     "help_text": "The filter often removes noise in the plots, but in some cases can also remove too much alignments. Be careful when interpreting the results.",
                     "fa_icon": "fas fa-filter"
+                },
+                "multiqc_thumbs": {
+                    "type": "integer",
+                    "default": 0,
+                    "fa_icon": "fas fa-th",
+                    "description": "Size of the alignments thumbnails in MultiQC (default 0 turns it off; 100 is a good value to start with).",
+                    "help_text": "Produces small pairwise alignment plots to be displayed in MultiQC. The value is the number of pixels given to the biggest genome. Labels and sequence boundaries are turned off.",
+                    "minimum": 0
                 }
             },
             "fa_icon": "fas fa-cogs"
@@ -391,6 +440,9 @@
         },
         {
             "$ref": "#/$defs/alignment_options"
+        },
+        {
+            "$ref": "#/$defs/export_options"
         },
         {
             "$ref": "#/$defs/dotplot_parameters"

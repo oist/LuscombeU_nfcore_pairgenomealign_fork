@@ -3,6 +3,41 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.3.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.3.0) "Umi budou" - [June 10th 2026]
+
+### `Added`
+
+- New `--multi_cram` option to produce a multi-query CRAM file combining all the alignments ([#60](https://github.com/nf-core/pairgenomealign/issues/60)).
+- New `--multiqc_thumbs` option to produce alignment thumbnails in the MultiQC report ([#93](https://github.com/nf-core/pairgenomealign/issues/93)).
+- New `--strand` option to index only one strand of the genome, which reduces memory usage at the expense of speed, and suppresses `-/+` alignments ([#97](https://github.com/nf-core/pairgenomealign/issues/97)).
+- New `--query` and `--queryName` convenience options to skip samplesheet creation when there is only one _query_ genome to align ([#112](https://github.com/nf-core/pairgenomealign/issues/112)).
+- In the GFF export format, the _target_ genome sequence lengths are now exported in `##sequence-region` fields ([#70](https://github.com/nf-core/pairgenomealign/issues/70)).
+
+### `Fixed`
+
+- Using the nf-core version of the `FASTA_BGZIP_INDEX_DICT_SAMTOOLS` subworkflow that we just contributed.
+- Check for input file existence in the parameter schema [#73](https://github.com/nf-core/pairgenomealign/issues/73)).
+
+### `Parameters`
+
+| Old parameter | New parameter      |
+| ------------- | ------------------ |
+|               | `--multi_cram`     |
+|               | `--multiqc_thumbs` |
+|               | `--query`          |
+|               | `--queryName`      |
+|               | `--strand`         |
+
+### `Dependencies`
+
+| Dependency          | Old version | New version |
+| ------------------- | ----------- | ----------- |
+| `SAMTOOLS_BGZIP`    | 1.21        |             |
+| `SAMTOOLS_DICT`     | 1.21        | 1.23.1      |
+| `SAMTOOLS_FAIDX`    | 1.21        | 1.23.1      |
+| `SAMTOOLS_MERGE`    |             | 1.23.1      |
+| `HTSLIB_BGZIPTABIX` |             | 1.23.1      |
+
 ## [v2.2.3](https://github.com/nf-core/pairgenomealign/releases/tag/2.2.3) "Reitou mikan" - [May 20th 2026]
 
 ### `Fixed`
@@ -28,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Merged output channels in `last/dotplot` ([#100](https://github.com/nf-core/pairgenomealign/issues/100))
 - Created missing `meta.yml` for subworkflows ([#101](https://github.com/nf-core/pairgenomealign/issues/101)).
 - Exclude PNG files from pipeline test, because not reproducible in conda.
+- Display the _target_ genome length in the MultiQC report ([#77](https://github.com/nf-core/pairgenomealign/issues/77)).
 
 ### `Dependencies`
 
