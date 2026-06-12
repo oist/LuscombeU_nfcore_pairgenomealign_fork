@@ -3,25 +3,25 @@
         "content": [
             {
                 "ALIGNMENT_DOTPLOT_M2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_DOTPLOT_O2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_EXP": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_LASTAL_M2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_LASTDB": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_SPLIT_O2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_TRAIN": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ASSEMBLYSCAN": {
                     "assemblyscan": "1.0.0"
@@ -36,7 +36,7 @@
                     "jq": "1.7.1"
                 },
                 "Workflow": {
-                    "nf-core/pairgenomealign": "v2.3.0"
+                    "nf-core/pairgenomealign": "v3.0.0dev"
                 }
             },
             [
@@ -94,15 +94,15 @@
                 "pipeline_info/nf_core_pairgenomealign_software_mqc_versions.yml"
             ],
             [
-                "target___test1.o2o_aln.maf.gz:md5,a5bef93ad94cd32e62503bbb993e17cf",
+                "target___test1.o2o_aln.maf.gz:md5,4f25a33e27b785dce27cb71a9af79526",
                 "target___test1.o2o_aln.tsv:md5,0400eb0d527a2e69d0ceaeff6e1e072c",
-                "target___test1.sam.gz:md5,1e7ce899a96c522af7cd716dda2addff",
-                "target___test1.train:md5,0024bdd7f4129fcecebeddc9e844389c",
+                "target___test1.sam.gz:md5,e7b814e19ea4379d3923f5c8aae040bc",
+                "target___test1.train:md5,f2c08f58e9cb212cec3d4f68a1480d1e",
                 "target___test1.train.tsv:md5,ffa807400265316cdf91de75286c1ac0",
-                "target___test2.o2o_aln.maf.gz:md5,35f2b1fda59aec6a2e7b90bf93d9bd07",
+                "target___test2.o2o_aln.maf.gz:md5,d914eb8fd498f9e98f67fe229aabe408",
                 "target___test2.o2o_aln.tsv:md5,6f0563aabaae562a5e38bb2e89fb2f79",
-                "target___test2.sam.gz:md5,8dcdb07614097a2a55f7c3f717eda97e",
-                "target___test2.train:md5,276f08718454c0b7b016b96474055100",
+                "target___test2.sam.gz:md5,846a0d5e7ae1cd3e9b05a76b91a7afda",
+                "target___test2.train:md5,0bf4875b5e05a328f061465fbdef0ed6",
                 "target___test2.train.tsv:md5,4d054581c85f745f4e21e0c436bcb6a6",
                 "test1.json:md5,bcef4e2bf296339c1ca7c513b483de96",
                 "test2.json:md5,3af6c8a55ed7c1cfeaa5bd8e8a336244",
@@ -116,7 +116,7 @@
                 "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7"
             ]
         ],
-        "timestamp": "2026-06-03T15:54:22.106030037",
+        "timestamp": "2026-06-12T12:02:12.051690503",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.4"
