@@ -5,6 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Development of v3.0.0 in progress…
 
+### `Fixed`
+
+- Update all modules to latest versions.
+- Use the default CRAM format from `samtools` (CRAM v3.1 as of `samtools` `1.23.1`) ([#86](https://github.com/nf-core/pairgenomealign/issues/86)).
+
+### `Dependencies`
+
+| Dependency | Old version   | New version   |
+| ---------- | ------------- | ------------- |
+| `LAST`     | 1611          | 1651          |
+| `SAMTOOLS` | 1.21 / 1.23.1 | 1.23.1 (only) |
+| `MultiQC`  | 1.34          | 1.35          |
+
 ## [v2.3.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.3.0) "Umi budou" - [June 10th 2026]
 
 ### `Added`
