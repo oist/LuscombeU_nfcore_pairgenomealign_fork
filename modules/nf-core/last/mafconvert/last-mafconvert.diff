@@ -1,22 +1,21 @@
 Changes in component 'nf-core/last/mafconvert'
 'modules/nf-core/last/mafconvert/environment.yml' is unchanged
-'modules/nf-core/last/mafconvert/meta.yml' is unchanged
 Changes in 'last/mafconvert/main.nf':
 --- modules/nf-core/last/mafconvert/main.nf
 +++ modules/nf-core/last/mafconvert/main.nf
 @@ -4,8 +4,8 @@
  
      conda "${moduleDir}/environment.yml"
-     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
--        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0b/0b03259f4457e393e47dfd87ea744afea462bd8614b14867e6b3640ae760f41f/data'
--        : 'community.wave.seqera.io/library/last_samtools:a6d74d4fe63f646a'}"
-+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
-+        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
+     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
+-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/33/338bf69d52491713e02bb9a9481af4102bf6fd2187b63b23e556dabcdc7004ee/data'
+-        : 'community.wave.seqera.io/library/last_samtools:487a90cd4bfaccb3'}"
++        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/df/df079f31c6d6b5f7eb2d70d5df113a92f27a3d897f5593056ef19cac6ed65578/data'
++        : 'community.wave.seqera.io/library/last_samtools_open-fonts:c77a5145ee22832c'}"
  
      input:
      tuple val(meta), path(maf), val(format)
 
-'modules/nf-core/last/mafconvert/main.nf.bak' was created
-'modules/nf-core/last/mafconvert/tests/main.nf.test' is unchanged
+'modules/nf-core/last/mafconvert/meta.yml' is unchanged
 'modules/nf-core/last/mafconvert/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/last/mafconvert/tests/main.nf.test' is unchanged
 ************************************************************

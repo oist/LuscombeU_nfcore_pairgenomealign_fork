@@ -13,37 +13,44 @@
                     "htslib/bgziptabix": {
                         "branch": "master",
                         "git_sha": "54e41f4ed3aead45054380a9befeb927612ffc91",
-                        "installed_by": ["fasta_bgzip_index_dict_samtools"]
+                        "installed_by": ["fasta_bgzip_index_dict_samtools"],
+                        "patch": "modules/nf-core/htslib/bgziptabix/htslib-bgziptabix.diff"
                     },
                     "last/dotplot": {
                         "branch": "master",
                         "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/last/dotplot/last-dotplot.diff"
                     },
                     "last/lastal": {
                         "branch": "master",
                         "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/last/lastal/last-lastal.diff"
                     },
                     "last/lastdb": {
                         "branch": "master",
                         "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/last/lastdb/last-lastdb.diff"
                     },
                     "last/mafconvert": {
                         "branch": "master",
                         "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/last/mafconvert/last-mafconvert.diff"
                     },
                     "last/split": {
                         "branch": "master",
                         "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/last/split/last-split.diff"
                     },
                     "last/train": {
                         "branch": "master",
                         "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/last/train/last-train.diff"
                     },
                     "multiqc": {
                         "branch": "master",
@@ -53,12 +60,14 @@
                     "samtools/dict": {
                         "branch": "master",
                         "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
-                        "installed_by": ["fasta_bgzip_index_dict_samtools", "modules"]
+                        "installed_by": ["fasta_bgzip_index_dict_samtools", "modules"],
+                        "patch": "modules/nf-core/samtools/dict/samtools-dict.diff"
                     },
                     "samtools/faidx": {
                         "branch": "master",
                         "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
-                        "installed_by": ["fasta_bgzip_index_dict_samtools", "modules"]
+                        "installed_by": ["fasta_bgzip_index_dict_samtools", "modules"],
+                        "patch": "modules/nf-core/samtools/faidx/samtools-faidx.diff"
                     },
                     "samtools/merge": {
                         "branch": "master",

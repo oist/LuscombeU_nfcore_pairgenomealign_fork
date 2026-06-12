@@ -4,8 +4,8 @@ process LAST_DOTPLOT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/94/947067f1acd9c6e32d70f433b95253a7a49b8d2c602ad18f3a5cd7284c03fdc3/data'
-        : 'community.wave.seqera.io/library/last_open-fonts:d68a91e3c95ee1c6'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/df/df079f31c6d6b5f7eb2d70d5df113a92f27a3d897f5593056ef19cac6ed65578/data'
+        : 'community.wave.seqera.io/library/last_samtools_open-fonts:c77a5145ee22832c'}"
 
     input:
     tuple val(meta), path(maf), path(annot_b)
