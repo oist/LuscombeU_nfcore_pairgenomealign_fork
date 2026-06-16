@@ -110,7 +110,7 @@ workflow PAIRGENOMEALIGN {
 
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
-            pairalign_out.o2o.combine(Channel.fromList(export_formats)),
+            pairalign_out.o2o.combine(channel.fromList(export_formats)),
             ch_targetgenome.fasta,
             ch_targetgenome.fai,
             ch_targetgenome.gzi,
