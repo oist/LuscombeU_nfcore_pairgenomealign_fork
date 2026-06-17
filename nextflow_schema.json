@@ -183,7 +183,7 @@
             "properties": {
                 "dotplot_width": {
                     "type": "integer",
-                    "default": 1000,
+                    "default": 1200,
                     "description": "Maximum width of the dot plots, in pixels.",
                     "fa_icon": "fas fa-arrows-alt-h"
                 },
