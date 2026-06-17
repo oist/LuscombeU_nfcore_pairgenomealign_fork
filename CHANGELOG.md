@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
+- Compatible with Nextflow `26.04` "strict syntax" ([#120](https://github.com/nf-core/pairgenomealign/issues/120)).
+
 ### `Dependencies`
 
 | Dependency | Old version   | New version   |
