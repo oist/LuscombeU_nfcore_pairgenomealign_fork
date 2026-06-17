@@ -13,6 +13,7 @@ process LAST_SPLIT {
     output:
     tuple val(meta), path("*.maf.gz"), emit: maf
     tuple val(meta), path("*.tsv")   , emit: multiqc
+    tuple val(meta), path("*.matrix.txt"), emit: matrix
     // last-dotplot has no --version option so let's use lastal from the same suite
     tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
 
@@ -78,6 +79,7 @@ process LAST_SPLIT {
         last-split $args |
         tee >(get_genome_stats > ${prefix}.genomestats.txt) |
         tee >(gzip --no-name   > ${prefix}.maf.gz) |
+        tee >(maf_to_matrix.py > ${prefix}.matrix.txt) |
         maf-convert psl |
         calculate_psl_metrics  > ${prefix}.alignmentstats.txt
 

@@ -43,6 +43,7 @@
                 "alignment",
                 "alignment/target___test1.m2o_plt.png",
                 "alignment/target___test1.o2o_aln.maf.gz",
+                "alignment/target___test1.o2o_aln.matrix.txt",
                 "alignment/target___test1.o2o_aln.tsv",
                 "alignment/target___test1.o2o_plt.png",
                 "alignment/target___test1.sam.gz",
@@ -50,6 +51,7 @@
                 "alignment/target___test1.train.tsv",
                 "alignment/target___test2.m2o_plt.png",
                 "alignment/target___test2.o2o_aln.maf.gz",
+                "alignment/target___test2.o2o_aln.matrix.txt",
                 "alignment/target___test2.o2o_aln.tsv",
                 "alignment/target___test2.o2o_plt.png",
                 "alignment/target___test2.sam.gz",
@@ -95,11 +97,13 @@
             ],
             [
                 "target___test1.o2o_aln.maf.gz:md5,4f25a33e27b785dce27cb71a9af79526",
+                "target___test1.o2o_aln.matrix.txt:md5,c16e864b50eafe5200e9f4e29d5e9845",
                 "target___test1.o2o_aln.tsv:md5,0400eb0d527a2e69d0ceaeff6e1e072c",
                 "target___test1.sam.gz:md5,e7b814e19ea4379d3923f5c8aae040bc",
                 "target___test1.train:md5,ef8c5281731d8c2e2125990f609e5fe6",
                 "target___test1.train.tsv:md5,ffa807400265316cdf91de75286c1ac0",
                 "target___test2.o2o_aln.maf.gz:md5,d914eb8fd498f9e98f67fe229aabe408",
+                "target___test2.o2o_aln.matrix.txt:md5,96c37304d315d8aac2b41c2c8403d308",
                 "target___test2.o2o_aln.tsv:md5,6f0563aabaae562a5e38bb2e89fb2f79",
                 "target___test2.sam.gz:md5,846a0d5e7ae1cd3e9b05a76b91a7afda",
                 "target___test2.train:md5,47ad817805e71f5482866bbf675a99cf",
@@ -116,7 +120,7 @@
                 "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7"
             ]
         ],
-        "timestamp": "2026-06-17T13:57:11.600702081",
+        "timestamp": "2026-06-17T18:17:35.763673964",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.3"

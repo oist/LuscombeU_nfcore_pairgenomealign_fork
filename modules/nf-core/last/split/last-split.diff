@@ -14,6 +14,22 @@ Changes in 'last/split/main.nf':
  
      input:
      tuple val(meta), path(maf)
+@@ -13,6 +13,7 @@
+     output:
+     tuple val(meta), path("*.maf.gz"), emit: maf
+     tuple val(meta), path("*.tsv")   , emit: multiqc
++    tuple val(meta), path("*.matrix.txt"), emit: matrix
+     // last-dotplot has no --version option so let's use lastal from the same suite
+     tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
+ 
+@@ -78,6 +79,7 @@
+         last-split $args |
+         tee >(get_genome_stats > ${prefix}.genomestats.txt) |
+         tee >(gzip --no-name   > ${prefix}.maf.gz) |
++        tee >(maf_to_matrix.py > ${prefix}.matrix.txt) |
+         maf-convert psl |
+         calculate_psl_metrics  > ${prefix}.alignmentstats.txt
+ 
 
 'modules/nf-core/last/split/meta.yml' is unchanged
 'modules/nf-core/last/split/tests/main.nf.test.snap' is unchanged
