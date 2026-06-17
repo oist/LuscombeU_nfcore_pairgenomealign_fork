@@ -97,12 +97,12 @@
                 "target___test1.o2o_aln.maf.gz:md5,4f25a33e27b785dce27cb71a9af79526",
                 "target___test1.o2o_aln.tsv:md5,0400eb0d527a2e69d0ceaeff6e1e072c",
                 "target___test1.sam.gz:md5,e7b814e19ea4379d3923f5c8aae040bc",
-                "target___test1.train:md5,f2c08f58e9cb212cec3d4f68a1480d1e",
+                "target___test1.train:md5,ef8c5281731d8c2e2125990f609e5fe6",
                 "target___test1.train.tsv:md5,ffa807400265316cdf91de75286c1ac0",
                 "target___test2.o2o_aln.maf.gz:md5,d914eb8fd498f9e98f67fe229aabe408",
                 "target___test2.o2o_aln.tsv:md5,6f0563aabaae562a5e38bb2e89fb2f79",
                 "target___test2.sam.gz:md5,846a0d5e7ae1cd3e9b05a76b91a7afda",
-                "target___test2.train:md5,0bf4875b5e05a328f061465fbdef0ed6",
+                "target___test2.train:md5,47ad817805e71f5482866bbf675a99cf",
                 "target___test2.train.tsv:md5,4d054581c85f745f4e21e0c436bcb6a6",
                 "test1.json:md5,bcef4e2bf296339c1ca7c513b483de96",
                 "test2.json:md5,3af6c8a55ed7c1cfeaa5bd8e8a336244",
@@ -116,7 +116,7 @@
                 "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7"
             ]
         ],
-        "timestamp": "2026-06-16T18:09:43.294827538",
+        "timestamp": "2026-06-17T13:57:11.600702081",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.3"
