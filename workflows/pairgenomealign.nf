@@ -36,12 +36,14 @@ workflow PAIRGENOMEALIGN {
     multiqc_logo
     multiqc_methods_description
     outdir
-    ch_targetgenome // channel: genome file read in from --target
 
     main:
 
     def ch_versions = channel.empty()
     def ch_multiqc_files = channel.empty()
+
+    ch_targetgenome = ch_samplesheet.map { meta, query, target -> [ [id:meta.targetName], target ] }.first()
+    ch_samplesheet  = ch_samplesheet.map { meta, query, target -> [ meta, query ] }
 
     // Extract coordinates of poly-N regions; they are often contig boundaries in scaffolds
     //

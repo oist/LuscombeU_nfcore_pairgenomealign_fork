@@ -124,16 +124,21 @@ workflow PIPELINE_INITIALISATION {
     //
 
     if ( params.query ) {
-        channel
+        ch_samplesheet = channel
             .value( params.query )
             .map { filename -> file(filename, checkIfExists: true) }
             .map { file_obj -> [ [id:params.queryName],  file_obj] }
-            .set { ch_samplesheet }
     } else {
-        channel
+        ch_samplesheet = channel
             .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-            .set { ch_samplesheet }
     }
+
+    ch_samplesheet = ch_samplesheet
+        .map { meta, query -> [
+            [id:meta.id, targetName:params.targetName],          // meta
+            query,                                               // query
+            file(params.target, checkIfExists: true)             // target
+        ] }
 
     emit:
     samplesheet = ch_samplesheet

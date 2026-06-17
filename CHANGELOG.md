@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Fixed`
 
 - Compatible with Nextflow `26.04` "strict syntax" ([#120](https://github.com/nf-core/pairgenomealign/issues/120)).
+- Merge _target_ and _query_ genome information in a single channel ([#119](https://github.com/nf-core/pairgenomealign/issues/119)).
 
 ### `Dependencies`
 

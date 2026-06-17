@@ -43,7 +43,6 @@ workflow NFCORE_PAIRGENOMEALIGN {
 
     take:
     samplesheet // channel: samplesheet read in from --input
-    target_genome // channel: genome file read in from --target
 
     main:
 
@@ -56,7 +55,6 @@ workflow NFCORE_PAIRGENOMEALIGN {
         params.multiqc_logo,
         params.multiqc_methods_description,
         params.outdir,
-        target_genome
     )
     emit:
     multiqc_report = PAIRGENOMEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html
@@ -85,18 +83,11 @@ workflow {
         params.show_hidden
     )
 
-    channel
-        .value( params.target )
-        .map { filename -> file(filename, checkIfExists: true) }
-        .map { file_obj -> [ [id:params.targetName], file_obj] }
-        .set { ch_target }
-
     //
     // WORKFLOW: Run main workflow
     //
     NFCORE_PAIRGENOMEALIGN (
-        PIPELINE_INITIALISATION.out.samplesheet,
-        ch_target
+        PIPELINE_INITIALISATION.out.samplesheet
     )
     //
     // SUBWORKFLOW: Run completion tasks
