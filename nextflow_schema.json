@@ -26,7 +26,7 @@
                     "exists": true,
                     "description": "Path or URL to a FASTA genome file for the _query_ genome.",
                     "fa_icon": "fas fa-file-code",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
+                    "pattern": "^\\S+\\.fn?(a|q)(sta|stq)?(\\.gz)?$",
                     "help_text": "Simpler than creating a sample sheet when there is only one _query_ genome."
                 },
                 "input": {
