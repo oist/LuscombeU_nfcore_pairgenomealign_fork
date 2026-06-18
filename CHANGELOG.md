@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Breaking changes`
 
+- Simplify output file names by removing `_aln` and `_plt`.
 - Update all modules to latest versions.
 - Use the default CRAM format from `samtools` (CRAM v3.1 as of `samtools` `1.23.1`) ([#86](https://github.com/nf-core/pairgenomealign/issues/86)).
 - Make bigger plots, and orient sequence names vertically for the _target_ genome ([#118](https://github.com/nf-core/pairgenomealign/issues/118)).

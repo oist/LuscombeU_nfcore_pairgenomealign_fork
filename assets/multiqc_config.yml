@@ -57,6 +57,6 @@ custom_data:
 
 sp:
   last_o2o:
-    fn: "*o2o_aln.tsv"
+    fn: "*o2o.tsv"
   train:
     fn: "*train.tsv"

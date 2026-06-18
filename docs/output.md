@@ -38,13 +38,13 @@ Basic statistics on nucleotide content and contig length are collected for align
 - `alignment/`
   - `*.train` is the alignment parameters computed by `last-train` (optional)
   - `*.train.tsv` reports some of the parameters computed by `last-train` for MultiQC (optional)
-  - `*.m2m_aln.maf.gz` is the _**many-to-many**_ alignment between _target_ and _query_ genomes. (optional through the `--m2m` option)
-  - `*.m2o_aln.maf.gz` is the _**many-to-one**_ alignment regions of the _target_ genome are matched at most once by the _query_ genome. (optional through the `--m2m` option)
-  - `*.o2m_aln.maf.gz` is the _**one-to-many**_ alignment between the _target_ and _query_ genomes. (optional through the `--m2m` option)
-  - `*.o2o_aln.maf.gz` is the _**one-to-one**_ alignment between the _target_ and _query_ genomes.
-  - `*.o2o_aln.tsv` reports nucleotide percent identity of the _**one-to-one**_ alignment for MultiQC.
-  - `*.o2o_aln.matrix.txt` reports the substitution matrix and some evolutionary distance indices computed from the _**one-to-one**_ alignment for MultiQC.
-  - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_aln_to` parameter. These extra files are always compressed with gzip when their format is text-based. The SAM/BAM/CRAM files are always sorted. Their header features all sequences from the _target_ genome, including the ones that did not align to the _query_ so that alignment files can be merged without disturbing the sort order.
+  - `*.m2m.maf.gz` is the _**many-to-many**_ alignment between _target_ and _query_ genomes. (optional through the `--m2m` option)
+  - `*.m2o.maf.gz` is the _**many-to-one**_ alignment regions of the _target_ genome are matched at most once by the _query_ genome. (optional through the `--m2m` option)
+  - `*.o2m.maf.gz` is the _**one-to-many**_ alignment between the _target_ and _query_ genomes. (optional through the `--m2m` option)
+  - `*.o2o.maf.gz` is the _**one-to-one**_ alignment between the _target_ and _query_ genomes.
+  - `*.o2o.tsv` reports nucleotide percent identity of the _**one-to-one**_ alignment for MultiQC.
+  - `*.o2o.matrix.txt` reports the substitution matrix and some evolutionary distance indices computed from the _**one-to-one**_ alignment for MultiQC.
+  - For each _**one-to-one**_ alignment there will be an additional file in a format such as Axt, Chain, GFF or SAM/BAM/CRAM if you used the `--export_to` parameter. These extra files are always compressed with gzip when their format is text-based. The SAM/BAM/CRAM files are always sorted. Their header features all sequences from the _target_ genome, including the ones that did not align to the _query_ so that alignment files can be merged without disturbing the sort order.
   - The _target_ genome sequence, compressed with `bgzip` and indexed by `samtools` is also present when BAM or CRAM files are produced.
   - A multi-_query_ CRAM sequence is present when `--multi_cram` is used, named like the _target_ genome but with the `cram` suffix.
 
@@ -60,16 +60,16 @@ To speed up alignment, both strands of the target genome are indexed. This doubl
 <summary>Output files</summary>
 
 - `alignment/`
-  - `*.m2m_plot` (optional)
-  - `*.m2o_plot` (optional)
-  - `*.o2o_plot` (optional)
-  - `*.o2m_plot` (optional)
+  - `*.m2m.png` (optional)
+  - `*.m2o.png` (optional)
+  - `*.o2m.png` (optional)
+  - `*.o2o.png` (optional)
 
 </details>
 
 Dot plots are representing the pairwise genome alignments and produced with the [`last-dotplot`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-dotplot.rst) tool. By default, their maximal width is fixed to aproximately 1200 pixels, so that the _target_ genome is always represented at the same scale in all plots. In the one-to-one alignment example below, the `hg38` human genome (_target_) is represented on the horizontal axis and a monkey genopme (_Macaca mulatta_ accession number `GCA\_049350105.1`) on the vertical axis (_query_). Regions containing unknown (`N`) sequences are on pink background. Forward (+/+) alignments are plotted in red and reverse (+/– or –/+) in blue. _Target_ (human) contigs are displayed in their original order. _Query_ contigs (monkey) are reordered and possibly reverse-complemented to diagonalise the plot as much as possible. The names of reverse-complemented contigs are printed in blue.
 
-![Example of a dot-plot produced by the pipeline after aligning human and macaque genomes](images/Homo_sapiens_GRCh38.p14___Macaca_mulatta_GCA_049350105.1.o2o_plt.png "Human–Monkey comparison")
+![Example of a dot-plot produced by the pipeline after aligning human and macaque genomes](images/Homo_sapiens_GRCh38.p14___Macaca_mulatta_GCA_049350105.1.o2o.png "Human–Monkey comparison")
 
 ### `N` regions
 
