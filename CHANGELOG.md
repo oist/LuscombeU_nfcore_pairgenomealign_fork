@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Merge _target_ and _query_ genome information in a single channel ([#119](https://github.com/nf-core/pairgenomealign/issues/119)).
 - Extract a substitution matrix from the alignment and compute evolutionary distance indices ([#102](https://github.com/nf-core/pairgenomealign/issues/102)).
 - Allow FASTQ _query_ input ([#122](https://github.com/nf-core/pairgenomealign/issues/122)).
+- Replace self-alignment with alignment to a different genome in the CI tests ([nf-core/test-datasets#122](https://github.com/nf-core/test-datasets/pull/2109)).
 
 ### `Dependencies`
 
