@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use the default CRAM format from `samtools` (CRAM v3.1 as of `samtools` `1.23.1`) ([#86](https://github.com/nf-core/pairgenomealign/issues/86)).
 - Make bigger plots, and orient sequence names vertically for the _target_ genome ([#118](https://github.com/nf-core/pairgenomealign/issues/118)).
 - Increase the symmetry of the alignment by passing `--gapsym` and `--matsym` to `last-train` ([#91](https://github.com/nf-core/pairgenomealign/issues/91)).
+- Change default seed from `YASS` to `RY128` ([#121](https://github.com/nf-core/pairgenomealign/issues/121)).
 
 ### `Fixed`
 

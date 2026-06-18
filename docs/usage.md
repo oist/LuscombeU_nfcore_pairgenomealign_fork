@@ -43,10 +43,9 @@ For your convenience when you have only one _query_ genome, you can skip the cre
 The parameters are described in details in the [online documentation](https://nf-co.re/pairgenomealign/parameters). Expert users can pass extra command line arguments to LAST commands. Apart from this the following options are of special importance:
 
 - `--seed` selects the LAST seeding scheme used to index the target genome and determines the trade‑off between alignment sensitivity, run time, and memory usage. See the [LAST seeding documentation](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-seeds.rst) for details.
-  - `YASS` (default): searches for long and weak similarities by allowing mismatches but not gaps; a general‑purpose default suitable for many use cases.
-    _(Note: `RY4` may replace `YASS` as the default in a future major release.)_
+  - `YASS`: searches for long and weak similarities by allowing mismatches but not gaps; a general‑purpose default suitable for many use cases.
   - `MAM8`: highest sensitivity; suitable for bacterial genomes and some small, distantly related invertebrate genomes (slow and memory‑intensive).
-  - `RY4`: balanced sensitivity and performance; suitable for aligning any pair of vertebrate genomes.
+  - `RY4` (default): balanced sensitivity and performance; suitable for aligning any pair of vertebrate genomes.
   - `RY128`: fastest and most memory‑efficient; suitable for large, closely related genomes such as primates, at the cost of reduced sensitivity.
 - `--m2m` enables the computation of the _many-to-many_ alignment, which reports alignments without enforcing uniqueness. This mode is required for self‑alignments and is useful for duplication or repeat analyses, but can exhaust computing resources on large or highly repetitive genomes.
 - The `--skip_dotplot_*` options disable dotplot visualisations. This is particularly useful when comparing very similar and repetitive genomes (for example, two vertebrate genomes from the same species), where dotplots other than the _one‑to‑one_ alignment can become extremely dense and difficult to interpret, without affecting the underlying alignments.
