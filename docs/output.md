@@ -50,7 +50,7 @@ Basic statistics on nucleotide content and contig length are collected for align
 
 </details>
 
-Genomes are aligned witn [`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst) after alignment parameters have been determined with [`last-train`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-train.rst). _**Many-to-many**_ alignments are progressively converted to _**one-to-one**_ with [`last-split`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst).
+Genomes are aligned with [`lastal`](https://gitlab.com/mcfrith/last/-/blob/main/doc/lastal.rst) after alignment parameters have been determined with [`last-train`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-train.rst). _**Many-to-many**_ alignments are progressively converted to _**one-to-one**_ with [`last-split`](https://gitlab.com/mcfrith/last/-/blob/main/doc/last-split.rst).  In a _many-to-one_ alignment, sequences from the _target_ genome can be matched multiple times.  This is for instance useful when aligning a diploid or draft assembly (_query_) to a primary reference genome (_target_), or aligning a whole-genome-duplicated _query_ to a _target_ with the ancestral ploidy.  Conversely, a _one-to-many_ alignment is useful when expecting multiple matches on the _query_ by the _target_.  Please note also that locally duplicated regions will appear as deletions in the _one-to-one_ alignment, as it will only keep one copy.
 
 To speed up alignment, both strands of the target genome are indexed. This doubles memory usage and may produce output files containing `-/+` alignments, which are not supported by some downstream pipelines. To disable this behavior, use `--strand forward`.
 
