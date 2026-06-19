@@ -46,7 +46,7 @@ workflow PAIRGENOMEALIGN {
     ch_samplesheet  = ch_samplesheet.map { meta, query, target -> [ meta, query ] }
 
     export_formats = params.export_aln_to.tokenize(',')
-    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('gff')) {
+    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('bcf') | export_formats.contains('gff')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
         ch_targetgenome = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
     } else {
