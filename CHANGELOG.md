@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow FASTQ _query_ input ([#122](https://github.com/nf-core/pairgenomealign/issues/122)).
 - Replace self-alignment with alignment to a different genome in the CI tests ([nf-core/test-datasets#122](https://github.com/nf-core/test-datasets/pull/2109)).
 - Updated `last/mafconvert` to allow BCF output, and updated the module diffs so that the shared container also includes BCFtools. BCF output is experimental and output may change in minor revisions of the pipeline ([#82](https://github.com/nf-core/pairgenomealign/issues/82)).
+- Index BCF and CRAM files ([#115](https://github.com/nf-core/pairgenomealign/issues/115)).
 
 ### `Dependencies`
 
