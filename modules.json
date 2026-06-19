@@ -36,7 +36,7 @@
                     },
                     "last/mafconvert": {
                         "branch": "master",
-                        "git_sha": "fce559f7d9299d5e0ad765248e0c59c57421afcb",
+                        "git_sha": "9d3f43456cee409e1f70ccef8661b245fdda5069",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/last/mafconvert/last-mafconvert.diff"
                     },
