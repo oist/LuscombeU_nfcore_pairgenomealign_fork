@@ -12,7 +12,7 @@ include { LAST_DOTPLOT as MULTIQC_THUMBS   } from '../modules/nf-core/last/dotpl
 include { MULTIQC_THUMBS_HTML              } from '../modules/local/multiqc_thumbs_html/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
 include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
-include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
+include { SEQTK_CUTN as TARGETGENOME_CUTN  } from '../modules/nf-core/seqtk/cutn/main'
 include { SEQTK_CUTN as CUTN_QUERY         } from '../modules/nf-core/seqtk/cutn/main'
 include { PAIRALIGN_M2O                    } from '../subworkflows/local/pairalign_m2o/main'
 include { MULTIQC                          } from '../modules/nf-core/multiqc/main'
@@ -53,12 +53,10 @@ workflow PAIRGENOMEALIGN {
         ch_targetgenome = ch_targetgenome.map { meta, target -> [ meta, target, [], [], [], [] ]  }
     }
 
-
     // Extract coordinates of poly-N regions; they are often contig boundaries in scaffolds
     //
-    CUTN_TARGET (
-        // Avoid file name conflicts when target genome is also in the list of queries
-        ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ [id:'targetGenome'] , target ] }
+    TARGETGENOME_CUTN (
+        ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ meta, target ] }
     )
     CUTN_QUERY (
         ch_samplesheet
@@ -90,7 +88,7 @@ workflow PAIRGENOMEALIGN {
         PAIRALIGN_M2O (
             ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ meta , target ] },
             ch_samplesheet,
-            CUTN_TARGET.out.bed,
+            TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
         pairalign_out = PAIRALIGN_M2O.out
@@ -98,7 +96,7 @@ workflow PAIRGENOMEALIGN {
         PAIRALIGN_M2M (
             ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ meta , target ] },
             ch_samplesheet,
-            CUTN_TARGET.out.bed,
+            TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
         pairalign_out = PAIRALIGN_M2M.out
