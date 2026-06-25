@@ -43,29 +43,28 @@ workflow PAIRGENOMEALIGN {
     def ch_multiqc_files = channel.empty()
 
     ch_targetgenome = ch_samplesheet.map { meta, query, target -> [ [id:meta.targetName], target ] }.first()
-    ch_samplesheet  = ch_samplesheet.map { meta, query, target -> [ meta, query ] }
+    ch_querygenome  = ch_samplesheet.map { meta, query, target -> [ meta, query ] }
 
+    ch_targetgenome_indexed = ch_targetgenome.map { meta, target -> [ meta, target, [], [], [], [] ]  }
     export_formats = params.export_aln_to.tokenize(',')
     if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('bcf') | export_formats.contains('gff')) {
         FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
-        ch_targetgenome = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
-    } else {
-        ch_targetgenome = ch_targetgenome.map { meta, target -> [ meta, target, [], [], [], [] ]  }
+        ch_targetgenome_indexed = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
     }
 
     // Extract coordinates of poly-N regions; they are often contig boundaries in scaffolds
     //
     TARGETGENOME_CUTN (
-        ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ meta, target ] }
+        ch_targetgenome
     )
     CUTN_QUERY (
-        ch_samplesheet
+        ch_querygenome
     )
 
     // Allow to skip statistics on contig length and GC content
     //
     if (! params.skip_assembly_qc ) {
-        ASSEMBLYSCAN ( ch_samplesheet )
+        ASSEMBLYSCAN ( ch_querygenome )
         assemblyscan_sorted_json_files = ASSEMBLYSCAN.out.report
           .toSortedList { a, b -> a[0].id <=> b[0].id }
           .map { sorted_list -> sorted_list.collect { it[1] } }
@@ -76,7 +75,7 @@ workflow PAIRGENOMEALIGN {
 
     // Prefix query ids with target genome name before producing alignment files
     //
-    ch_samplesheet = ch_samplesheet
+    ch_querygenome_pairnames = ch_querygenome
         .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
     ch_seqtk_cutn_query = CUTN_QUERY.out.bed
         .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
@@ -86,16 +85,16 @@ workflow PAIRGENOMEALIGN {
     //
     if (!(params.m2m)) {
         PAIRALIGN_M2O (
-            ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ meta , target ] },
-            ch_samplesheet,
+            ch_targetgenome,
+            ch_querygenome_pairnames,
             TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
         pairalign_out = PAIRALIGN_M2O.out
     } else {
         PAIRALIGN_M2M (
-            ch_targetgenome.map { meta, target, fai_, gzi_, sizes_, dict_ -> [ meta , target ] },
-            ch_samplesheet,
+            ch_targetgenome,
+            ch_querygenome_pairnames,
             TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
@@ -105,7 +104,7 @@ workflow PAIRGENOMEALIGN {
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
             pairalign_out.o2o.combine(channel.fromList(export_formats)),
-            ch_targetgenome
+            ch_targetgenome_indexed
         )
     }
 
@@ -118,7 +117,7 @@ workflow PAIRGENOMEALIGN {
         }
         ALIGNMENT_CRAM(
             o2o_alignments.map {it + "cram"},
-            ch_targetgenome
+            ch_targetgenome_indexed
         )
         // Collect all per-query CRAMs into a single merged CRAM per target genome
         ch_merge_input = ALIGNMENT_CRAM.out.alignment
@@ -131,7 +130,7 @@ workflow PAIRGENOMEALIGN {
         // Output a single CRAM file under the target genome name.
         ALIGNMENT_MERGE(
             ch_merge_input,
-            ch_targetgenome.map { meta, fasta, fai, gzi, _sizes, _dict -> [meta, fasta, fai, gzi ] },
+            ch_targetgenome_indexed.map { meta, fasta, fai, gzi, _sizes, _dict -> [meta, fasta, fai, gzi ] },
         )
     }
 
