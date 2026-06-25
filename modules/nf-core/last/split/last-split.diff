@@ -1,22 +1,37 @@
 Changes in component 'nf-core/last/split'
 'modules/nf-core/last/split/environment.yml' is unchanged
-'modules/nf-core/last/split/meta.yml' is unchanged
 Changes in 'last/split/main.nf':
 --- modules/nf-core/last/split/main.nf
 +++ modules/nf-core/last/split/main.nf
 @@ -4,8 +4,8 @@
  
      conda "${moduleDir}/environment.yml"
-     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
--        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0d/0d27a2649f1291ff817dc8f73357ffac206424cd972d3855421e4258acc600f7/data'
--        : 'community.wave.seqera.io/library/last:1611--e1193b3871fa0975'}"
-+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
-+        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
+     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
+-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/2e/2eb57450207840a7fba7f60b65239a86679bfcaa79fb5fba652dd41af2b3e1d9/data'
+-        : 'community.wave.seqera.io/library/last:1651--c83f04148c23181f'}"
++        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/fc/fc775f66277d9ca6584b130ff24d9ddeaf2797f1729fadb6d73641dcaa685be7/data'
++        : 'community.wave.seqera.io/library/bcftools_last_samtools_bzip2_pruned:93dbd1b10eecc490'}"
  
      input:
      tuple val(meta), path(maf)
+@@ -13,6 +13,7 @@
+     output:
+     tuple val(meta), path("*.maf.gz"), emit: maf
+     tuple val(meta), path("*.tsv")   , emit: multiqc
++    tuple val(meta), path("*.matrix.txt"), emit: matrix
+     // last-dotplot has no --version option so let's use lastal from the same suite
+     tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
+ 
+@@ -78,6 +79,7 @@
+         last-split $args |
+         tee >(get_genome_stats > ${prefix}.genomestats.txt) |
+         tee >(gzip --no-name   > ${prefix}.maf.gz) |
++        tee >(maf_to_matrix.py > ${prefix}.matrix.txt) |
+         maf-convert psl |
+         calculate_psl_metrics  > ${prefix}.alignmentstats.txt
+ 
 
-'modules/nf-core/last/split/main.nf.bak' was created
-'modules/nf-core/last/split/tests/main.nf.test' is unchanged
+'modules/nf-core/last/split/meta.yml' is unchanged
 'modules/nf-core/last/split/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/last/split/tests/main.nf.test' is unchanged
 ************************************************************

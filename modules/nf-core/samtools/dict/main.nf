@@ -4,8 +4,8 @@ process SAMTOOLS_DICT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/8c/8c5d2818c8b9f58e1fba77ce219fdaf32087ae53e857c4a496402978af26e78c/data'
-        : 'community.wave.seqera.io/library/htslib_samtools:1.23.1--5b6bb4ede7e612e5'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/fc/fc775f66277d9ca6584b130ff24d9ddeaf2797f1729fadb6d73641dcaa685be7/data'
+        : 'community.wave.seqera.io/library/bcftools_last_samtools_bzip2_pruned:93dbd1b10eecc490'}"
 
     input:
     tuple val(meta), path(fasta)

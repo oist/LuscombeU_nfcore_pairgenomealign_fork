@@ -149,7 +149,7 @@ workflow PAIRALIGN_M2M {
 
     emit:
 
-    multiqc = Channel.empty()
+    multiqc = channel.empty()
         .mix(training_results_for_multiqc)
         .mix(ALIGNMENT_SPLIT_O2O.out.multiqc.collect{ it[1]} )
     m2m = ALIGNMENT_LASTAL_M2M.out.maf

@@ -1,22 +1,22 @@
 Changes in component 'nf-core/last/mafconvert'
-'modules/nf-core/last/mafconvert/environment.yml' is unchanged
 'modules/nf-core/last/mafconvert/meta.yml' is unchanged
+'modules/nf-core/last/mafconvert/environment.yml' is unchanged
 Changes in 'last/mafconvert/main.nf':
 --- modules/nf-core/last/mafconvert/main.nf
 +++ modules/nf-core/last/mafconvert/main.nf
 @@ -4,8 +4,8 @@
  
      conda "${moduleDir}/environment.yml"
-     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
--        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0b/0b03259f4457e393e47dfd87ea744afea462bd8614b14867e6b3640ae760f41f/data'
--        : 'community.wave.seqera.io/library/last_samtools:a6d74d4fe63f646a'}"
-+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
-+        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
+     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
+-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/89/8975c4b3f5acfdf065246236c3a1b8cde7a0df4cacff72f9ca2670fc7626726e/data'
+-        : 'community.wave.seqera.io/library/bcftools_last_samtools:f6cbdfb2676292ee'}"
++        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/fc/fc775f66277d9ca6584b130ff24d9ddeaf2797f1729fadb6d73641dcaa685be7/data'
++        : 'community.wave.seqera.io/library/bcftools_last_samtools_bzip2_pruned:93dbd1b10eecc490'}"
  
      input:
      tuple val(meta), path(maf), val(format)
 
-'modules/nf-core/last/mafconvert/main.nf.bak' was created
+'modules/nf-core/last/mafconvert/tests/nextflow.config' is unchanged
 'modules/nf-core/last/mafconvert/tests/main.nf.test' is unchanged
 'modules/nf-core/last/mafconvert/tests/main.nf.test.snap' is unchanged
 ************************************************************

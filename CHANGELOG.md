@@ -3,6 +3,38 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Development of v3.0.0 in progress…
+
+### `Breaking changes`
+
+- Simplify output file names by removing `_aln` and `_plt`.
+- Update all modules to latest versions.
+- Use the default CRAM format from `samtools` (CRAM v3.1 as of `samtools` `1.23.1`) ([#86](https://github.com/nf-core/pairgenomealign/issues/86)).
+- Make bigger plots, and orient sequence names vertically for the _target_ genome ([#118](https://github.com/nf-core/pairgenomealign/issues/118)).
+- Increase the symmetry of the alignment by passing `--gapsym` and `--matsym` to `last-train` ([#91](https://github.com/nf-core/pairgenomealign/issues/91)).
+- Change default seed from `YASS` to `RY128` ([#121](https://github.com/nf-core/pairgenomealign/issues/121)).
+- Move target genome information from `cutn` to `targetgenome` ([#126](https://github.com/nf-core/pairgenomealign/issues/126)).
+
+### `Fixed`
+
+- Compatible with Nextflow `26.04` "strict syntax" ([#120](https://github.com/nf-core/pairgenomealign/issues/120)).
+- Merge _target_ and _query_ genome information in a single channel ([#119](https://github.com/nf-core/pairgenomealign/issues/119)).
+- Extract a substitution matrix from the alignment and compute evolutionary distance indices ([#102](https://github.com/nf-core/pairgenomealign/issues/102)).
+- Allow FASTQ _query_ input ([#122](https://github.com/nf-core/pairgenomealign/issues/122)).
+- Replace self-alignment with alignment to a different genome in the CI tests ([nf-core/test-datasets#122](https://github.com/nf-core/test-datasets/pull/2109)).
+- Updated `last/mafconvert` to allow BCF output, and updated the module diffs so that the shared container also includes BCFtools. BCF output is experimental and output may change in minor revisions of the pipeline ([#82](https://github.com/nf-core/pairgenomealign/issues/82)).
+- Index BCF and CRAM files ([#115](https://github.com/nf-core/pairgenomealign/issues/115)).
+- Add back alignment training and result statistics that slipped out of MultiQC in version `2.3.0` ([#124](https://github.com/nf-core/pairgenomealign/issues/124)).
+
+### `Dependencies`
+
+| Dependency | Old version   | New version   |
+| ---------- | ------------- | ------------- |
+| `LAST`     | 1611          | 1651          |
+| `BCFTOOLS` |               | 1.23.1        |
+| `SAMTOOLS` | 1.21 / 1.23.1 | 1.23.1 (only) |
+| `MultiQC`  | 1.34          | 1.35          |
+
 ## [v2.3.0](https://github.com/nf-core/pairgenomealign/releases/tag/2.3.0) "Umi budou" - [June 10th 2026]
 
 ### `Added`

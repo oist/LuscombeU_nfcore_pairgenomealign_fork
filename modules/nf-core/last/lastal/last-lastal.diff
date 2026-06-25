@@ -1,23 +1,22 @@
 Changes in component 'nf-core/last/lastal'
 'modules/nf-core/last/lastal/environment.yml' is unchanged
-'modules/nf-core/last/lastal/meta.yml' is unchanged
 Changes in 'last/lastal/main.nf':
 --- modules/nf-core/last/lastal/main.nf
 +++ modules/nf-core/last/lastal/main.nf
 @@ -4,8 +4,8 @@
  
      conda "${moduleDir}/environment.yml"
-     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
--        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0d/0d27a2649f1291ff817dc8f73357ffac206424cd972d3855421e4258acc600f7/data'
--        : 'community.wave.seqera.io/library/last:1611--e1193b3871fa0975'}"
-+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/06/06beccfa4d48e5daf30dd8cee4f7e06fd51594963db0d5087ab695365b79903b/data'
-+        : 'community.wave.seqera.io/library/last_samtools_open-fonts:176a6ab0c8171057'}"
+     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
+-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/2e/2eb57450207840a7fba7f60b65239a86679bfcaa79fb5fba652dd41af2b3e1d9/data'
+-        : 'community.wave.seqera.io/library/last:1651--c83f04148c23181f'}"
++        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/fc/fc775f66277d9ca6584b130ff24d9ddeaf2797f1729fadb6d73641dcaa685be7/data'
++        : 'community.wave.seqera.io/library/bcftools_last_samtools_bzip2_pruned:93dbd1b10eecc490'}"
  
      input:
      tuple val(meta), path(fastx), path (param_file)
 
-'modules/nf-core/last/lastal/main.nf.bak' was created
+'modules/nf-core/last/lastal/meta.yml' is unchanged
 'modules/nf-core/last/lastal/tests/nextflow.config' is unchanged
-'modules/nf-core/last/lastal/tests/main.nf.test' is unchanged
 'modules/nf-core/last/lastal/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/last/lastal/tests/main.nf.test' is unchanged
 ************************************************************

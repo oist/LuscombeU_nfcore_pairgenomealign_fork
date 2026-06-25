@@ -4,23 +4,23 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { ASSEMBLYSCAN                     } from '../modules/nf-core/assemblyscan/main'
-include { LAST_MAFCONVERT as ALIGNMENT_CRAM} from '../modules/nf-core/last/mafconvert/main'
-include { LAST_MAFCONVERT as ALIGNMENT_EXP } from '../modules/nf-core/last/mafconvert/main'
-include { SAMTOOLS_MERGE as ALIGNMENT_MERGE} from '../modules/nf-core/samtools/merge/main'
-include { LAST_DOTPLOT as MULTIQC_THUMBS   } from '../modules/nf-core/last/dotplot/main'
-include { MULTIQC_THUMBS_HTML              } from '../modules/local/multiqc_thumbs_html/main'
-include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA   } from '../modules/local/multiqc_assemblyscan_plot_data/main'
-include { PAIRALIGN_M2M                    } from '../subworkflows/local/pairalign_m2m/main'
-include { SEQTK_CUTN as CUTN_TARGET        } from '../modules/nf-core/seqtk/cutn/main'
-include { SEQTK_CUTN as CUTN_QUERY         } from '../modules/nf-core/seqtk/cutn/main'
-include { PAIRALIGN_M2O                    } from '../subworkflows/local/pairalign_m2o/main'
-include { MULTIQC                          } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap                 } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc             } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML           } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS  } from '../subworkflows/nf-core/fasta_bgzip_index_dict_samtools/main'
-include { methodsDescriptionText           } from '../subworkflows/local/utils_nfcore_pairgenomealign_pipeline'
+include { ASSEMBLYSCAN                             } from '../modules/nf-core/assemblyscan/main'
+include { LAST_MAFCONVERT as ALIGNMENT_CRAM        } from '../modules/nf-core/last/mafconvert/main'
+include { LAST_MAFCONVERT as ALIGNMENT_EXP         } from '../modules/nf-core/last/mafconvert/main'
+include { SAMTOOLS_MERGE as ALIGNMENT_MERGE        } from '../modules/nf-core/samtools/merge/main'
+include { LAST_DOTPLOT as MULTIQC_THUMBS           } from '../modules/nf-core/last/dotplot/main'
+include { MULTIQC_THUMBS_HTML                      } from '../modules/local/multiqc_thumbs_html/main'
+include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA           } from '../modules/local/multiqc_assemblyscan_plot_data/main'
+include { PAIRALIGN_M2M                            } from '../subworkflows/local/pairalign_m2m/main'
+include { SEQTK_CUTN as TARGETGENOME_CUTN          } from '../modules/nf-core/seqtk/cutn/main'
+include { SEQTK_CUTN as CUTN_QUERY                 } from '../modules/nf-core/seqtk/cutn/main'
+include { PAIRALIGN_M2O                            } from '../subworkflows/local/pairalign_m2o/main'
+include { MULTIQC                                  } from '../modules/nf-core/multiqc/main'
+include { paramsSummaryMap                         } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc                     } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML                   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { FASTA_BGZIP_INDEX_DICT_SAMTOOLS          } from '../subworkflows/nf-core/fasta_bgzip_index_dict_samtools/main'
+include { methodsDescriptionText                   } from '../subworkflows/local/utils_nfcore_pairgenomealign_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,27 +36,35 @@ workflow PAIRGENOMEALIGN {
     multiqc_logo
     multiqc_methods_description
     outdir
-    ch_targetgenome // channel: genome file read in from --target
 
     main:
 
     def ch_versions = channel.empty()
     def ch_multiqc_files = channel.empty()
 
+    ch_targetgenome = ch_samplesheet.map { meta, query, target -> [ [id:meta.targetName], target ] }.first()
+    ch_querygenome  = ch_samplesheet.map { meta, query, target -> [ meta, query ] }
+
+    ch_targetgenome_indexed = ch_targetgenome.map { meta, target -> [ meta, target, [], [], [], [] ]  }
+    export_formats = params.export_aln_to.tokenize(',')
+    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('bcf') | export_formats.contains('gff')) {
+        FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
+        ch_targetgenome_indexed = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
+    }
+
     // Extract coordinates of poly-N regions; they are often contig boundaries in scaffolds
     //
-    CUTN_TARGET (
-        // Avoid file name conflicts when target genome is also in the list of queries
-        ch_targetgenome.map { meta, file -> [ [id:'targetGenome'] , file ] }
+    TARGETGENOME_CUTN (
+        ch_targetgenome
     )
     CUTN_QUERY (
-        ch_samplesheet
+        ch_querygenome
     )
 
     // Allow to skip statistics on contig length and GC content
     //
     if (! params.skip_assembly_qc ) {
-        ASSEMBLYSCAN ( ch_samplesheet )
+        ASSEMBLYSCAN ( ch_querygenome )
         assemblyscan_sorted_json_files = ASSEMBLYSCAN.out.report
           .toSortedList { a, b -> a[0].id <=> b[0].id }
           .map { sorted_list -> sorted_list.collect { it[1] } }
@@ -67,7 +75,7 @@ workflow PAIRGENOMEALIGN {
 
     // Prefix query ids with target genome name before producing alignment files
     //
-    ch_samplesheet = ch_samplesheet
+    ch_querygenome_pairnames = ch_querygenome
         .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
     ch_seqtk_cutn_query = CUTN_QUERY.out.bed
         .map { row -> [ [id: params.targetName + '___' + row[0].id] , row.tail() ] }
@@ -78,43 +86,25 @@ workflow PAIRGENOMEALIGN {
     if (!(params.m2m)) {
         PAIRALIGN_M2O (
             ch_targetgenome,
-            ch_samplesheet,
-            CUTN_TARGET.out.bed,
+            ch_querygenome_pairnames,
+            TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
         pairalign_out = PAIRALIGN_M2O.out
     } else {
         PAIRALIGN_M2M (
             ch_targetgenome,
-            ch_samplesheet,
-            CUTN_TARGET.out.bed,
+            ch_querygenome_pairnames,
+            TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
         pairalign_out = PAIRALIGN_M2M.out
     }
 
-    ch_genome_for_cram = channel.value( [[:], [], [], [], [], []] )
-    export_formats = params.export_aln_to.tokenize(',')
-    if (params.multi_cram | export_formats.contains('cram') | export_formats.contains('bam') | export_formats.contains('gff')) {
-        FASTA_BGZIP_INDEX_DICT_SAMTOOLS( ch_targetgenome )
-        ch_genome_for_cram = FASTA_BGZIP_INDEX_DICT_SAMTOOLS.out.fasta_fai_gzi_dict.first()
-    }
-
-    ch_targetgenome = ch_genome_for_cram
-      .multiMap { meta, fasta, fai, gzi, _sizes, dict ->
-          fasta: [meta, fasta]
-          fai:   [meta, fai]
-          gzi:   [meta, gzi]
-          dict:  [meta, dict]
-    }
-
     if (!(params.export_aln_to == "no_export")) {
         ALIGNMENT_EXP(
-            pairalign_out.o2o.combine(Channel.fromList(export_formats)),
-            ch_targetgenome.fasta,
-            ch_targetgenome.fai,
-            ch_targetgenome.gzi,
-            ch_targetgenome.dict
+            pairalign_out.o2o.combine(channel.fromList(export_formats)),
+            ch_targetgenome_indexed
         )
     }
 
@@ -127,10 +117,7 @@ workflow PAIRGENOMEALIGN {
         }
         ALIGNMENT_CRAM(
             o2o_alignments.map {it + "cram"},
-            ch_targetgenome.fasta,
-            ch_targetgenome.fai,
-            ch_targetgenome.gzi,
-            ch_targetgenome.dict
+            ch_targetgenome_indexed
         )
         // Collect all per-query CRAMs into a single merged CRAM per target genome
         ch_merge_input = ALIGNMENT_CRAM.out.alignment
@@ -143,7 +130,7 @@ workflow PAIRGENOMEALIGN {
         // Output a single CRAM file under the target genome name.
         ALIGNMENT_MERGE(
             ch_merge_input,
-            ch_genome_for_cram.map { meta, fasta, fai, gzi, _sizes, _dict -> [meta, fasta, fai, gzi ] },
+            ch_targetgenome_indexed.map { meta, fasta, fai, gzi, _sizes, _dict -> [meta, fasta, fai, gzi ] },
         )
     }
 
@@ -202,7 +189,9 @@ workflow PAIRGENOMEALIGN {
         ? file(multiqc_methods_description, checkIfExists: true)
         : file("${projectDir}/assets/methods_description_template.yml", checkIfExists: true)
     def ch_methods_description = channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
-    ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml', sort: true))
+    ch_multiqc_files = ch_multiqc_files
+        .mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml', sort: true))
+        .mix(pairalign_out.multiqc)
     MULTIQC(
         ch_multiqc_files.flatten().collect().map { files ->
             [

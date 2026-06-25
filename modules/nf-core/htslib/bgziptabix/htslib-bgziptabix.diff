@@ -1,0 +1,21 @@
+Changes in component 'nf-core/htslib/bgziptabix'
+'modules/nf-core/htslib/bgziptabix/environment.yml' is unchanged
+Changes in 'htslib/bgziptabix/main.nf':
+--- modules/nf-core/htslib/bgziptabix/main.nf
++++ modules/nf-core/htslib/bgziptabix/main.nf
+@@ -4,8 +4,8 @@
+ 
+     conda "${moduleDir}/environment.yml"
+     container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
+-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/33/33a1f2c7f36ec58339e41cbea096d121f606918778a91cfbef944b40ba7ce48b/data'
+-        : 'community.wave.seqera.io/library/htslib_xz:49c8c84af5c4b3b9'}"
++        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/fc/fc775f66277d9ca6584b130ff24d9ddeaf2797f1729fadb6d73641dcaa685be7/data'
++        : 'community.wave.seqera.io/library/bcftools_last_samtools_bzip2_pruned:93dbd1b10eecc490'}"
+ 
+     input:
+     tuple val(meta), path(infile), path(infile_tbi), path(regions)
+
+'modules/nf-core/htslib/bgziptabix/meta.yml' is unchanged
+'modules/nf-core/htslib/bgziptabix/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/htslib/bgziptabix/tests/main.nf.test' is unchanged
+************************************************************

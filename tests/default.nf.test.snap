@@ -3,25 +3,25 @@
         "content": [
             {
                 "ALIGNMENT_DOTPLOT_M2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_DOTPLOT_O2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_EXP": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_LASTAL_M2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_LASTDB": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_SPLIT_O2O": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ALIGNMENT_TRAIN": {
-                    "last": 1611
+                    "last": 1651
                 },
                 "ASSEMBLYSCAN": {
                     "assemblyscan": "1.0.0"
@@ -29,39 +29,40 @@
                 "CUTN_QUERY": {
                     "seqtk": "1.4-r122"
                 },
-                "CUTN_TARGET": {
-                    "seqtk": "1.4-r122"
-                },
                 "MULTIQC_ASSEMBLYSCAN_PLOT_DATA": {
                     "jq": "1.7.1"
                 },
+                "TARGETGENOME_CUTN": {
+                    "seqtk": "1.4-r122"
+                },
                 "Workflow": {
-                    "nf-core/pairgenomealign": "v2.3.0"
+                    "nf-core/pairgenomealign": "v3.0.0dev"
                 }
             },
             [
                 "alignment",
-                "alignment/target___test1.m2o_plt.png",
-                "alignment/target___test1.o2o_aln.maf.gz",
-                "alignment/target___test1.o2o_aln.tsv",
-                "alignment/target___test1.o2o_plt.png",
-                "alignment/target___test1.sam.gz",
-                "alignment/target___test1.train",
-                "alignment/target___test1.train.tsv",
-                "alignment/target___test2.m2o_plt.png",
-                "alignment/target___test2.o2o_aln.maf.gz",
-                "alignment/target___test2.o2o_aln.tsv",
-                "alignment/target___test2.o2o_plt.png",
-                "alignment/target___test2.sam.gz",
-                "alignment/target___test2.train",
-                "alignment/target___test2.train.tsv",
+                "alignment/MT192765___contigs.m2o.png",
+                "alignment/MT192765___contigs.o2o.maf.gz",
+                "alignment/MT192765___contigs.o2o.matrix.txt",
+                "alignment/MT192765___contigs.o2o.png",
+                "alignment/MT192765___contigs.o2o.tsv",
+                "alignment/MT192765___contigs.sam.gz",
+                "alignment/MT192765___contigs.train",
+                "alignment/MT192765___contigs.train.tsv",
+                "alignment/MT192765___genome-OY074094.m2o.png",
+                "alignment/MT192765___genome-OY074094.o2o.maf.gz",
+                "alignment/MT192765___genome-OY074094.o2o.matrix.txt",
+                "alignment/MT192765___genome-OY074094.o2o.png",
+                "alignment/MT192765___genome-OY074094.o2o.tsv",
+                "alignment/MT192765___genome-OY074094.sam.gz",
+                "alignment/MT192765___genome-OY074094.train",
+                "alignment/MT192765___genome-OY074094.train.tsv",
                 "assemblyscan",
-                "assemblyscan/test1.json",
-                "assemblyscan/test2.json",
+                "assemblyscan/contigs.json",
+                "assemblyscan/genome-OY074094.json",
                 "cutn",
-                "cutn/targetGenome.bed",
-                "cutn/test1.bed",
-                "cutn/test2.bed",
+                "cutn/contigs.bed",
+                "cutn/genome-OY074094.bed",
                 "multiqc",
                 "multiqc/assemblyscan_plot_data",
                 "multiqc/assemblyscan_plot_data/contig_length_mqc.tsv",
@@ -74,52 +75,66 @@
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_contigs_length_statistics_plot.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_last_o2o.txt",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
                 "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_data/multiqc_train.txt",
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_plots/pdf",
                 "multiqc/multiqc_plots/pdf/base_content_summary_plot-cnt.pdf",
                 "multiqc/multiqc_plots/pdf/base_content_summary_plot-pct.pdf",
                 "multiqc/multiqc_plots/pdf/contigs_length_statistics_plot.pdf",
+                "multiqc/multiqc_plots/pdf/last_o2o.pdf",
+                "multiqc/multiqc_plots/pdf/train.pdf",
                 "multiqc/multiqc_plots/png",
                 "multiqc/multiqc_plots/png/base_content_summary_plot-cnt.png",
                 "multiqc/multiqc_plots/png/base_content_summary_plot-pct.png",
                 "multiqc/multiqc_plots/png/contigs_length_statistics_plot.png",
+                "multiqc/multiqc_plots/png/last_o2o.png",
+                "multiqc/multiqc_plots/png/train.png",
                 "multiqc/multiqc_plots/svg",
                 "multiqc/multiqc_plots/svg/base_content_summary_plot-cnt.svg",
                 "multiqc/multiqc_plots/svg/base_content_summary_plot-pct.svg",
                 "multiqc/multiqc_plots/svg/contigs_length_statistics_plot.svg",
+                "multiqc/multiqc_plots/svg/last_o2o.svg",
+                "multiqc/multiqc_plots/svg/train.svg",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/nf_core_pairgenomealign_software_mqc_versions.yml"
+                "pipeline_info/nf_core_pairgenomealign_software_mqc_versions.yml",
+                "targetgenome",
+                "targetgenome/MT192765.bed"
             ],
             [
-                "target___test1.o2o_aln.maf.gz:md5,a5bef93ad94cd32e62503bbb993e17cf",
-                "target___test1.o2o_aln.tsv:md5,0400eb0d527a2e69d0ceaeff6e1e072c",
-                "target___test1.sam.gz:md5,1e7ce899a96c522af7cd716dda2addff",
-                "target___test1.train:md5,0024bdd7f4129fcecebeddc9e844389c",
-                "target___test1.train.tsv:md5,ffa807400265316cdf91de75286c1ac0",
-                "target___test2.o2o_aln.maf.gz:md5,35f2b1fda59aec6a2e7b90bf93d9bd07",
-                "target___test2.o2o_aln.tsv:md5,6f0563aabaae562a5e38bb2e89fb2f79",
-                "target___test2.sam.gz:md5,8dcdb07614097a2a55f7c3f717eda97e",
-                "target___test2.train:md5,276f08718454c0b7b016b96474055100",
-                "target___test2.train.tsv:md5,4d054581c85f745f4e21e0c436bcb6a6",
-                "test1.json:md5,bcef4e2bf296339c1ca7c513b483de96",
-                "test2.json:md5,3af6c8a55ed7c1cfeaa5bd8e8a336244",
-                "targetGenome.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "test1.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "test2.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "contig_length_mqc.tsv:md5,851b7c50f78b040264f44762d0035110",
-                "gc_summary_mqc.tsv:md5,3d6f3875c87fb7c810bbeff004bea4ba",
-                "multiqc_base_content_summary_plot.txt:md5,34b6c2cfdbeea4d761b6b1361d95b1c8",
+                "MT192765___contigs.o2o.maf.gz:md5,9e82383843409fac0bdc61a4f1885f90",
+                "MT192765___contigs.o2o.matrix.txt:md5,96c37304d315d8aac2b41c2c8403d308",
+                "MT192765___contigs.o2o.tsv:md5,e6ebe18f9092f051412bbfd4e467d577",
+                "MT192765___contigs.sam.gz:md5,5e1d93ef6cd2e3ea8b124b612f015132",
+                "MT192765___contigs.train:md5,2225d14c45fc5937b3a555dd998710c9",
+                "MT192765___contigs.train.tsv:md5,5326a6811b6ab45adaf8d66635a85b11",
+                "MT192765___genome-OY074094.o2o.maf.gz:md5,d9612922f821184bda8207e5ef1f9366",
+                "MT192765___genome-OY074094.o2o.matrix.txt:md5,485accb1b8f6fc2df6854039d2e252c3",
+                "MT192765___genome-OY074094.o2o.tsv:md5,e7523b7bbddabe03b3a683471c0d70be",
+                "MT192765___genome-OY074094.sam.gz:md5,565ce6a97a8348c2bd9c52135e484967",
+                "MT192765___genome-OY074094.train:md5,d744f30bbce15715805f543b1f2c509a",
+                "MT192765___genome-OY074094.train.tsv:md5,e64580fc87a3f539b54c072800eddac3",
+                "contigs.json:md5,3af6c8a55ed7c1cfeaa5bd8e8a336244",
+                "genome-OY074094.json:md5,8842b63d03a21bd4b2dd2c1ff41cd86a",
+                "contigs.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "genome-OY074094.bed:md5,994e7adb9883af1980fb7d3fbe4db11a",
+                "contig_length_mqc.tsv:md5,4c1fb85988db7487dbf481215b12d4b5",
+                "gc_summary_mqc.tsv:md5,f1a386cc0205338caed9387869b78c38",
+                "multiqc_base_content_summary_plot.txt:md5,677480195978fb119cb1719fee7d1381",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_contigs_length_statistics_plot.txt:md5,d5d8303533a3a3dc6f0bf268707864c7"
+                "multiqc_contigs_length_statistics_plot.txt:md5,47ae2dc83d76ea6380b59f8bf0d75a80",
+                "multiqc_last_o2o.txt:md5,239ddd25125afba167d85d48e9a4e72e",
+                "multiqc_train.txt:md5,d785f7b0188b1239d0f1d40f0ef89871",
+                "MT192765.bed:md5,d41d8cd98f00b204e9800998ecf8427e"
             ]
         ],
-        "timestamp": "2026-06-03T15:54:22.106030037",
+        "timestamp": "2026-06-24T16:29:30.090341415",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.4"
+            "nextflow": "26.04.3"
         }
     }
 }
