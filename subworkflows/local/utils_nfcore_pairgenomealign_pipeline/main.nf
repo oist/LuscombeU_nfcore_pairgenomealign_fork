@@ -133,7 +133,7 @@ workflow PIPELINE_INITIALISATION {
             .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
     }
 
-    ch_samplesheet = ch_samplesheet
+    ch_validated_samplesheet = ch_samplesheet
         .map { meta, query -> [
             [id:meta.id, targetName:params.targetName],          // meta
             query,                                               // query
