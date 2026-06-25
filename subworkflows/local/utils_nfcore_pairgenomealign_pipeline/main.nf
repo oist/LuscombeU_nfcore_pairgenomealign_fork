@@ -141,7 +141,7 @@ workflow PIPELINE_INITIALISATION {
         ] }
 
     emit:
-    samplesheet = ch_samplesheet
+    samplesheet = ch_validated_samplesheet
     versions    = ch_versions
 }
 
