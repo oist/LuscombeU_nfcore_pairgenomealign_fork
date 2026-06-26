@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Development of v3.0.0 in progress…
+## [v3.0.0](https://github.com/nf-core/pairgenomealign/releases/tag/3.0.0) "Tokoroten" - [June 26th 2026]
 
 ### `Breaking changes`
 
@@ -15,15 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change default seed from `YASS` to `RY4` ([#121](https://github.com/nf-core/pairgenomealign/issues/121)).
 - Move target genome information from `cutn` to `targetgenome` ([#126](https://github.com/nf-core/pairgenomealign/issues/126)).
 
+### `Added`
+
+- Extract a substitution matrix from the alignment and compute evolutionary distance indices ([#102](https://github.com/nf-core/pairgenomealign/issues/102)).
+- Allow FASTQ _query_ input ([#122](https://github.com/nf-core/pairgenomealign/issues/122)).
+- Updated `last/mafconvert` to allow BCF output, and updated the module diffs so that the shared container also includes BCFtools. BCF output is experimental and output may change in minor revisions of the pipeline ([#82](https://github.com/nf-core/pairgenomealign/issues/82)).
+- Index BCF and CRAM files ([#115](https://github.com/nf-core/pairgenomealign/issues/115)).
+
 ### `Fixed`
 
 - Compatible with Nextflow `26.04` "strict syntax" ([#120](https://github.com/nf-core/pairgenomealign/issues/120)).
 - Merge _target_ and _query_ genome information in a single channel ([#119](https://github.com/nf-core/pairgenomealign/issues/119)).
-- Extract a substitution matrix from the alignment and compute evolutionary distance indices ([#102](https://github.com/nf-core/pairgenomealign/issues/102)).
-- Allow FASTQ _query_ input ([#122](https://github.com/nf-core/pairgenomealign/issues/122)).
 - Replace self-alignment with alignment to a different genome in the CI tests ([nf-core/test-datasets#122](https://github.com/nf-core/test-datasets/pull/2109)).
-- Updated `last/mafconvert` to allow BCF output, and updated the module diffs so that the shared container also includes BCFtools. BCF output is experimental and output may change in minor revisions of the pipeline ([#82](https://github.com/nf-core/pairgenomealign/issues/82)).
-- Index BCF and CRAM files ([#115](https://github.com/nf-core/pairgenomealign/issues/115)).
 - Add back alignment training and result statistics that slipped out of MultiQC in version `2.3.0` ([#124](https://github.com/nf-core/pairgenomealign/issues/124)).
 - Fix erroneous doubling of the reported length and number of sequences of the _target_ genome when both strands are indexed ([#128](https://github.com/nf-core/pairgenomealign/issues/128)).
 
