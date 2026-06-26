@@ -102,7 +102,7 @@ workflow PAIRALIGN_M2O {
 
     emit:
 
-    multiqc = Channel.empty()
+    multiqc = channel.empty()
         .mix(training_results_for_multiqc)
         .mix(ALIGNMENT_SPLIT_O2O.out.multiqc.collect{ it[1]} )
     m2o = ALIGNMENT_LASTAL_M2O.out.maf

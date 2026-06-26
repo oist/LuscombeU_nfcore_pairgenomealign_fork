@@ -3,9 +3,9 @@ process LAST_SPLIT {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/0d/0d27a2649f1291ff817dc8f73357ffac206424cd972d3855421e4258acc600f7/data'
-        : 'community.wave.seqera.io/library/last:1611--e1193b3871fa0975'}"
+    container "${workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/fc/fc775f66277d9ca6584b130ff24d9ddeaf2797f1729fadb6d73641dcaa685be7/data'
+        : 'community.wave.seqera.io/library/bcftools_last_samtools_bzip2_pruned:93dbd1b10eecc490'}"
 
     input:
     tuple val(meta), path(maf)
@@ -13,6 +13,7 @@ process LAST_SPLIT {
     output:
     tuple val(meta), path("*.maf.gz"), emit: maf
     tuple val(meta), path("*.tsv")   , emit: multiqc
+    tuple val(meta), path("*.matrix.txt"), emit: matrix
     // last-dotplot has no --version option so let's use lastal from the same suite
     tuple val("${task.process}"), val('last'), eval("lastal --version | sed 's/lastal //'"), emit: versions_last, topic: versions
 
@@ -28,7 +29,11 @@ process LAST_SPLIT {
 
     # LAST reports genome sizes and sequence number at the beginning and end of the MAF files it outputs.
     function get_genome_stats() { awk '
-        BEGIN { OFS = "\\t" }
+        BEGIN {
+            OFS = "\\t"
+            in_params = 1
+        }
+
         function extract(line, regex,   s) {
             if (match(line, regex)) {
                 s = substr(line, RSTART, RLENGTH)
@@ -37,15 +42,34 @@ process LAST_SPLIT {
             }
             return ""
         }
+
+        # Stop parsing parameters at the start of result section
         /^# Reference sequences=/ {
+            in_params = 0
             ref_seq     = extract(\$0, "^# Reference sequences=[0-9]+")
             ref_letters = extract(\$0,                "letters=[0-9]+")
         }
+
+        # Parse parameter lines only before Reference sequences
+        /^#/ {
+            if (in_params && gsub(/=/, "&") >= 5) {
+                if (match(\$0, /s=([0-9]+)/)) {
+                    strand_mode = substr(\$0, RSTART+2, RLENGTH-2)
+                }
+            }
+        }
+
         /^# Query sequences=/ {
             qry_seq     = extract(\$0, "^# Query sequences=[0-9]+")
             qry_letters = extract(\$0,            "letters=[0-9]+")
         }
+
         END {
+        if (strand_mode == 1) {
+            ref_seq     /= 2
+            ref_letters /= 2
+        }
+
             print "TargetSequences", "TargetLength", "QuerySequences", "QueryLength"    # Header for MultiQC
             print ref_seq+0,         ref_letters+0,  qry_seq+0,         qry_letters+0   # Data in TSV format
         }'
@@ -78,6 +102,7 @@ process LAST_SPLIT {
         last-split $args |
         tee >(get_genome_stats > ${prefix}.genomestats.txt) |
         tee >(gzip --no-name   > ${prefix}.maf.gz) |
+        tee >(maf_to_matrix.py > ${prefix}.matrix.txt) |
         maf-convert psl |
         calculate_psl_metrics  > ${prefix}.alignmentstats.txt
 
@@ -86,11 +111,10 @@ process LAST_SPLIT {
     """
 
     stub:
-    def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     if( "$maf" == "${prefix}.maf.gz" ) error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
     """
-    echo stub | gzip --no-name > ${prefix}.maf.gz
+    echo "" | gzip > ${prefix}.maf.gz
     touch ${prefix}.tsv
     """
 }
