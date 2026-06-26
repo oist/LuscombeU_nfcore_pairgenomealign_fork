@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `last/mafconvert` to allow BCF output, and updated the module diffs so that the shared container also includes BCFtools. BCF output is experimental and output may change in minor revisions of the pipeline ([#82](https://github.com/nf-core/pairgenomealign/issues/82)).
 - Index BCF and CRAM files ([#115](https://github.com/nf-core/pairgenomealign/issues/115)).
 - Add back alignment training and result statistics that slipped out of MultiQC in version `2.3.0` ([#124](https://github.com/nf-core/pairgenomealign/issues/124)).
+- Fix erroneous doubling of the reported length and number of sequences of the _target_ genome when both strands are indexed ([#128](https://github.com/nf-core/pairgenomealign/issues/128)).
 
 ### `Dependencies`
 

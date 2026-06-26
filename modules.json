@@ -24,7 +24,7 @@
                     },
                     "last/lastal": {
                         "branch": "master",
-                        "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
+                        "git_sha": "204a4fbb6b1087a3fd3dc9367740e8e19a869b55",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/last/lastal/last-lastal.diff"
                     },
@@ -42,7 +42,7 @@
                     },
                     "last/split": {
                         "branch": "master",
-                        "git_sha": "e972519eb46cf42c31587bdfb663026e915d76b2",
+                        "git_sha": "204a4fbb6b1087a3fd3dc9367740e8e19a869b55",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/last/split/last-split.diff"
                     },

@@ -110,7 +110,7 @@
                     "fa_icon": "fas fa-grip-lines",
                     "description": "Index both strand, or just one.",
                     "enum": ["both", "forward"],
-                    "help_text": "This is the `-S` parameter of `lastdb`. By default, both strands are indexed.  This roughly doubles the speed of the alignment, but also the memory usage. Also, it causes the presence of -/+ alignments in some output files, which is not supported by toolchains. Turn it off by setting it to `forward`."
+                    "help_text": "This is the `-s` parameter of `lastdb`. By default, both strands are indexed. This roughly doubles the speed of the alignment, but also the memory usage. Also, it causes the presence of -/+ alignments in some output files, which is not supported by toolchains. Turn it off by setting it to `forward`."
                 }
             }
         },
