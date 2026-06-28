@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.1](https://github.com/nf-core/pairgenomealign/releases/tag/3.0.1) "Tokoroten" - [June 29th 2026]
+
+### `Fixed`
+
+- Fix strict syntax error when using `--multi-cram`.
+- Run the long test with the `RY4` seed and `--multi-cram` as a better showcase.
+
 ## [v3.0.0](https://github.com/nf-core/pairgenomealign/releases/tag/3.0.0) "Tokoroten" - [June 26th 2026]
 
 ### `Breaking changes`

@@ -36,7 +36,7 @@
                     "seqtk": "1.4-r122"
                 },
                 "Workflow": {
-                    "nf-core/pairgenomealign": "v3.0.0"
+                    "nf-core/pairgenomealign": "v3.0.1dev"
                 }
             },
             [
@@ -131,7 +131,7 @@
                 "MT192765.bed:md5,d41d8cd98f00b204e9800998ecf8427e"
             ]
         ],
-        "timestamp": "2026-06-26T18:13:11.395194951",
+        "timestamp": "2026-06-28T17:42:53.028869312",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.4"
