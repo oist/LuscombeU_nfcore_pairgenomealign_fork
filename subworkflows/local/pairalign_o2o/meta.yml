@@ -1,9 +1,9 @@
-name: pairalign_m2o
+name: pairalign_o2o
 description: |
-  Performs many-to-one pairwise genome alignment using LAST and generates alignment views (M2O only).
+  Performs one-to-one pairwise genome alignment using LAST and generates alignment views (M2O, O2O).
   This subworkflow indexes the target genome, trains alignment parameters, performs direct many-to-one alignment
-  using specific parameter modules, and stops there.
-  Optionally generates dotplots for the many-to-one alignment type with filtering options.
+  using specific parameter modules, and derives one-to-one alignment through split operation.
+  Optionally generates dotplots for each alignment type with filtering options.
 keywords:
   - alignment
   - genomics

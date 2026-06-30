@@ -126,6 +126,12 @@
                     "help_text": "This adds time and can comsume considerable amount of space; use only if you need that data, for instance in the case of a self-alignment",
                     "fa_icon": "fas fa-arrows-alt"
                 },
+                "m2o": {
+                    "type": "boolean",
+                    "description": "Make a many to one alignment",
+                    "help_text": "This skips the one-to-one alignment and makes the export funtions use the many-to-one instead. Useful when aligning a di- or poly-ploid genome to an haploid reference, or when aligning reads to a genome reference.",
+                    "fa_icon": "fas fa-arrows-alt"
+                },
                 "lastal_params": {
                     "type": "string",
                     "exists": true,

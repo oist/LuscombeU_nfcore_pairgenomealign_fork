@@ -11,10 +11,11 @@ include { SAMTOOLS_MERGE as ALIGNMENT_MERGE        } from '../modules/nf-core/sa
 include { LAST_DOTPLOT as MULTIQC_THUMBS           } from '../modules/nf-core/last/dotplot/main'
 include { MULTIQC_THUMBS_HTML                      } from '../modules/local/multiqc_thumbs_html/main'
 include { MULTIQC_ASSEMBLYSCAN_PLOT_DATA           } from '../modules/local/multiqc_assemblyscan_plot_data/main'
-include { PAIRALIGN_M2M                            } from '../subworkflows/local/pairalign_m2m/main'
 include { SEQTK_CUTN as TARGETGENOME_CUTN          } from '../modules/nf-core/seqtk/cutn/main'
 include { SEQTK_CUTN as CUTN_QUERY                 } from '../modules/nf-core/seqtk/cutn/main'
+include { PAIRALIGN_M2M                            } from '../subworkflows/local/pairalign_m2m/main'
 include { PAIRALIGN_M2O                            } from '../subworkflows/local/pairalign_m2o/main'
+include { PAIRALIGN_O2O                            } from '../subworkflows/local/pairalign_o2o/main'
 include { MULTIQC                                  } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap                         } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc                     } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -84,7 +85,15 @@ workflow PAIRGENOMEALIGN {
     // Align with either the many-to-many or the many-to-one subworkflow
     // and collect the output under a fixed name
     //
-    if (!(params.m2m)) {
+    if ( params.m2m ) {
+        PAIRALIGN_M2M (
+            ch_targetgenome,
+            ch_querygenome_pairnames,
+            TARGETGENOME_CUTN.out.bed,
+            ch_seqtk_cutn_query
+        )
+        pairalign_out = PAIRALIGN_M2M.out
+    } else if ( params.m2o ) {
         PAIRALIGN_M2O (
             ch_targetgenome,
             ch_querygenome_pairnames,
@@ -93,20 +102,27 @@ workflow PAIRGENOMEALIGN {
         )
         pairalign_out = PAIRALIGN_M2O.out
     } else {
-        PAIRALIGN_M2M (
+        PAIRALIGN_O2O (
             ch_targetgenome,
             ch_querygenome_pairnames,
             TARGETGENOME_CUTN.out.bed,
             ch_seqtk_cutn_query
         )
-        pairalign_out = PAIRALIGN_M2M.out
+        pairalign_out = PAIRALIGN_O2O.out
     }
 
     if (!(params.export_aln_to == "no_export")) {
-        ALIGNMENT_EXP(
-            pairalign_out.o2o.combine(channel.fromList(export_formats)),
-            ch_targetgenome_indexed
-        )
+        if ( params.m2o ) {
+            ALIGNMENT_EXP(
+                pairalign_out.m2o.combine(channel.fromList(export_formats)),
+                ch_targetgenome_indexed
+            )
+        } else {
+            ALIGNMENT_EXP(
+                pairalign_out.o2o.combine(channel.fromList(export_formats)),
+                ch_targetgenome_indexed
+            )
+        }
     }
 
     if (params.multi_cram) {
